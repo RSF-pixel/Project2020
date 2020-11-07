@@ -1,3 +1,86 @@
+@font-face {
+    font-family: r_pro;
+    src: url("../other/Relish_Pro.ttf"); /* A fonte apenas não pode ser utilizada para uso comercial. */
+}
 body{
+    margin: auto;
+    height: 100vh;
+}
+#app{
     background-color: #202020;
+}
+.navbar{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: 40px;
+    background-color: #606060;
+    color: #202020;
+}
+.navbar p{
+    margin: 0 0;
+    font-family: "r_pro";
+    font-size: 50px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.sidebar{
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: center;
+    width: 40px;
+    height: calc(100vh - 40px);
+    background-color: #606060;
+    box-shadow: 0px 0px 0px black, 0px -10px 0px #606060, 5px 5px 5px #181818, 0px 0px 0px black;
+}
+.folder{
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #606060;
+    height: 40px;
+    width: 40px;
+    transition: all 0.4s ease-in;
+    box-shadow: 0px 0px 3px #303030;
+    cursor: pointer;
+}
+.folder2{
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+    width: 36px;
+    cursor: pointer;
+    border-radius: 4px;
+    background: #606060;
+    box-shadow: inset 4px 4px 7px #4e4e4e, 
+            inset -4px -4px 7px #4e4e4e;
+}
+.folder:hover{
+    background-color: #404040;
+    transition: all 0.4s ease-in;
+    box-shadow: 0px 0px 2px #151515;
+}
+.folder2:hover{
+    transition: all 0.4s ease-in;
+    border-radius: 4px;
+    background: #404040;
+    box-shadow: inset 4px 4px 7px #343434, 
+            inset -4px -4px 7px #343434;
+}
+#folder, #folder2{
+    width: 24px;
+    height: 24px;
+    fill: #404040;
+}
+.folder:hover > #folder path, .folder2:hover > #folder2 path{
+    fill: #202020;
+}
+path{
+    transition: fill 0.4s ease-out;
 }
