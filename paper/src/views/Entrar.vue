@@ -1,5 +1,5 @@
 <template>
-  <div class="entrar">
+  <div>
     <h1>Entrar</h1>
     <router-link :to="{ name: 'Home' }">Home</router-link> |
     <router-link :to="{ name: 'Registar' }">Registar</router-link>

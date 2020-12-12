@@ -1,7 +1,7 @@
 <template>
   <div>
     <SideBar/>
-    <h1>Gestão</h1>
+    <h1>Submeter Propostas</h1>
   </div>
 </template>
 
