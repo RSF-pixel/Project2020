@@ -1,7 +1,7 @@
 <template>
   <div>
     <SideBar/>
-    <h1>Gestão</h1>
+    <h1>Gestão Propostas</h1>
   </div>
 </template>
 
