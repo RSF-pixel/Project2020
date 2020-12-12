@@ -3,10 +3,10 @@
         <b-button v-b-toggle.sidebar>Toggle Sidebar</b-button>
         <b-sidebar id="sidebar" title="paper" shadow>
             <div class="px-3 py-2">
-                <router-link :to="{ name: 'Propostas' }">Propostas</router-link> |
-                <router-link :to="{ name: 'Gestao' }">Gestão</router-link> |
-                <router-link :to="{ name: 'Agenda' }">Agenda</router-link> |
-                <router-link :to="{ name: 'Perfil' }">Perfil</router-link>
+                <li><router-link :to="{ name: 'Propostas' }">Propostas</router-link></li>
+                <li><router-link :to="{ name: 'Gestao' }">Gestão</router-link></li>
+                <li><router-link :to="{ name: 'Agenda' }">Agenda</router-link></li>
+                <li><router-link :to="{ name: 'Perfil' }">Perfil</router-link></li>
             </div>
         </b-sidebar>
     </div>
@@ -15,6 +15,7 @@
 <style>
     #sidebar {
     padding: 30px;
+    text-align: left;
     }
 
     #sidebar a {
