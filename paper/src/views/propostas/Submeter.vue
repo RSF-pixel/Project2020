@@ -1,0 +1,15 @@
+<template>
+  <div>
+    <SideBar/>
+    <h1>Submeter Propostas</h1>
+  </div>
+</template>
+
+<script>
+import SideBar from "@/components/SideBar.vue";
+export default {
+  components: {
+    SideBar
+  }
+};
+</script>
