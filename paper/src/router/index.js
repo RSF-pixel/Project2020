@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
-import Entrar from "../views/Entrar.vue";
+import Autenticacao from "../views/Autenticacao.vue";
 import Registar from "../views/Registar.vue";
 import Propostas from "../views/Propostas.vue";
 import Gestao from "../views/Gestao.vue";
@@ -25,9 +25,9 @@ const routes = [
     component: Home
   },
   {
-    path: "/entrar",
-    name: "Entrar",
-    component: Entrar
+    path: "/autenticacao",
+    name: "Autenticacao",
+    component: Autenticacao
   },
   {
     path: "/registar",
