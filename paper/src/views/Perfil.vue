@@ -1,6 +1,6 @@
 <template>
   <div>
-    <SideBar/>
+    <SideBar />
     <h1>Perfil</h1>
     <router-link :to="{ name: 'Sair' }">Sair</router-link>
   </div>

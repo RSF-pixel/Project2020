@@ -1,6 +1,6 @@
 <template>
   <div>
-    <SideBar/>
+    <SideBar />
     <h1>Submeter Propostas</h1>
   </div>
 </template>
