@@ -15,13 +15,15 @@ body{
   text-align: center;
   color: #2c3e50;
 }
+/* Fundo de todas as páginas */
+  html, body, #app, .container{height: 100%;} 
 /* Margens */
   .sem-margens{margin: 0px 0px;}
   .margem-l5{margin-left: 5px;}
   .margem-t7{margin-top: 7px;}
   .margem-t15{margin-top: 15px;}
-  .margem-h15{margin: 15px 0px;}
   .margem-w5{margin: 0px 5px;}
+  .margem-all50{margin: 50px 50px;}
 /* Paddings */
   .padding-t8{padding-top: 8px;}
 /* Paleta de cores */
@@ -118,12 +120,16 @@ body{
 /* Cursores */
   /* Pointer */
   .cursor-pointer{cursor: pointer;}
-/* Caixas Input */
-  input[type=text], input[type=password]{height: 42px; width: 240px; border: 0.5px solid #aaaaaa; outline: none; padding-left: 10px;}
-  input[type=text]:focus, input[type=password]:focus, input[type=text]:hover, input[type=password]:hover{ background-color: #ffffff; border: 0.5px solid #0084c0;}
-
+/* Selects e Caixas Input */
+  select{background: url(./assets/selecionar.svg) no-repeat right; appearance: none; background-position-x: 218px;}
+  select, input[type=email], input[type=text], input[type=password]{height: 42px; width: 240px; border: 0.5px solid #aaaaaa; outline: none; padding-left: 10px;}
+  select:focus, input[type=email]:focus, input[type=text]:focus, input[type=password]:focus, select:hover, input[type=email]:hover, input[type=text]:hover, input[type=password]:hover{ background-color: #ffffff; border: 0.5px solid #0084c0;}
 /* Botões */
   /* Para a página de autenticação e de registo */
   .botao-autenticacao-registo{height: 42px; width: 100%; border: none; outline: none;}
+  .botao-autenticacao-registo a{color: #202020; text-decoration: none;}
   .botao-autenticacao-registo:hover{background-color: #707070;}
+/* Animações/Transições */
+.anim-autenticacao-registo{animation: 1.2s ease-in-out 0s 1 surgimento;}
+@keyframes surgimento{0%{opacity: 0; box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);}100%{opacity:1; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);}}
 </style>
