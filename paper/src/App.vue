@@ -15,6 +15,7 @@ body{
   text-align: center;
   color: #2c3e50;
 }
+/* Só serve para as views */
 /* Fundo de todas as páginas */
   html, body, #app, .container{height: 100%;} 
 /* Margens */
@@ -122,8 +123,9 @@ body{
   .cursor-pointer{cursor: pointer;}
 /* Selects e Caixas Input */
   select{background: url(./assets/selecionar.svg) no-repeat right; appearance: none; background-position-x: 218px;}
-  select, input[type=email], input[type=text], input[type=password]{height: 42px; width: 240px; border: 0.5px solid #aaaaaa; outline: none; padding-left: 10px;}
-  select:focus, input[type=email]:focus, input[type=text]:focus, input[type=password]:focus, select:hover, input[type=email]:hover, input[type=text]:hover, input[type=password]:hover{ background-color: #ffffff; border: 0.5px solid #0084c0;}
+  select, input[type=email], input[type=text], input[type=password], input[type=number]{height: 42px; width: 240px; border: 0.5px solid #aaaaaa; outline: none; padding-left: 10px;}
+  select:focus, input[type=email]:focus, input[type=text]:focus, input[type=password]:focus, input[type=number]:focus, select:hover, input[type=email]:hover, input[type=text]:hover, input[type=password]:hover, input[type=number]:hover{background-color: #ffffff; border: 0.5px solid #0084c0;}
+  input::-webkit-outer-spin-button, input::-webkit-inner-spin-button{appearance: none; margin: 0;} /* Remover setas do input[type=number] */
 /* Botões */
   /* Para a página de autenticação e de registo */
   .botao-autenticacao-registo{height: 42px; width: 100%; border: none; outline: none;}
@@ -132,4 +134,7 @@ body{
 /* Animações/Transições */
 .anim-autenticacao-registo{animation: 1.2s ease-in-out 0s 1 surgimento;}
 @keyframes surgimento{0%{opacity: 0; box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);}100%{opacity:1; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);}}
+/* Logo */
+  #logo-autenticacao-registo{fill: #202020; height: 45px; width: 160px; margin: 35px 0px;}
+  #logo-geral{fill: #cccccc; height: 30px; width: 108px; margin: 20px 0px;}
 </style>
