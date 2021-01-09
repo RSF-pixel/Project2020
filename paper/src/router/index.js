@@ -15,11 +15,11 @@ import Inscricoes from "../views/gestao/Inscricoes.vue";
 import AdicionarDocentes from "../views/gestao/AdicionarDocentes.vue";
 import Prazos from "../views/gestao/Prazos.vue";
 import Sair from "../views/Sair.vue";
+import NaoEncontrado from "../views/NaoEncontrado.vue"
 
 Vue.use(VueRouter);
 
-const routes = [
-  {
+const routes = [{
     path: "/",
     name: "Home",
     component: Home
@@ -93,6 +93,11 @@ const routes = [
     path: "/sair",
     name: "Sair",
     component: Sair
+  },
+  {
+    path: "*",
+    mame: "PaginaNãoEncontrada",
+    component: NaoEncontrado,
   }
 ];
 

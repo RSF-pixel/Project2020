@@ -6,7 +6,6 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     route: "",
-    logged_user: 0,
     estados: {
       id_estado: 0,
       estado: ""
@@ -19,7 +18,7 @@ export default new Vuex.Store({
       id_tipo: 0,
       proposta: ""
     },
-    utilizadores: {
+    /*utilizadores: {
       id_utilizador: 0,
       id_estado: 0,
       nome: "",
@@ -27,8 +26,10 @@ export default new Vuex.Store({
       correio: "",
       passe: "",
       id_tipo: 0,
-      complementar: "",
+      numero_estudante: "",
+      (Falta aqui pelo menos 4 relativos a empresa)
       foto: "",
+      inscricao: "",
       cv: "",
       portfolio: "",
       facebook: "",
@@ -36,7 +37,7 @@ export default new Vuex.Store({
       github: "",
       discord: "",
       ano_letivo: ""
-    },
+    },*/
     agenda: {
       id_utilizador: 0,
       id_convidado: 0,
@@ -100,13 +101,64 @@ export default new Vuex.Store({
     temas: {
       id_tema: 0,
       tema: ""
-    }
+    },
+    utilizadores: localStorage.getItem('utilizadores')
+      ? JSON.parse(localStorage.getItem('utilizadores'))
+      : [
+        {
+          nome: "João",
+          apelido: "Silva",
+          correio: "js@gmail.com",
+          passe: "123",
+          numero_estudante: 40190100
+        }],
+    utilizadorAutenticado: localStorage.getItem('utilizadorAutenticado') 
+      ? JSON.parse(localStorage.getItem('utilizadorAutenticado')) 
+      : ""
+  
+    },
+  getters:{
+    obterUtilizadorAutenticado: (state) => state.utilizadorAutenticado,
+    ativoUtilizadorAutenticado: (state) => (state.utilizadorAutenticado == "" ? false : true)
   },
   mutations: {
-
+    AUTENTICADO(state, utilizador){
+      state.utilizadorAutenticado = utilizador;
+    },
+    DESCONECTAR(state){
+      state.utilizadorAutenticado = "";
+    },
+    REGISTADO(state, utilizador){
+      state.utilizadores.push(utilizador);
+    }
   },
   actions: {
-
+    autenticacao(context, payload) {
+      const utilizador = context.state.utilizadores.find(
+        (utilizador) => utilizador.correio === payload.correio && utilizador.passe === payload.passe)
+      if (utilizador != undefined){
+        context.commit('AUTENTICADO', utilizador)
+        localStorage.setItem('utilizadorAutenticado', JSON.stringify(utilizador))
+      }
+      else{
+        throw Error ('Autenticação falhada, tente novamente.')
+      }
+    },
+    registo(context, payload){
+      const utilizador = context.state.utilizadores.find(
+        (utilizador) => utilizador.correio === payload.correio || utilizador.numero_estudante === payload.numero_estudante)
+      if(utilizador == undefined){
+        context.commit('REGISTADO', payload);
+        localStorage.setItem('utilizadores', JSON.stringify(context.state.utilizadores))
+      }
+      else{
+        throw Error("Utilizador inválido")
+      }
+    },
+    desconectar(context){
+      context.commit("DESCONECTAR");
+      localStorage.removeItem("utilizadorAutenticado");
+    }
   },
   modules: {
     

@@ -1,10 +1,10 @@
 <template>
-  <div>
     <SideBar />
+    <!--
     <h1>Propostas</h1>
     <router-link :to="{ name: 'Submeter' }">Submeter</router-link> |
     <router-link :to="{ name: 'GestaoP' }">Gerir</router-link>
-  </div>
+    -->
 </template>
 
 <script>
@@ -15,3 +15,8 @@ export default {
   }
 };
 </script>
+<style>
+  .testing{
+    height: 100%;
+  }
+</style>

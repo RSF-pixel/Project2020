@@ -5,7 +5,7 @@
     <router-link :to="{ name: 'Aprovar' }">Aprovar</router-link> |
     <router-link :to="{ name: 'Utilizadores' }">Utilizadores</router-link> |
     <router-link :to="{ name: 'Inscricoes' }">Inscrições</router-link> |
-    <router-link :to="{ name: 'AdicionarDocente' }"
+    <router-link :to="{ name: 'AdicionarDocentes' }"
       >Adicionar Docente</router-link
     >
     |
