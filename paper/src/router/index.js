@@ -136,8 +136,8 @@ const routes = [{
   },
   {
     path: "*",
-    mame: "PaginaNãoEncontrada",
-    component: NaoEncontrado,
+    mame: "Erro",
+    component: Erro,
   }
 ];
 
