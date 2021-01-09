@@ -1,5 +1,5 @@
 <template>
-  <div class="container d-flex justify-content-center align-items-center">
+  <div class="container-autenticacao-registo d-flex justify-content-center align-items-center">
     <div class="autenticacao anim-autenticacao-registo fundo-dd borda-solida borda-w05 borda-70 borda-r10 sombra-caixa">
       <div class="form-container">
         <form @submit.prevent="autenticacao">
@@ -9,7 +9,7 @@
           <label class="d-flex justify-content-start cor-20 fonte-14 mukta-m sem-margens margem-l5 margem-t7" for="passe">Palavra-passe</label>
           <input class="cor-60 fundo-fa fonte-12 opensans-l borda-r5 sem-margens" :type="type" name="passe" v-model='passe'>
           <div class="ver-helper d-flex justify-content-end sem-margens">
-          <svg @click="mostrar" class="ver cursor-pointer" xmlns="http://www.w3.org/2000/svg" width="16" viewBox="0 0 24 24"><path d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 7.449-11.985 7.449c-7.18 0-12.015-7.449-12.015-7.449s4.446-6.551 12.015-6.551c7.694 0 11.985 6.551 11.985 6.551zm-7 .449c0-2.761-2.238-5-5-5-2.761 0-5 2.239-5 5 0 2.762 2.239 5 5 5 2.762 0 5-2.238 5-5z"/></svg>
+          <svg @click="mostrar" class="ver cursor-pointer sem-margens" xmlns="http://www.w3.org/2000/svg" width="16" viewBox="0 0 24 24"><path d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 7.449-11.985 7.449c-7.18 0-12.015-7.449-12.015-7.449s4.446-6.551 12.015-6.551c7.694 0 11.985 6.551 11.985 6.551zm-7 .449c0-2.761-2.238-5-5-5-2.761 0-5 2.239-5 5 0 2.762 2.239 5 5 5 2.762 0 5-2.238 5-5z"/></svg>
           </div>
           <label class="checkbox-content d-flex justify-content-start align-items-center cursor-pointer cor-20 fonte-10 mukta-r sem-margens margem-t15">
             <input class="checkbox" type="checkbox">Manter conectado
@@ -19,10 +19,10 @@
         </form>
         <div class="separador d-flex justify-content-start">
           <hr class="linha-separador borda-solida borda-aa sem-margens margem-t15">
-            <span class="texto-separador cor-80 fonte-10 mukta-el sem-margens margem-t7 margem-w5 padding-t8">ou</span>
+            <span class="texto-separador cor-80 fonte-10 mukta-el sem-margens margem-t7 margem-x5 padding-t8">ou</span>
           <hr class="linha-separador borda-solida borda-aa sem-margens margem-t15">
         </div>
-        <p class="link-registo fonte-12 mukta-l sem-margens"><router-link :to="{name: 'Registar'}">Criar um utilizador</router-link></p>
+        <p class="link-registo fonte-12 mukta-l sem-margens"><router-link :to="{name:'Registo'}">Criar um utilizador</router-link></p>
       </div>
     </div>
   </div>
