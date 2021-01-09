@@ -11,14 +11,19 @@
     >
     |
     <router-link :to="{ name: 'Prazos' }">Prazos</router-link>
+    <div>
+      <Tabela />
+    </div>
   </div>
 </template>
 
 <script>
+import Tabela from "@/components/Tabela.vue";
 import SideBar from "@/components/SideBar.vue";
 export default {
   components: {
     SideBar,
+    Tabela,
   },
 };
 </script>
