@@ -40,7 +40,7 @@ export default new Vuex.Store({
     agenda: {
       id_utilizador: 0,
       id_convidado: 0,
-      dia: "",
+      data: "",
       hora: "",
       detalhes: "",
       ano_letivo: ""
@@ -59,7 +59,7 @@ export default new Vuex.Store({
       perfil: "",
       dados: "",
       recursos: "",
-      data: "",
+      data_hora: "",
       ano_letivo: ""
     },
     empresas: {
@@ -84,11 +84,22 @@ export default new Vuex.Store({
       preferencia: 0,
       ano_letivo: ""
     },
-    prazo: {
+    prazos: {
       id_prazo: 0,
       ano_letivo: "",
       prazo: "",
-      dia_hora: ""
+      data_hora: ""
+    },
+    notificacoes: {
+      id_notificacao: 0,
+      id_utilizador: 0,
+      id_tema: 0,
+      texto: "",
+      data_hora: ""
+    },
+    temas: {
+      id_tema: 0,
+      tema: ""
     }
   },
   mutations: {
