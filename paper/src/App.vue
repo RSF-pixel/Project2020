@@ -13,7 +13,7 @@
   color: #2c3e50;
 }
 /* Fundo de todas as páginas */
-  html, body, #app, .container-autenticacao-registo, .view{height: 100%; background-color: #e7e7e7;} 
+  html, body, #app, .container-autenticacao-registo, .view{height: 100%; background-color: #e7e7e7; min-height: 700px; min-width: 400px;} 
 /* Margens */
   .sem-margens{margin: 0px 0px;}
   .margem-l5{margin-left: 5px;}
@@ -128,14 +128,14 @@
   .cursor-pointer{cursor: pointer;}
 /* Selects e Caixas Input */
   select{background: url(./assets/selecionar.svg) no-repeat right; appearance: none; background-position-x: 218px;}
-  select, input[type=email], input[type=text], input[type=password], input[type=number]{height: 42px; width: 240px; border: 0.5px solid #aaaaaa; outline: none; padding-left: 10px;}
-  select:focus, input[type=email]:focus, input[type=text]:focus, input[type=password]:focus, input[type=number]:focus, select:hover, input[type=email]:hover, input[type=text]:hover, input[type=password]:hover, input[type=number]:hover{background-color: #ffffff; border: 0.5px solid #0084c0;}
+  select, input[type=email], input[type=text], input[type=password], input[type=number], input[type=link] {height: 42px; width: 240px; border: 0.5px solid #aaaaaa; outline: none; padding-left: 10px;}
+  select:focus, input[type=email]:focus, input[type=text]:focus, input[type=password]:focus, input[type=number]:focus, input[type=link]:focus, select:hover, input[type=email]:hover, input[type=text]:hover, input[type=password]:hover, input[type=number]:hover, input[type=link]:hover{background-color: #ffffff; border: 0.5px solid #0084c0 !important;}
   input::-webkit-outer-spin-button, input::-webkit-inner-spin-button{appearance: none; margin: 0;} /* Remover setas do input[type=number] */
 /* Botões */
   /* Para a página de autenticação e de registo */
   .botao-autenticacao-registo{height: 42px; width: 100%; border: none; outline: none;}
   .botao-autenticacao-registo a{color: #202020; text-decoration: none;}
-  .botao-autenticacao-registo:hover{background-color: #707070;}
+  .botao-autenticacao-registo:focus, .botao-autenticacao-registo:hover{background-color: #0084c0;}
 /* Animações/Transições */
   .anim-autenticacao-registo{animation: 1.2s ease-in-out 0s 1 surgimento-ar;}
   @keyframes surgimento-ar{0%{opacity: 0; box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);}100%{opacity:1; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);}}
