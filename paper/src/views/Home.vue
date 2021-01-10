@@ -11,12 +11,6 @@
 <script>
 import SideBar from "@/components/SideBar.vue";
 export default {
-  name: "Home",
-  methods:{
-    desconectar(){
-      this.$store.dispatch("desconectar")
-    }
-  },
   components: {
     SideBar
   }

@@ -10,10 +10,10 @@ export default new Vuex.Store({
       id_estado: 0,
       estado: ""
     },
-    tipo_utilizador: {
-      id_tipo: 0,
-      utilizador: ""
-    },
+    tipo_utilizadores:[ 
+      {id: 1, tipo: "Estudante"},
+      {id: 2, tipo: "Entidade Externa"}
+    ],
     tipo_proposta: {
       id_tipo: 0,
       proposta: ""
@@ -105,21 +105,45 @@ export default new Vuex.Store({
     utilizadores: localStorage.getItem('utilizadores')
       ? JSON.parse(localStorage.getItem('utilizadores'))
       : [
-        {
+        { 
+          id_utilizador: 1,
+          id_estado: 1,
           nome: "João",
           apelido: "Silva",
           correio: "js@gmail.com",
           passe: "123",
-          numero_estudante: 40190100
+          id_tipo: 1,
+          numero_estudante: 1,
+          nome_empresa: null,
+          correio_empresa: null,
+          morada_empresa: null,
+          website_empresa: null,
+          foto: null,
+          inscricao: null,
+          cv: null,
+          portfólio: null,
+          facebook: null,
+          instagram: null,
+          github: null,
+          discord: null,
+          ano: ""
         }],
     utilizadorAutenticado: localStorage.getItem('utilizadorAutenticado') 
       ? JSON.parse(localStorage.getItem('utilizadorAutenticado')) 
       : ""
-  
     },
   getters:{
     obterUtilizadorAutenticado: (state) => state.utilizadorAutenticado,
-    ativoUtilizadorAutenticado: (state) => (state.utilizadorAutenticado == "" ? false : true)
+    ativoUtilizadorAutenticado: (state) => (state.utilizadorAutenticado == "" ? false : true),
+    obterTipoUtilizadores: (state) => state.tipo_utilizadores.map((tipo_utilizador) => ({
+      value: tipo_utilizador.id,
+      text: tipo_utilizador.tipo
+    })),
+    proximoIDUtilizador: (state) => {
+      return state.utilizadores.length > 0 ?
+      state.utilizadores[state.utilizadores.length - 1].id_utilizador + 1
+      : 1;
+    }
   },
   mutations: {
     AUTENTICADO(state, utilizador){
@@ -138,6 +162,8 @@ export default new Vuex.Store({
         (utilizador) => utilizador.correio === payload.correio && utilizador.passe === payload.passe)
       if (utilizador != undefined){
         context.commit('AUTENTICADO', utilizador)
+      }
+      if(payload.manter_conectado != ''){
         localStorage.setItem('utilizadorAutenticado', JSON.stringify(utilizador))
       }
       else{
