@@ -13,7 +13,6 @@ import Aprovar from "../views/gestao/Aprovar.vue";
 import Utilizadores from "../views/gestao/Utilizadores.vue";
 import Inscricoes from "../views/gestao/Inscricoes.vue";
 import AdicionarDocentes from "../views/gestao/AdicionarDocentes.vue";
-import Prazos from "../views/gestao/Prazos.vue";
 import Sair from "../views/Sair.vue";
 import Erro from "../views/Erro.vue"
 import Store from "../store";
@@ -114,14 +113,6 @@ const routes = [{
     path: "/gestao/adicionardocentes",
     name: "AdicionarDocentes",
     component: AdicionarDocentes,
-    meta:{
-      requerAutenticacao: true
-    }
-  },
-  {
-    path: "/gestao/prazos",
-    name: "Prazos",
-    component: Prazos,
     meta:{
       requerAutenticacao: true
     }
