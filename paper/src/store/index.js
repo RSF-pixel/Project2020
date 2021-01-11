@@ -118,7 +118,7 @@ export default new Vuex.Store({
           correio_empresa: null,
           morada_empresa: null,
           website_empresa: null,
-          foto: null,
+          foto: "https://lh3.googleusercontent.com/-4yFaWmS7-Pg/X_xzGKwqwHI/AAAAAAAAAAY/L78mg1HQzvELjdvv5xiLqZT6keuBmoGSACMICGAYYCw/s83-c/foto_default.png",
           inscricao: null,
           cv: null,
           portfólio: null,

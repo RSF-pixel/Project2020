@@ -18,9 +18,9 @@
             <a id="a-sb">Agenda</a>
           </div></router-link>
           </div>
-          <router-link :to="{name:'Perfil'}" class="opcoes margem-b30"><div class="opcao ajuste d-flex justify-content-start align-items-center fundo-30 margem-x10 borda-r5">
-            <!-- Por fazer - aqui fica a imagem do utilizador ou imagem default -->
-            <a class="limitar-texto-sb" id="a-sb">Samuel Ribeiro</a>
+          <router-link :to="{name:'Perfil'}" class="opcoes margem-b30"><div class="opcao d-flex justify-content-start align-items-center fundo-30 margem-x10 borda-r5">
+            <img :src="obterInfoUtilizador.foto" class="foto-perfil-sb"/>
+            <a class="limitar-texto-sb" id="a-sb">{{obterInfoUtilizador.nome + ' ' + obterInfoUtilizador.apelido}}</a>
           </div></router-link>
       </div>
     </div>
@@ -37,8 +37,18 @@
 a.router-link-exact-active, .router-link-exact-active:hover a, 
 .router-link-exact-active #a-sb:hover, .router-link-exact-active .limitar-texto-sb{color: #3586aa;}
 #icone-sb{fill: #aaaaaa; margin: 0px 10px;}
+.foto-perfil-sb{margin: 0px 10px; width: 26px; height: 26px;}
 .opcao:hover #icone-sb{fill: #707070;}
 .router-link-exact-active #icone-sb, .router-link-exact-active:hover #icone-sb{ fill: #3586aa;}
-.ajuste{padding-left: 46px;}
 .limitar-texto-sb{width: 90px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; text-align: left;}
 </style>
+<script>
+export default {
+  name: "Perfil",
+  computed:{
+    obterInfoUtilizador(){
+      return this.$store.getters.obterUtilizadorAutenticado;
+    }
+  }
+}
+</script>
