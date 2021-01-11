@@ -13,7 +13,7 @@
   color: #2c3e50;
 }
 /* Fundo de todas as páginas */
-  html, body, #app, .container-autenticacao-registo, .view{height: 100%; background-color: #e7e7e7; min-height: 700px; min-width: 400px;} 
+  html, body, #app, .container-autenticacao-registo, .view{height: 100%; background-color: #e7e7e7; min-height: 754px; min-width: 400px;} 
 /* Margens */
   .sem-margens{margin: 0px 0px;}
   .margem-l5{margin-left: 5px;}
@@ -27,6 +27,8 @@
   .margem-all50{margin: 50px 50px;}
 /* Paddings */
   .padding-t8{padding-top: 8px;}
+  .padding-l8{padding-left: 8px;}
+  .padding-all8{padding: 8px 8px;}
 /* Paleta de cores */
   /* Fundos */
   .fundo-20{background-color: #202020;}
@@ -93,6 +95,7 @@
   .fonte-12{font-size: 12px;}
   .fonte-14{font-size: 14px;}
   .fonte-16{font-size: 16px;}
+  .fonte-24{font-size: 24px;}
 
 /* Bordas */
   /* Estilo */ 
