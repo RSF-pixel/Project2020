@@ -54,7 +54,8 @@
       autenticacao(){
         const autenticacao = {
           correio: this.autenticacao_utilizador.correio,
-          passe: this.autenticacao_utilizador.passe
+          passe: this.autenticacao_utilizador.passe,
+          manter_conectado: this.autenticacao_utilizador.manter_conectado
         }
         try {
           this.$store.dispatch('autenticacao', autenticacao)

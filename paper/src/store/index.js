@@ -162,9 +162,13 @@ export default new Vuex.Store({
         (utilizador) => utilizador.correio === payload.correio && utilizador.passe === payload.passe)
       if (utilizador != undefined){
         context.commit('AUTENTICADO', utilizador)
-      }
-      if(payload.manter_conectado != ''){
-        localStorage.setItem('utilizadorAutenticado', JSON.stringify(utilizador))
+        if(payload.manter_conectado){
+          localStorage.setItem('utilizadorAutenticado', JSON.stringify(utilizador))
+          console.log(payload.manter_conectado)
+        }
+        else{
+          sessionStorage.setItem('utilizadorAutenticado', JSON.stringify(utilizador))
+        }
       }
       else{
         throw Error ('Autenticação falhada, tente novamente.')
