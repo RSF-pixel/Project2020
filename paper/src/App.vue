@@ -5,9 +5,6 @@
 </template>
 
 <style>
-body{
-  background-color: #e7e7e7;
-}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -15,18 +12,23 @@ body{
   text-align: center;
   color: #2c3e50;
 }
-/* Só serve para as views */
 /* Fundo de todas as páginas */
-  html, body, #app, .container{height: 100%;} 
+  html, body, #app, .container-autenticacao-registo, .view{height: 100%; background-color: #e7e7e7; min-height: 754px; min-width: 400px;} 
 /* Margens */
   .sem-margens{margin: 0px 0px;}
   .margem-l5{margin-left: 5px;}
   .margem-t7{margin-top: 7px;}
   .margem-t15{margin-top: 15px;}
-  .margem-w5{margin: 0px 5px;}
+  .margem-b10{margin-bottom: 10px;}
+  .margem-b20{margin-bottom: 20px;}
+  .margem-b30{margin-bottom: 30px;}
+  .margem-x5{margin: 0px 5px;}
+  .margem-x10{margin: 0px 10px;}
   .margem-all50{margin: 50px 50px;}
 /* Paddings */
   .padding-t8{padding-top: 8px;}
+  .padding-l8{padding-left: 8px;}
+  .padding-all8{padding: 8px 8px;}
 /* Paleta de cores */
   /* Fundos */
   .fundo-20{background-color: #202020;}
@@ -86,11 +88,14 @@ body{
   .mukta-sb{font-family: mukta-semibold;}
   @font-face {font-family: opensans-light; src: url(assets/fonts/OpenSans-Light.ttf);}
   .opensans-l{font-family: opensans-light;}
+  @font-face {font-family: opensans-semibold; src: url(assets/fonts/OpenSans-SemiBold.ttf);}
+  .opensans-sb{font-family: opensans-semibold;}
   /* Tamanhos */
   .fonte-10{font-size: 10px;}
   .fonte-12{font-size: 12px;}
   .fonte-14{font-size: 14px;}
   .fonte-16{font-size: 16px;}
+  .fonte-24{font-size: 24px;}
 
 /* Bordas */
   /* Estilo */ 
@@ -98,9 +103,11 @@ body{
   /* Espessura */
   .borda-w05{border-width: 0.5px;}
   /* Cor */
+  .borda-20{border-color: #202020;}
   .borda-70{border-color: #707070;}
   .borda-aa{border-color: #aaaaaa;}
   .borda-bb{border-color: #bbbbbb;}
+  .borda-004666{border-color: #004666;}
   /* Raio */
   .borda-r10{border-radius: 10px;}
   .borda-r5{border-radius: 5px;}
@@ -108,6 +115,7 @@ body{
 /* Sombras */
   /* Caixas */
   .sombra-caixa{box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);}
+  .sombra-area-conteudo{box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);}
   /* Textos */
 
 /* Checkboxes */
@@ -123,18 +131,33 @@ body{
   .cursor-pointer{cursor: pointer;}
 /* Selects e Caixas Input */
   select{background: url(./assets/selecionar.svg) no-repeat right; appearance: none; background-position-x: 218px;}
-  select, input[type=email], input[type=text], input[type=password], input[type=number]{height: 42px; width: 240px; border: 0.5px solid #aaaaaa; outline: none; padding-left: 10px;}
-  select:focus, input[type=email]:focus, input[type=text]:focus, input[type=password]:focus, input[type=number]:focus, select:hover, input[type=email]:hover, input[type=text]:hover, input[type=password]:hover, input[type=number]:hover{background-color: #ffffff; border: 0.5px solid #0084c0;}
+  select, input[type=email], input[type=text], input[type=password], input[type=number], input[type=link] {height: 42px; width: 240px; border: 0.5px solid #aaaaaa; outline: none; padding-left: 10px;}
+  select:focus, input[type=email]:focus, input[type=text]:focus, input[type=password]:focus, input[type=number]:focus, input[type=link]:focus, select:hover, input[type=email]:hover, input[type=text]:hover, input[type=password]:hover, input[type=number]:hover, input[type=link]:hover{background-color: #ffffff; border: 0.5px solid #0084c0 !important;}
   input::-webkit-outer-spin-button, input::-webkit-inner-spin-button{appearance: none; margin: 0;} /* Remover setas do input[type=number] */
 /* Botões */
   /* Para a página de autenticação e de registo */
   .botao-autenticacao-registo{height: 42px; width: 100%; border: none; outline: none;}
   .botao-autenticacao-registo a{color: #202020; text-decoration: none;}
-  .botao-autenticacao-registo:hover{background-color: #707070;}
+  .botao-autenticacao-registo:focus, .botao-autenticacao-registo:hover{background-color: #0084c0;}
 /* Animações/Transições */
-.anim-autenticacao-registo{animation: 1.2s ease-in-out 0s 1 surgimento;}
-@keyframes surgimento{0%{opacity: 0; box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);}100%{opacity:1; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);}}
+  .anim-autenticacao-registo{animation: 1.2s ease-in-out 0s 1 surgimento-ar;}
+  @keyframes surgimento-ar{0%{opacity: 0; box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);}100%{opacity:1; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);}}
+  .anim-area-principal{animation: 0.6s ease-in-out 0s 1 surgimento-ap;}
+  @keyframes surgimento-ap{0%{opacity: 0;}100%{opacity: 1;}}
+  /* Área de conteúdo sem navegação */
+  .anim-sombra-area-conteudo{animation: 1.2s ease-in-out 0s 1 test;}
+  @keyframes test{0%{box-shadow: 2px 2px 2px rgba(0, 0, 0, 0);}50%{box-shadow: 2px 2px 2px rgba(0, 0, 0, 0);}100%{ box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);}}
 /* Logo */
   #logo-autenticacao-registo{fill: #202020; height: 45px; width: 160px; margin: 35px 0px;}
   #logo-geral{fill: #cccccc; height: 30px; width: 108px; margin: 20px 0px;}
+/* Áreas de conteúdo */
+  .area-principal{width: 100%; height: 100vh;} /* Obrigatório */
+  /* Se a página não tiver navegação, usar apenas este: */
+  .area-conteudo{width: 100%; height: calc(100vh - 110px); margin: 70px 40px 40px 40px;}
+  /* Caso tenha, usa-se o anterior mais estes dois: */
+  .navegador-area-conteudo{height: 50px;}
+  .area-conteudo-se-navegador{height: calc(100% - 70px);}
+/* Anti-Bootstrap */
+  *{outline: none;}
+  button:focus{outline: none;} 
 </style>

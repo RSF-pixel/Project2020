@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="view d-flex">
     <SideBar />
-    <h1>Gestão</h1>
+    <!--<h1>Gestão</h1>
     <router-link :to="{ name: 'Aprovar' }">Aprovar</router-link> |
     <router-link :to="{ name: 'Utilizadores' }">Utilizadores</router-link> |
     <router-link :to="{ name: 'Inscricoes' }">Inscrições</router-link> |
@@ -9,7 +9,38 @@
       >Adicionar Docente</router-link
     >
     |
-    <router-link :to="{ name: 'Prazos' }">Prazos</router-link>
+    <router-link :to="{ name: 'Prazos' }">Prazos</router-link>-->
+    <div class="area-principal anim-area-principal d-flex">
+      <div class="area-conteudo">
+        <div
+          class="navegador-area-conteudo anim-sombra-area-conteudo d-flex justify-content-between fundo-f4 margem-b20 borda-r5 sombra-area-conteudo"
+        >
+          <h1>Gestão</h1>
+          <router-link :to="{ name: 'Aprovar' }"
+            ><div><a>Aprovar</a></div></router-link
+          >
+          |
+          <router-link :to="{ name: 'Utilizadores' }"
+            ><div><a>Utilizadores</a></div></router-link
+          >
+          |
+          <router-link :to="{ name: 'Inscricoes' }"
+            ><div><a>Inscrições</a></div></router-link
+          >
+          |
+          <router-link :to="{ name: 'AdicionarDocentes' }"
+            ><div><a>Adicionar Docente</a></div></router-link
+          >
+        </div>
+        <div
+          class="area-conteudo-se-navegador anim-sombra-area-conteudo d-flex justify-content-start fundo-f4 borda-r5 sombra-area-conteudo"
+        >
+          <!-- Por fazer -->
+          <div>Área de Gestão (precisamos tabelas)</div>
+          <!-- Por fazer -->
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -17,7 +48,7 @@
 import SideBar from "@/components/SideBar.vue";
 export default {
   components: {
-    SideBar
-  }
+    SideBar,
+  },
 };
 </script>
