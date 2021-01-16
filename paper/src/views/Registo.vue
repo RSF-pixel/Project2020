@@ -92,9 +92,6 @@ export default {
           id_tipo: this.utilizador.tipo_utilizador,
           numero_estudante: this.utilizador.numero_estudante,
           nome_empresa: this.utilizador.nome_empresa,
-          correio_empresa: this.utilizador.correio_empresa,
-          morada_empresa: this.utilizador.morada_empresa,
-          website_empresa: this.utilizador.website_empresa,
           foto: "https://lh3.googleusercontent.com/-4yFaWmS7-Pg/X_xzGKwqwHI/AAAAAAAAAAY/L78mg1HQzvELjdvv5xiLqZT6keuBmoGSACMICGAYYCw/s83-c/foto_default.png",
           inscricao: null,
           cv: null,
@@ -105,8 +102,19 @@ export default {
           discord: null,
           ano: ""
         }
+        const empresa = this.utilizador.tipo_utilizador == 2 ? {
+          nome: this.utilizador.nome_empresa,
+          correio: this.utilizador.correio_empresa,
+          morada: this.utilizador.morada_empresa,
+          website: this.utilizador.website_empresa,
+        } : null;
+        alert(this.utilizador.tipo_utilizador)
+        const dados = {
+          utilizador: utilizador,
+          empresa: empresa
+        }
         try {
-          this.$store.dispatch("registo", utilizador)
+          this.$store.dispatch("registo", dados)
           this.$router.push({name: "Autenticacao"});
         }
         catch(error){
