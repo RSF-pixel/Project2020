@@ -95,7 +95,7 @@ export default {
           foto: "https://lh3.googleusercontent.com/-4yFaWmS7-Pg/X_xzGKwqwHI/AAAAAAAAAAY/L78mg1HQzvELjdvv5xiLqZT6keuBmoGSACMICGAYYCw/s83-c/foto_default.png",
           inscricao: null,
           cv: null,
-          portfólio: null,
+          portfolio: null,
           facebook: null,
           instagram: null,
           github: null,
@@ -108,7 +108,6 @@ export default {
           morada: this.utilizador.morada_empresa,
           website: this.utilizador.website_empresa,
         } : null;
-        alert(this.utilizador.tipo_utilizador)
         const dados = {
           utilizador: utilizador,
           empresa: empresa
