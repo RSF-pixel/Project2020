@@ -11,6 +11,7 @@ export default new Vuex.Store({
       estado: ""
     },
     tipo_utilizadores:[ 
+      {id: 0, tipo: "Docente"},
       {id: 1, tipo: "Estudante"},
       {id: 2, tipo: "Entidade Externa"}
     ],
@@ -18,26 +19,27 @@ export default new Vuex.Store({
       id_tipo: 0,
       proposta: ""
     },
-    /*utilizadores: {
-      id_utilizador: 0,
-      id_estado: 0,
-      nome: "",
-      apelido: "",
-      correio: "",
-      passe: "",
-      id_tipo: 0,
-      numero_estudante: "",
-      (Falta aqui pelo menos 4 relativos a empresa)
-      foto: "",
-      inscricao: "",
-      cv: "",
-      portfolio: "",
-      facebook: "",
-      instagram: "",
-      github: "",
-      discord: "",
-      ano_letivo: ""
-    },*/
+    utilizadores: localStorage.getItem('utilizadores') ? JSON.parse(localStorage.getItem('utilizadores')) :
+      [{ 
+        id_utilizador: 1,
+        id_estado: 1,
+        nome: "João",
+        apelido: "Silva",
+        correio: "js@gmail.com",
+        passe: "123",
+        id_tipo: 1,
+        numero_estudante: 1,
+        nome_empresa: null,
+        foto: "https://lh3.googleusercontent.com/-4yFaWmS7-Pg/X_xzGKwqwHI/AAAAAAAAAAY/L78mg1HQzvELjdvv5xiLqZT6keuBmoGSACMICGAYYCw/s83-c/foto_default.png",
+        inscricao: null,
+        cv: null,
+        portfólio: null,
+        facebook: null,
+        instagram: null,
+        github: null,
+        discord: null,
+        ano: ""
+    }],
     agenda: {
       id_utilizador: 0,
       id_convidado: 0,
@@ -63,13 +65,14 @@ export default new Vuex.Store({
       data_hora: "",
       ano_letivo: ""
     },
-    empresas: {
+    empresas: localStorage.getItem('empresas') ? JSON.parse(localStorage.getItem('empresas')) :
+    [{
       id_empresa: 0,
       nome: "",
       correio: "",
       morada: "",
       website: ""
-    },
+    }],
     estagios: {
       id_proposta: 0,
       id_empresa: 0,
@@ -102,35 +105,8 @@ export default new Vuex.Store({
       id_tema: 0,
       tema: ""
     },
-    utilizadores: localStorage.getItem('utilizadores')
-      ? JSON.parse(localStorage.getItem('utilizadores'))
-      : [
-        { 
-          id_utilizador: 1,
-          id_estado: 1,
-          nome: "João",
-          apelido: "Silva",
-          correio: "js@gmail.com",
-          passe: "123",
-          id_tipo: 1,
-          numero_estudante: 1,
-          nome_empresa: null,
-          correio_empresa: null,
-          morada_empresa: null,
-          website_empresa: null,
-          foto: "https://lh3.googleusercontent.com/-4yFaWmS7-Pg/X_xzGKwqwHI/AAAAAAAAAAY/L78mg1HQzvELjdvv5xiLqZT6keuBmoGSACMICGAYYCw/s83-c/foto_default.png",
-          inscricao: null,
-          cv: null,
-          portfólio: null,
-          facebook: null,
-          instagram: null,
-          github: null,
-          discord: null,
-          ano: ""
-        }],
     utilizadorAutenticado: localStorage.getItem('utilizadorAutenticado') 
-      ? JSON.parse(localStorage.getItem('utilizadorAutenticado')) 
-      : ""
+      ? JSON.parse(localStorage.getItem('utilizadorAutenticado')) : ""
     },
   getters:{
     obterUtilizadorAutenticado: (state) => state.utilizadorAutenticado,
@@ -138,7 +114,7 @@ export default new Vuex.Store({
     obterTipoUtilizadores: (state) => state.tipo_utilizadores.map((tipo_utilizador) => ({
       value: tipo_utilizador.id,
       text: tipo_utilizador.tipo
-    })),
+    })).filter(c => c.value > 0),
     proximoIDUtilizador: (state) => {
       return state.utilizadores.length > 0 ?
       state.utilizadores[state.utilizadores.length - 1].id_utilizador + 1
@@ -152,8 +128,9 @@ export default new Vuex.Store({
     DESCONECTAR(state){
       state.utilizadorAutenticado = "";
     },
-    REGISTADO(state, utilizador){
-      state.utilizadores.push(utilizador);
+    REGISTADO(state, payload){
+      state.utilizadores.push(payload.utilizador);
+      if (payload.empresas != null) { state.empresas.push(payload.empresa); }
     }
   },
   actions: {
@@ -176,12 +153,17 @@ export default new Vuex.Store({
     },
     registo(context, payload){
       const utilizador = context.state.utilizadores.find(
-        (utilizador) => utilizador.correio === payload.correio || utilizador.numero_estudante === payload.numero_estudante)
+        (utilizador) => utilizador.correio === payload.utilizador.correio || utilizador.numero_estudante === payload.utilizador.numero_estudante)
       if(utilizador == undefined){
+        if (payload.empresas != null) {
+          const empresa = context.state.empresas.find(
+            (empresa) => empresa.nome === payload.empresa.nome)
+          payload.empresa = empresa != undefined ? payload.empresa : null;
+        }
         context.commit('REGISTADO', payload);
         localStorage.setItem('utilizadores', JSON.stringify(context.state.utilizadores))
-      }
-      else{
+        localStorage.setItem('empresas', JSON.stringify(context.state.empresas))
+      } else{
         throw Error("Utilizador inválido")
       }
     },
