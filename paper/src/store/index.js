@@ -30,10 +30,10 @@ export default new Vuex.Store({
         id_tipo: 1,
         numero_estudante: 1,
         nome_empresa: null,
-        foto: "https://lh3.googleusercontent.com/-4yFaWmS7-Pg/X_xzGKwqwHI/AAAAAAAAAAY/L78mg1HQzvELjdvv5xiLqZT6keuBmoGSACMICGAYYCw/s83-c/foto_default.png",
+        foto: "https://www.tenforums.com/geek/gars/images/2/types/thumb_15951118880user.png",
         inscricao: null,
         cv: null,
-        portfólio: null,
+        portfolio: null,
         facebook: null,
         instagram: null,
         github: null,
@@ -131,6 +131,19 @@ export default new Vuex.Store({
     REGISTADO(state, payload){
       state.utilizadores.push(payload.utilizador);
       if (payload.empresas != null) { state.empresas.push(payload.empresa); }
+    },
+    EDITARPERFIL(state, payload){
+      state.utilizadores = state.utilizadores.map(utilizador => {
+        if(utilizador.id_utilizador == payload.id_utilizador){
+          utilizador.passe = payload.passe_nova
+          utilizador.facebook = payload.link_facebook
+          utilizador.github = payload.link_github
+          utilizador.instagram = payload.link_instagram
+          utilizador.discord = payload.id_discord
+          utilizador.portfolio = payload.link_portfolio
+        }
+        return utilizador;
+      })
     }
   },
   actions: {
@@ -170,9 +183,10 @@ export default new Vuex.Store({
     desconectar(context){
       context.commit("DESCONECTAR");
       localStorage.removeItem("utilizadorAutenticado");
+    },
+    editarPerfil(context, payload){
+      context.commit('EDITARPERFIL', payload);
+      localStorage.setItem('utilizadores', JSON.stringify(context.state.utilizadores));
     }
-  },
-  modules: {
-    
   }
 });

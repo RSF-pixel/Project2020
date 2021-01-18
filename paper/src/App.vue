@@ -24,10 +24,14 @@
   .margem-b30{margin-bottom: 30px;}
   .margem-x5{margin: 0px 5px;}
   .margem-x10{margin: 0px 10px;}
+  .margem-y8{margin: 8px 0px;}
+  .margem-all4{margin: 4px 4px;}
   .margem-all50{margin: 50px 50px;}
 /* Paddings */
   .padding-t8{padding-top: 8px;}
+  .padding-l4{padding-left: 4px;}
   .padding-l8{padding-left: 8px;}
+  .padding-all4{padding: 4px 4px;}
   .padding-all8{padding: 8px 8px;}
 /* Paleta de cores */
   /* Fundos */
@@ -102,6 +106,7 @@
   .borda-solida{border-style: solid;}
   /* Espessura */
   .borda-w05{border-width: 0.5px;}
+  .borda-w1{border-width: 1px;}
   /* Cor */
   .borda-20{border-color: #202020;}
   .borda-70{border-color: #707070;}
