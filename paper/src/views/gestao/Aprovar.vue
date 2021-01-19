@@ -16,6 +16,11 @@
         </div>
         <div class="area-conteudo-se-navegador anim-sombra-area-conteudo d-flex justify-content-start fundo-f4 borda-r5 sombra-area-conteudo">
           <div>
+            <!-- O select já está com a opção do utilizadores já selecionada -->
+            <select id="typeSelect" v-model="select">
+              <option value="utilizadores">Utilizadores</option>
+              <option value="propostas">Propostas</option>
+            </select>
             <table>
             <tr>
               <th>ID</th>
@@ -25,14 +30,26 @@
               <th>Complementar</th>
               <th>Ações</th>
             </tr>
+         <div v-if="(select == 'utilizadores')">
+             
             <tr v-for="(user) in obterTabelaAprovarUsers" :key="user.id">              
-              <td>{{user.id}}</td>
+              <td>ah</td>
               <td>{{user.tipo}}</td>
               <td>{{user.nome}}</td>
               <td>{{user.correio}}</td>
               <td>{{user.complementar}}</td>
               <td><button @click="aprovarUtilizador(user.id)">Aprovar</button><button @click="negarUtilizador(user.id)">Negar</button></td>
             </tr>
+         </div>
+
+        <tr v-else>
+
+
+          <!-- Faltam fazer a cena para aprovar propostas -->
+          Esperar pela criação de propostas!
+
+
+        </tr>
         </table>
           </div>
         </div>
@@ -45,21 +62,26 @@
 import SideBar from "@/components/SideBar.vue";
 export default {
   components: {
-    SideBar
+    SideBar,
+  },
+  data() {
+    return {
+      select: "utilizadores",
+    };
   },
   computed: {
     obterTabelaAprovarUsers() {
       return this.$store.getters.obterTabelaAprovarUsers;
-    }
+    },
   },
   methods: {
-    aprovarUtilizador(id){
-      alert("aprovado " + id )
+    aprovarUtilizador(id) {
+      alert("aprovado " + id);
     },
-    negarUtilizador(id){
-      alert("negado " + id)
-    }
-  }
+    negarUtilizador(id) {
+      alert("negado " + id);
+    },
+  },
 };
 </script>
 
