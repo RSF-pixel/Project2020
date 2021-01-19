@@ -6,10 +6,10 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     route: "",
-    estados: {
-      id_estado: 0,
-      estado: ""
-    },
+    estados: [
+      {id_estado: 0, estado: "em espera"},
+      {id_estado: 1, estado: "aceite"},
+    ],
     tipo_utilizadores:[ 
       {id: 0, tipo: "Docente"},
       {id: 1, tipo: "Estudante"},
@@ -115,10 +115,32 @@ export default new Vuex.Store({
       value: tipo_utilizador.id,
       text: tipo_utilizador.tipo
     })).filter(c => c.value > 0),
-    proximoIDUtilizador: (state) => {
+    proximoIDUtilizador: (state) =>  {
       return state.utilizadores.length > 0 ?
       state.utilizadores[state.utilizadores.length - 1].id_utilizador + 1
       : 1;
+    },
+    obterIdEstado: (state) => (estado) => {
+      return state.estados.find(e => estado == e.estado).id_estado
+    },
+    obterTipoUtilizadorePorId: (state) => (id) => {
+      return state.tipo_utilizadores.find(tu => id == tu.id).tipo
+    },
+    obterTabelaAprovarUsers: (state, getters) => {
+      const tabela = [];
+      state.utilizadores.forEach(utilizador => {
+        if (utilizador.id_estado == getters.obterIdEstado("em espera")) {
+          const dados = {
+            id: utilizador.id_utilizador,
+            tipo: getters.obterTipoUtilizadorePorId(utilizador.id_tipo),
+            nome: utilizador.nome + " " + utilizador.apelido,
+            correio: utilizador.correio,
+            complementar: utilizador.nome_empresa == null ? utilizador.numero_estudante : utilizador.nome_empresa
+          }
+          tabela.push(dados);
+        }
+      });
+      return tabela;
     }
   },
   mutations: {
