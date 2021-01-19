@@ -5,7 +5,6 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    route: "",
     estados: [
       {id_estado: 0, estado: "em espera"},
       {id_estado: 1, estado: "aceite"},
@@ -21,15 +20,16 @@ export default new Vuex.Store({
     },
     utilizadores: localStorage.getItem('utilizadores') ? JSON.parse(localStorage.getItem('utilizadores')) :
       [{ 
-        id_utilizador: 1,
+        id_utilizador: 0,
         id_estado: 1,
         nome: "João",
         apelido: "Silva",
         correio: "js@gmail.com",
         passe: "123",
         id_tipo: 1,
-        numero_estudante: 1,
+        numero_estudante: 40190158,
         nome_empresa: null,
+        cca: false,
         foto: "https://www.tenforums.com/geek/gars/images/2/types/thumb_15951118880user.png",
         inscricao: null,
         cv: null,
@@ -38,7 +38,7 @@ export default new Vuex.Store({
         instagram: null,
         github: null,
         discord: null,
-        ano: ""
+        ano: "2020/2021"
     }],
     agenda: {
       id_utilizador: 0,
@@ -48,7 +48,7 @@ export default new Vuex.Store({
       detalhes: "",
       ano_letivo: ""
     },
-    propostas: {
+    propostas: localStorage.getItem('empresas') ? JSON.parse(localStorage.getItem('empresas')) : {
       id_proposta: 0,
       id_estado: 0,
       motivo: "",
@@ -94,17 +94,19 @@ export default new Vuex.Store({
       prazo: "",
       data_hora: ""
     },
-    notificacoes: {
-      id_notificacao: 0,
-      id_utilizador: 0,
-      id_tema: 0,
-      texto: "",
-      data_hora: ""
-    },
-    temas: {
-      id_tema: 0,
-      tema: ""
-    },
+    notificacoes: localStorage.getItem('notificacoes') ? JSON.parse(localStorage.getItem('notificacoes')) : 
+    [
+      {
+        id_notificacao: 0,
+        id_utilizador: 1,
+        id_tema: 0,
+        texto: "O utilizador foi admitido",
+        data_hora: "08-04-21 | 15:31"
+      }
+    ],
+    temas: [
+      {id_tema: 0, tema: "Inscrição"},
+    ],
     utilizadorAutenticado: localStorage.getItem('utilizadorAutenticado') 
       ? JSON.parse(localStorage.getItem('utilizadorAutenticado')) : ""
     },
@@ -141,7 +143,14 @@ export default new Vuex.Store({
         }
       });
       return tabela;
-    }
+    },
+    obterTabelaNotificacoes: (state) => state.notificacoes.map((notificacao) => ({
+      id: notificacao.id_notificacao,
+      id_utilizador: notificacao.id_utilizador,
+      data_hora: notificacao.data_hora,
+      tema: state.temas.find(t => notificacao.id_tema == t.id_tema).tema,
+      texto: notificacao.texto
+    })).filter(n => n.id_utilizador == state.utilizadorAutenticado.id_utilizador),
   },
   mutations: {
     AUTENTICADO(state, utilizador){
