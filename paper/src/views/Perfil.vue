@@ -63,9 +63,9 @@
                 <div class="area-notificacoes-conteudo d-flex justify-content-center align-items-center fundo-ff borda-solida borda-w05 borda-aa borda-r5" name="notificacoes-conteudo">
                   <table>
                     <tr>
-                      <th>ID</th>
-                      <th>Tipo de utilizador</th>
-                      <th>Nome</th>
+                      <th>Data e Hora</th>
+                      <th>Tema</th>
+                      <th>Mensagem</th>
                     </tr>
                     <tr v-for="(notificacao) in obterTabelaNotificacoes" :key="notificacao.id">              
                       <td>{{notificacao.data_hora}}</td>
