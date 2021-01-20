@@ -171,6 +171,22 @@ export default new Vuex.Store({
       tema: state.temas.find(t => notificacao.id_tema == t.id_tema).tema,
       texto: notificacao.texto
     })).filter(n => n.id_utilizador == state.utilizadorAutenticado.id_utilizador),
+    obterTabelaUsers: (state, getters) => (tipo) => {
+      const tabela = [];
+      state.utilizadores.forEach(utilizador => {
+        if (getters.obterTipoUtilizadorePorId(utilizador.id_tipo) == tipo) {
+          const dados = {
+            id: utilizador.id_utilizador,
+            nome: utilizador.nome + " " + utilizador.apelido,
+            correio: utilizador.correio,
+            complementar: tipo == 'Estudante' ? utilizador.numero_estudante :
+            tipo == 'Docente' ? utilizador.cca : utilizador.nome_empresa
+          }
+          tabela.push(dados);
+        }
+      });
+      return tabela;
+    },
   },
   mutations: {
     AUTENTICADO(state, utilizador){
