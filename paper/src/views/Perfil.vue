@@ -61,7 +61,18 @@
               <div class="area-notificacoes">
                 <label class="area-label fonte-24 mukta-m cor-20 padding-l8 sem-margens" for="notificacoes-conteudo">Notificações</label>
                 <div class="area-notificacoes-conteudo d-flex justify-content-center align-items-center fundo-ff borda-solida borda-w05 borda-aa borda-r5" name="notificacoes-conteudo">
-                  <a>Por fazer</a>
+                  <table>
+                    <tr>
+                      <th>Data e Hora</th>
+                      <th>Tema</th>
+                      <th>Mensagem</th>
+                    </tr>
+                    <tr v-for="(notificacao) in obterTabelaNotificacoes" :key="notificacao.id">              
+                      <td>{{notificacao.data_hora}}</td>
+                      <td>{{notificacao.tema}}</td>
+                      <td>{{notificacao.texto}}</td>
+                    </tr>
+                  </table>
                 </div>
               </div>
             </div>
@@ -208,6 +219,11 @@ export default {
   computed:{
     obterInfoUtilizador(){
       return this.$store.getters.obterUtilizadorAutenticado;
+    },
+    obterTabelaNotificacoes() {
+      const table = this.$store.getters.obterTabelaNotificacoes
+      console.log(table)
+      return table;
     }
   }
 };

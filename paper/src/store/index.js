@@ -5,31 +5,31 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    route: "",
-    estados: {
-      id_estado: 0,
-      estado: ""
-    },
+    estados: [
+      {id_estado: 0, estado: "em espera"},
+      {id_estado: 1, estado: "aceite"},
+    ],
     tipo_utilizadores:[ 
       {id: 0, tipo: "Docente"},
       {id: 1, tipo: "Estudante"},
       {id: 2, tipo: "Entidade Externa"}
     ],
-    tipo_proposta: {
-      id_tipo: 0,
-      proposta: ""
-    },
-    utilizadores: localStorage.getItem('utilizadores') ? JSON.parse(localStorage.getItem('utilizadores')) :
-      [{ 
-        id_utilizador: 1,
+    tipo_propostas: [
+      {id_tipo: 0, proposta: "Projeto"},
+      {id_tipo: 1, proposta: "Estágio"}
+    ],
+    utilizadores: localStorage.getItem('utilizadores') ? JSON.parse(localStorage.getItem('utilizadores')) : [
+      { 
+        id_utilizador: 0,
         id_estado: 1,
         nome: "João",
         apelido: "Silva",
         correio: "js@gmail.com",
         passe: "123",
         id_tipo: 1,
-        numero_estudante: 1,
+        numero_estudante: 40190158,
         nome_empresa: null,
+        cca: false,
         foto: "https://www.tenforums.com/geek/gars/images/2/types/thumb_15951118880user.png",
         inscricao: null,
         cv: null,
@@ -38,8 +38,9 @@ export default new Vuex.Store({
         instagram: null,
         github: null,
         discord: null,
-        ano: ""
-    }],
+        ano: "2020/2021"
+      }
+    ],
     agenda: {
       id_utilizador: 0,
       id_convidado: 0,
@@ -48,31 +49,34 @@ export default new Vuex.Store({
       detalhes: "",
       ano_letivo: ""
     },
-    propostas: {
-      id_proposta: 0,
-      id_estado: 0,
-      motivo: "",
-      id_criador: 0,
-      id_docente: 0,
-      id_tipo: 0,
-      titulo: "",
-      objetivos: "",
-      planos: "",
-      resultados: "",
-      perfil: "",
-      dados: "",
-      recursos: "",
-      data_hora: "",
-      ano_letivo: ""
-    },
-    empresas: localStorage.getItem('empresas') ? JSON.parse(localStorage.getItem('empresas')) :
-    [{
-      id_empresa: 0,
-      nome: "",
-      correio: "",
-      morada: "",
-      website: ""
-    }],
+    propostas: localStorage.getItem('propostas') ? JSON.parse(localStorage.getItem('propostas')) : [
+      {
+        id_proposta: 0,
+        id_estado: 0,
+        motivo: "",
+        id_criador: 0,
+        id_docente: 0,
+        id_tipo: 0,
+        titulo: "",
+        objetivos: "",
+        planos: "",
+        resultados: "",
+        perfil: "",
+        dados: "",
+        recursos: "",
+        data_hora: "",
+        ano_letivo: ""
+      }
+    ],
+    empresas: localStorage.getItem('empresas') ? JSON.parse(localStorage.getItem('empresas')) : [
+      {
+        id_empresa: 0,
+        nome: "",
+        correio: "",
+        morada: "",
+        website: ""
+      }
+    ],
     estagios: {
       id_proposta: 0,
       id_empresa: 0,
@@ -94,17 +98,19 @@ export default new Vuex.Store({
       prazo: "",
       data_hora: ""
     },
-    notificacoes: {
-      id_notificacao: 0,
-      id_utilizador: 0,
-      id_tema: 0,
-      texto: "",
-      data_hora: ""
-    },
-    temas: {
-      id_tema: 0,
-      tema: ""
-    },
+    notificacoes: localStorage.getItem('notificacoes') ? JSON.parse(localStorage.getItem('notificacoes')) : 
+    [
+      {
+        id_notificacao: 0,
+        id_utilizador: 0,
+        id_tema: 0,
+        texto: "O utilizador foi admitido",
+        data_hora: "08-04-21 | 15:31"
+      }
+    ],
+    temas: [
+      {id_tema: 0, tema: "Inscrição"},
+    ],
     utilizadorAutenticado: localStorage.getItem('utilizadorAutenticado') 
       ? JSON.parse(localStorage.getItem('utilizadorAutenticado')) : ""
     },
@@ -115,11 +121,72 @@ export default new Vuex.Store({
       value: tipo_utilizador.id,
       text: tipo_utilizador.tipo
     })).filter(c => c.value > 0),
-    proximoIDUtilizador: (state) => {
+    proximoIDUtilizador: (state) =>  {
       return state.utilizadores.length > 0 ?
       state.utilizadores[state.utilizadores.length - 1].id_utilizador + 1
       : 1;
-    }
+    },
+    obterIdEstado: (state) => (estado) => {
+      return state.estados.find(e => estado == e.estado).id_estado
+    },
+    obterTipoUtilizadorePorId: (state) => (id) => {
+      return state.tipo_utilizadores.find(tu => id == tu.id).tipo
+    },
+    obterTabelaAprovarUsers: (state, getters) => {
+      const tabela = [];
+      state.utilizadores.forEach(utilizador => {
+        if (utilizador.id_estado == getters.obterIdEstado("em espera")) {
+          const dados = {
+            id: utilizador.id_utilizador,
+            tipo: getters.obterTipoUtilizadorePorId(utilizador.id_tipo),
+            nome: utilizador.nome + " " + utilizador.apelido,
+            correio: utilizador.correio,
+            complementar: utilizador.nome_empresa == null ? utilizador.numero_estudante : utilizador.nome_empresa
+          }
+          tabela.push(dados);
+        }
+      });
+      return tabela;
+    },
+    obterTabelaAprovarPropostas: (state, getters) => {
+      const tabela = [];
+      state.propostas.forEach(proposta => {
+        if (proposta.id_estado == getters.obterIdEstado("em espera")) {
+          const criador = state.utilizadores.find(u => proposta.id_criador == u.id_utilizador);
+          const dados = {
+            id: proposta.id_proposta,
+            tipo_criador: getters.obterTipoUtilizadorePorId(criador.id_tipo),
+            nome_criador: criador.nome + " " + criador.apelido,
+            tipo_proposta: state.tipo_propostas.find(t => proposta.id_tipo == t.id_tipo).proposta
+          }
+          tabela.push(dados);
+        }
+      });
+      return tabela;
+    },
+    obterTabelaNotificacoes: (state) => state.notificacoes.map((notificacao) => ({
+      id: notificacao.id_notificacao,
+      id_utilizador: notificacao.id_utilizador,
+      data_hora: notificacao.data_hora,
+      tema: state.temas.find(t => notificacao.id_tema == t.id_tema).tema,
+      texto: notificacao.texto
+    })).filter(n => n.id_utilizador == state.utilizadorAutenticado.id_utilizador),
+    obterTabelaUsers: (state, getters) => (tipo) => {
+      const tabela = [];
+      state.utilizadores.forEach(utilizador => {
+        if (getters.obterTipoUtilizadorePorId(utilizador.id_tipo) == tipo) {
+          const dados = {
+            id: utilizador.id_utilizador,
+            nome: utilizador.nome + " " + utilizador.apelido,
+            correio: utilizador.correio,
+            complementar: tipo == 'Estudante' ? utilizador.numero_estudante :
+            tipo == 'Docente' ? utilizador.cca : utilizador.nome_empresa
+          }
+          tabela.push(dados);
+        }
+      });
+      return tabela;
+    },
   },
   mutations: {
     AUTENTICADO(state, utilizador){
