@@ -9,7 +9,7 @@ export default new Vuex.Store({
       {id_estado: 0, estado: "em espera"},
       {id_estado: 1, estado: "aceite"},
     ],
-    tipo_utilizadores:[ 
+    tipo_utilizadores: [ 
       {id: 0, tipo: "Docente"},
       {id: 1, tipo: "Estudante"},
       {id: 2, tipo: "Entidade Externa"}
@@ -71,33 +71,39 @@ export default new Vuex.Store({
     empresas: localStorage.getItem('empresas') ? JSON.parse(localStorage.getItem('empresas')) : [
       {
         id_empresa: 0,
-        nome: "",
+        nome: "Pepega",
         correio: "",
         morada: "",
         website: ""
       }
     ],
-    estagios: {
-      id_proposta: 0,
-      id_empresa: 0,
-      nome_tutor: "",
-      contacto_tutor: "",
-      cargo_tutor: "",
-      correio_tutor: ""
-    },
-    inscricoes: {
-      id_utilizador: 0,
-      id_proposta: 0,
-      id_estado: 0,
-      preferencia: 0,
-      ano_letivo: ""
-    },
-    prazos: {
-      id_prazo: 0,
-      ano_letivo: "",
-      prazo: "",
-      data_hora: ""
-    },
+    estagios: localStorage.getItem('estagios') ? JSON.parse(localStorage.getItem('estagios')) : [
+      {
+        id_proposta: 0,
+        id_empresa: 0,
+        nome_tutor: "Jorge Cunha",
+        contacto_tutor: "",
+        cargo_tutor: "",
+        correio_tutor: ""
+      }
+    ],
+    inscricoes: localStorage.getItem('inscricoes') ? JSON.parse(localStorage.getItem('inscricoes')) : [ 
+      {
+        id_utilizador: 0,
+        id_proposta: 0,
+        id_estado: 0,
+        preferencia: 0,
+        ano_letivo: ""
+      }
+    ],
+    prazos: [
+      {
+        id_prazo: 0,
+        ano_letivo: "",
+        prazo: "",
+        data_hora: ""
+      }
+    ],
     notificacoes: localStorage.getItem('notificacoes') ? JSON.parse(localStorage.getItem('notificacoes')) : 
     [
       {
@@ -184,6 +190,26 @@ export default new Vuex.Store({
           }
           tabela.push(dados);
         }
+      });
+      return tabela;
+    },
+    obterTabelaInscricoes: (state) => {
+      const tabela = [];
+      state.inscricoes.forEach(inscricao => {
+        const inscrito = state.utilizadores.find(u => inscricao.id_utilizador == u.id_utilizador);
+        const proposta = state.propostas.find(p => inscricao.id_proposta == p.id_proposta);
+        const tipo_proposta = state.tipo_propostas.find(t => proposta.id_tipo == t.id_tipo).proposta;
+        const estagio = tipo_proposta == 'Estágio' ?
+          state.estagios.find(est => est.id_proposta == proposta.id_proposta) : null;
+        const dados = {
+          id: inscricao.id_proposta,
+          nome_inscrito: inscrito.nome + " " + inscrito.apelido,
+          tipo_proposta: tipo_proposta,
+          entidade: estagio != null ?
+            state.empresas.find(emp => emp.id_empresa == estagio.id_empresa).nome : "---",
+          tutor: estagio != null ? estagio.nome_tutor : "---"
+        }
+        tabela.push(dados);
       });
       return tabela;
     },
