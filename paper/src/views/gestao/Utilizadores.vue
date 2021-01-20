@@ -24,55 +24,27 @@
           <div>
             <!-- O select já está com a opção do Estudantes já selecionada -->
             <select id="typeSelect" v-model="select">
-              <option value="estudantes">Estudantes</option>
-              <option value="docentes">Docentes</option>
-              <option value="entidades">Entidades</option>
+              <option value="Estudante">Estudantes</option>
+              <option value="Docente">Docentes</option>
+              <option value="Entidade Externa">Entidades Externas</option>
             </select>
             <table>
               <tr>
                 <th>ID</th>
-                <th>Tipo de utilizador</th>
                 <th>Nome</th>
                 <th>Correio eletrónico</th>
-                <th>Complementar</th>
+                <th v-if="select == 'Estudante'">Número de Estudante</th>
+                <th v-else-if="select == 'Docente'">Docente CCA</th>
+                <th v-else>Nome da Empresa</th>
                 <th>Ações</th>
               </tr>
-              <!-- Estudantes -->
-              <div v-if="select == 'estudantes'">
-                <!-- FIXME: Pedro é igual a estrutura do aprovar para seguir a mesma lógica -->
-                <!-- <tr v-for="(user) in obterTabelaAprovarUsers" :key="user.id">              
-              <td>ah</td>
-              <td>{{user.tipo}}</td>
-              <td>{{user.nome}}</td>
-              <td>{{user.correio}}</td>
-              <td>{{user.complementar}}</td>
-              <td><button @click="aprovarUtilizador(user.id)">Aprovar</button><button @click="negarUtilizador(user.id)">Negar</button></td>
-            </tr> -->
-              </div>
-              <!-- Docentes -->
-              <div v-else-if="select == 'docentes'">
-                <!-- FIXME: Pedro é igual a estrutura do aprovar para seguir a mesma lógica -->
-                <!-- <tr v-for="(user) in obterTabelaAprovarUsers" :key="user.id">              
-              <td>ah</td>
-              <td>{{user.tipo}}</td>
-              <td>{{user.nome}}</td>
-              <td>{{user.correio}}</td>
-              <td>{{user.complementar}}</td>
-              <td><button @click="aprovarUtilizador(user.id)">Aprovar</button><button @click="negarUtilizador(user.id)">Negar</button></td>
-            </tr> -->
-              </div>
-              <!-- Entidades Externas -->
-              <tr v-else>
-                <!-- FIXME: Pedro é igual a estrutura do aprovar para seguir a mesma lógica -->
-                <!-- <tr v-for="(user) in obterTabelaAprovarUsers" :key="user.id">              
-              <td>ah</td>
-              <td>{{user.tipo}}</td>
-              <td>{{user.nome}}</td>
-              <td>{{user.correio}}</td>
-              <td>{{user.complementar}}</td>
-              <td><button @click="aprovarUtilizador(user.id)">Aprovar</button><button @click="negarUtilizador(user.id)">Negar</button></td>
-            </tr> -->
-              </tr>
+              <tr v-for="(user) in obterTabelaUsers" :key="user.id">              
+                <td>{{user.id}}</td>
+                <td>{{user.nome}}</td>
+                <td>{{user.correio}}</td>
+                <td>{{user.complementar}}</td>
+                <td><button @click="aprovarUtilizador(user.id)">Aprovar</button><button @click="negarUtilizador(user.id)">Negar</button></td>
+              </tr> 
             </table>
           </div>
         </div>
@@ -89,8 +61,13 @@ export default {
   },
   data() {
     return {
-      select: "estudantes",
+      select: 'Estudante',
     };
   },
+  computed: {
+    obterTabelaUsers() {
+      return this.$store.getters.obterTabelaUsers(this.select);
+    }
+  }
 };
 </script>
