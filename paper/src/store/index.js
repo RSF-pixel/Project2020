@@ -14,12 +14,12 @@ export default new Vuex.Store({
       {id: 1, tipo: "Estudante"},
       {id: 2, tipo: "Entidade Externa"}
     ],
-    tipo_proposta: {
-      id_tipo: 0,
-      proposta: ""
-    },
-    utilizadores: localStorage.getItem('utilizadores') ? JSON.parse(localStorage.getItem('utilizadores')) :
-      [{ 
+    tipo_propostas: [
+      {id_tipo: 0, proposta: "Projeto"},
+      {id_tipo: 1, proposta: "Estágio"}
+    ],
+    utilizadores: localStorage.getItem('utilizadores') ? JSON.parse(localStorage.getItem('utilizadores')) : [
+      { 
         id_utilizador: 0,
         id_estado: 1,
         nome: "João",
@@ -39,7 +39,8 @@ export default new Vuex.Store({
         github: null,
         discord: null,
         ano: "2020/2021"
-    }],
+      }
+    ],
     agenda: {
       id_utilizador: 0,
       id_convidado: 0,
@@ -48,31 +49,34 @@ export default new Vuex.Store({
       detalhes: "",
       ano_letivo: ""
     },
-    propostas: localStorage.getItem('empresas') ? JSON.parse(localStorage.getItem('empresas')) : {
-      id_proposta: 0,
-      id_estado: 0,
-      motivo: "",
-      id_criador: 0,
-      id_docente: 0,
-      id_tipo: 0,
-      titulo: "",
-      objetivos: "",
-      planos: "",
-      resultados: "",
-      perfil: "",
-      dados: "",
-      recursos: "",
-      data_hora: "",
-      ano_letivo: ""
-    },
-    empresas: localStorage.getItem('empresas') ? JSON.parse(localStorage.getItem('empresas')) :
-    [{
-      id_empresa: 0,
-      nome: "",
-      correio: "",
-      morada: "",
-      website: ""
-    }],
+    propostas: localStorage.getItem('propostas') ? JSON.parse(localStorage.getItem('propostas')) : [
+      {
+        id_proposta: 0,
+        id_estado: 0,
+        motivo: "",
+        id_criador: 0,
+        id_docente: 0,
+        id_tipo: 0,
+        titulo: "",
+        objetivos: "",
+        planos: "",
+        resultados: "",
+        perfil: "",
+        dados: "",
+        recursos: "",
+        data_hora: "",
+        ano_letivo: ""
+      }
+    ],
+    empresas: localStorage.getItem('empresas') ? JSON.parse(localStorage.getItem('empresas')) : [
+      {
+        id_empresa: 0,
+        nome: "",
+        correio: "",
+        morada: "",
+        website: ""
+      }
+    ],
     estagios: {
       id_proposta: 0,
       id_empresa: 0,
@@ -98,7 +102,7 @@ export default new Vuex.Store({
     [
       {
         id_notificacao: 0,
-        id_utilizador: 1,
+        id_utilizador: 0,
         id_tema: 0,
         texto: "O utilizador foi admitido",
         data_hora: "08-04-21 | 15:31"
@@ -138,6 +142,22 @@ export default new Vuex.Store({
             nome: utilizador.nome + " " + utilizador.apelido,
             correio: utilizador.correio,
             complementar: utilizador.nome_empresa == null ? utilizador.numero_estudante : utilizador.nome_empresa
+          }
+          tabela.push(dados);
+        }
+      });
+      return tabela;
+    },
+    obterTabelaAprovarPropostas: (state, getters) => {
+      const tabela = [];
+      state.propostas.forEach(proposta => {
+        if (proposta.id_estado == getters.obterIdEstado("em espera")) {
+          const criador = state.utilizadores.find(u => proposta.id_criador == u.id_utilizador);
+          const dados = {
+            id: proposta.id_proposta,
+            tipo_criador: getters.obterTipoUtilizadorePorId(criador.id_tipo),
+            nome_criador: criador.nome + " " + criador.apelido,
+            tipo_proposta: state.tipo_propostas.find(t => proposta.id_tipo == t.id_tipo).proposta
           }
           tabela.push(dados);
         }
