@@ -16,41 +16,52 @@
         </div>
         <div class="area-conteudo-se-navegador anim-sombra-area-conteudo d-flex justify-content-start fundo-f4 borda-r5 sombra-area-conteudo">
           <div>
-            <!-- O select já está com a opção do utilizadores já selecionada -->
             <select id="typeSelect" v-model="select">
               <option value="utilizadores">Utilizadores</option>
               <option value="propostas">Propostas</option>
             </select>
-            <table>
-            <tr>
-              <th>ID</th>
-              <th>Tipo de utilizador</th>
-              <th>Nome</th>
-              <th>Correio eletrónico</th>
-              <th>Complementar</th>
-              <th>Ações</th>
-            </tr>
-         <div v-if="(select == 'utilizadores')">
-             
-            <tr v-for="(user) in obterTabelaAprovarUsers" :key="user.id">              
-              <td>ah</td>
-              <td>{{user.tipo}}</td>
-              <td>{{user.nome}}</td>
-              <td>{{user.correio}}</td>
-              <td>{{user.complementar}}</td>
-              <td><button @click="aprovarUtilizador(user.id)">Aprovar</button><button @click="negarUtilizador(user.id)">Negar</button></td>
-            </tr>
-         </div>
-
-        <tr v-else>
-
-
-          <!-- Faltam fazer a cena para aprovar propostas -->
-          Esperar pela criação de propostas!
-
-
-        </tr>
-        </table>
+            <div v-if="(select == 'utilizadores')">
+              <h3>Aprovar Utilizadores</h3>
+              <table>
+                <tr>
+                  <th>ID</th>
+                  <th>Tipo de utilizador</th>
+                  <th>Nome</th>
+                  <th>Correio eletrónico</th>
+                  <th>Complementar</th>
+                  <th>Ações</th>
+                </tr>
+                <tr v-for="(user) in obterTabelaAprovarUsers" :key="user.id">              
+                  <td>{{user.id}}</td>
+                  <td>{{user.tipo}}</td>
+                  <td>{{user.nome}}</td>
+                  <td>{{user.correio}}</td>
+                  <td>{{user.complementar}}</td>
+                  <td><button @click="aprovarUtilizador(user.id)">Aprovar</button><button @click="negarUtilizador(user.id)">Negar</button></td>
+                </tr>
+              </table>
+            </div>
+            <div v-else>
+              <h3>Aprovar Propostas</h3>
+              <table>
+                <tr>
+                  <th>ID</th>
+                  <th>Submetido por</th>
+                  <th>Nome</th>
+                  <th>Tipo de proposta</th>
+                  <th>Detalhes</th>
+                  <th>Ações</th>
+                </tr>
+                <tr v-for="(proposta) in obterTabelaAprovarPropostas" :key="proposta.id">              
+                  <td>{{proposta.id}}</td>
+                  <td>{{proposta.tipo_criador}}</td>
+                  <td>{{proposta.nome_criador}}</td>
+                  <td>{{proposta.tipo_proposta}}</td>
+                  <td><a href="">Ver detalhes</a></td>
+                  <td><button @click="aprovarUtilizador(proposta.id)">Aprovar</button><button @click="negarUtilizador(proposta.id)">Negar</button></td>
+                </tr>
+              </table>
+            </div>
           </div>
         </div>
       </div>
@@ -73,6 +84,9 @@ export default {
     obterTabelaAprovarUsers() {
       return this.$store.getters.obterTabelaAprovarUsers;
     },
+    obterTabelaAprovarPropostas() {
+      return this.$store.getters.obterTabelaAprovarPropostas;
+    }
   },
   methods: {
     aprovarUtilizador(id) {
