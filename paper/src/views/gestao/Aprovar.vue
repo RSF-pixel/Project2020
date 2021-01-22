@@ -58,7 +58,7 @@
                   <td>{{proposta.nome_criador}}</td>
                   <td>{{proposta.tipo_proposta}}</td>
                   <td><a href="">Ver detalhes</a></td>
-                  <td><button @click="aprovarUtilizador(proposta.id)">Aprovar</button><button @click="negarUtilizador(proposta.id)">Negar</button></td>
+                  <td><button @click="aprovarProposta(proposta.id)">Aprovar</button><button @click="negarProposta(proposta.id)">Negar</button></td>
                 </tr>
               </table>
             </div>
@@ -90,11 +90,17 @@ export default {
   },
   methods: {
     aprovarUtilizador(id) {
-      alert("aprovado " + id);
+      this.$store.dispatch("aprovarUtilizador", id);
     },
     negarUtilizador(id) {
-      alert("negado " + id);
+      this.$store.dispatch("negarUtilizador", id);
     },
+    aprovarProposta(id) {
+      this.$store.dispatch("aprovarProposta", id);
+    },
+    negarProposta(id) {
+      this.$store.dispatch("negarProposta", id);
+    }
   },
 };
 </script>

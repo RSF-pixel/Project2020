@@ -84,7 +84,7 @@ export default {
       registo(){
         const utilizador = {
           id_utilizador: this.$store.getters.proximoIDUtilizador,
-          id_estado: 1,
+          id_estado: 0,
           nome: this.utilizador.nome,
           apelido: this.utilizador.apelido,
           correio: this.utilizador.correio,

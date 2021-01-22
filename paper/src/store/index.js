@@ -21,7 +21,7 @@ export default new Vuex.Store({
     utilizadores: localStorage.getItem('utilizadores') ? JSON.parse(localStorage.getItem('utilizadores')) : [
       { 
         id_utilizador: 0,
-        id_estado: 1,
+        id_estado: 0,
         nome: "João",
         apelido: "Silva",
         correio: "js@gmail.com",
@@ -131,10 +131,7 @@ export default new Vuex.Store({
     proximoIDUtilizador: (state) =>  {
       return state.utilizadores.length > 0 ?
       state.utilizadores[state.utilizadores.length - 1].id_utilizador + 1
-      : 1;
-    },
-    obterIdEstado: (state) => (estado) => {
-      return state.estados.find(e => estado == e.estado).id_estado
+      : 0;
     },
     obterTipoUtilizadorePorId: (state) => (id) => {
       return state.tipo_utilizadores.find(tu => id == tu.id).tipo
@@ -142,7 +139,7 @@ export default new Vuex.Store({
     obterTabelaAprovarUsers: (state, getters) => {
       const tabela = [];
       state.utilizadores.forEach(utilizador => {
-        if (utilizador.id_estado == getters.obterIdEstado("Em análise")) {
+        if (utilizador.id_estado == 0) {
           const dados = {
             id: utilizador.id_utilizador,
             tipo: getters.obterTipoUtilizadorePorId(utilizador.id_tipo),
@@ -158,12 +155,12 @@ export default new Vuex.Store({
     obterTabelaAprovarPropostas: (state, getters) => {
       const tabela = [];
       state.propostas.forEach(proposta => {
-        if (proposta.id_estado == getters.obterIdEstado("Em análise")) {
+        if (proposta.id_estado == 0) {
           const criador = state.utilizadores.find(u => proposta.id_criador == u.id_utilizador);
           const dados = {
             id: proposta.id_proposta,
-            tipo_criador: getters.obterTipoUtilizadorePorId(criador.id_tipo),
-            nome_criador: criador.nome + " " + criador.apelido,
+            tipo_criador: criador != undefined ? getters.obterTipoUtilizadorePorId(criador.id_tipo) : "N/A",
+            nome_criador: criador != undefined ? criador.nome + " " + criador.apelido : "N/A",
             tipo_proposta: state.tipo_propostas.find(t => proposta.id_tipo == t.id_tipo).proposta
           }
           tabela.push(dados);
@@ -282,6 +279,30 @@ export default new Vuex.Store({
         }
         return utilizador;
       })
+    },
+    APROVARUTILIZADOR(state, payload) {
+      state.utilizadores = state.utilizadores.map(utilizador => {
+        if (utilizador.id_utilizador == payload) {
+          utilizador.id_estado = 1;
+        }
+        return utilizador;
+      })
+    },
+    NEGARUTILIZADOR(state, payload) {
+      state.utilizadores = state.utilizadores.filter(utilizador =>
+        utilizador.id_utilizador != payload);
+    },
+    APROVARPROPOSTA(state, payload) {
+      state.propostas = state.propostas.map(proposta => {
+        if (proposta.id_proposta == payload) {
+          proposta.id_estado = 1;
+        }
+        return proposta;
+      })
+    },
+    NEGARPROPOSTA(state, payload) {
+      state.propostas = state.propostas.filter(proposta =>
+        proposta.id_proposta != payload);
     }
   },
   actions: {
@@ -325,6 +346,22 @@ export default new Vuex.Store({
     editarPerfil(context, payload){
       context.commit('EDITARPERFIL', payload);
       localStorage.setItem('utilizadores', JSON.stringify(context.state.utilizadores));
+    },
+    aprovarUtilizador(context, payload) {
+      context.commit('APROVARUTILIZADOR', payload);
+      localStorage.setItem('utilizadores', JSON.stringify(context.state.utilizadores));
+    },
+    negarUtilizador(context, payload) {
+      context.commit('NEGARUTILIZADOR', payload);
+      localStorage.setItem('utilizadores', JSON.stringify(context.state.utilizadores));
+    },
+    aprovarProposta(context, payload) {
+      context.commit('APROVARPROPOSTA', payload);
+      localStorage.setItem('propostas', JSON.stringify(context.state.propostas));
+    },
+    negarProposta(context, payload) {
+      context.commit('NEGARPROPOSTA', payload);
+      localStorage.setItem('propostas', JSON.stringify(context.state.propostas));
     }
   }
 });
