@@ -34,7 +34,7 @@
                   <td>{{inscricoes.entidade}}</td>
                   <td>{{inscricoes.tutor}}</td>
                   <td><a href="">Ver detalhes</a></td>
-                  <td><button @click="aprovarUtilizador(proposta.id)">Aprovar</button><button @click="negarUtilizador(proposta.id)">Negar</button></td>
+                  <td><button @click="AprovarInscricao(proposta.id)">Aprovar</button><button @click="negarInscricao(proposta.id)">Negar</button></td>
                 </tr>
             </table>
           </div>
@@ -56,10 +56,10 @@ export default {
     }
   },
   methods: {
-    aprovarUtilizador(id) {
+    AprovarInscricao(id) {
       alert("aprovado " + id);
     },
-    negarUtilizador(id) {
+    negarInscricao(id) {
       alert("negado " + id);
     },
   }
