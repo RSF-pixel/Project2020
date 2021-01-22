@@ -131,7 +131,7 @@ export default new Vuex.Store({
     proximoIDUtilizador: (state) =>  {
       return state.utilizadores.length > 0 ?
       state.utilizadores[state.utilizadores.length - 1].id_utilizador + 1
-      : 1;
+      : 0;
     },
     obterTipoUtilizadorePorId: (state) => (id) => {
       return state.tipo_utilizadores.find(tu => id == tu.id).tipo
@@ -159,8 +159,8 @@ export default new Vuex.Store({
           const criador = state.utilizadores.find(u => proposta.id_criador == u.id_utilizador);
           const dados = {
             id: proposta.id_proposta,
-            tipo_criador: getters.obterTipoUtilizadorePorId(criador.id_tipo),
-            nome_criador: criador.nome + " " + criador.apelido,
+            tipo_criador: criador != undefined ? getters.obterTipoUtilizadorePorId(criador.id_tipo) : "N/A",
+            nome_criador: criador != undefined ? criador.nome + " " + criador.apelido : "N/A",
             tipo_proposta: state.tipo_propostas.find(t => proposta.id_tipo == t.id_tipo).proposta
           }
           tabela.push(dados);
@@ -291,6 +291,18 @@ export default new Vuex.Store({
     NEGARUTILIZADOR(state, payload) {
       state.utilizadores = state.utilizadores.filter(utilizador =>
         utilizador.id_utilizador != payload);
+    },
+    APROVARPROPOSTA(state, payload) {
+      state.propostas = state.propostas.map(proposta => {
+        if (proposta.id_proposta == payload) {
+          proposta.id_estado = 1;
+        }
+        return proposta;
+      })
+    },
+    NEGARPROPOSTA(state, payload) {
+      state.propostas = state.propostas.filter(proposta =>
+        proposta.id_proposta != payload);
     }
   },
   actions: {
@@ -342,6 +354,14 @@ export default new Vuex.Store({
     negarUtilizador(context, payload) {
       context.commit('NEGARUTILIZADOR', payload);
       localStorage.setItem('utilizadores', JSON.stringify(context.state.utilizadores));
+    },
+    aprovarProposta(context, payload) {
+      context.commit('APROVARPROPOSTA', payload);
+      localStorage.setItem('propostas', JSON.stringify(context.state.propostas));
+    },
+    negarProposta(context, payload) {
+      context.commit('NEGARPROPOSTA', payload);
+      localStorage.setItem('propostas', JSON.stringify(context.state.propostas));
     }
   }
 });
