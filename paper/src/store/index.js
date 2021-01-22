@@ -6,8 +6,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     estados: [
-      {id_estado: 0, estado: "em espera"},
-      {id_estado: 1, estado: "aceite"},
+      {id_estado: 0, estado: "Em análise"},
+      {id_estado: 1, estado: "Aprovado"},
     ],
     tipo_utilizadores: [ 
       {id: 0, tipo: "Docente"},
@@ -57,7 +57,7 @@ export default new Vuex.Store({
         id_criador: 0,
         id_docente: 0,
         id_tipo: 0,
-        titulo: "",
+        titulo: "Paper",
         objetivos: "",
         planos: "",
         resultados: "",
@@ -89,10 +89,11 @@ export default new Vuex.Store({
     ],
     inscricoes: localStorage.getItem('inscricoes') ? JSON.parse(localStorage.getItem('inscricoes')) : [ 
       {
+        id_inscricao: 0,
         id_utilizador: 0,
         id_proposta: 0,
         id_estado: 0,
-        preferencia: 0,
+        preferencia: 1,
         ano_letivo: ""
       }
     ],
@@ -141,7 +142,7 @@ export default new Vuex.Store({
     obterTabelaAprovarUsers: (state, getters) => {
       const tabela = [];
       state.utilizadores.forEach(utilizador => {
-        if (utilizador.id_estado == getters.obterIdEstado("em espera")) {
+        if (utilizador.id_estado == getters.obterIdEstado("Em análise")) {
           const dados = {
             id: utilizador.id_utilizador,
             tipo: getters.obterTipoUtilizadorePorId(utilizador.id_tipo),
@@ -157,7 +158,7 @@ export default new Vuex.Store({
     obterTabelaAprovarPropostas: (state, getters) => {
       const tabela = [];
       state.propostas.forEach(proposta => {
-        if (proposta.id_estado == getters.obterIdEstado("em espera")) {
+        if (proposta.id_estado == getters.obterIdEstado("Em análise")) {
           const criador = state.utilizadores.find(u => proposta.id_criador == u.id_utilizador);
           const dados = {
             id: proposta.id_proposta,
@@ -213,6 +214,50 @@ export default new Vuex.Store({
       });
       return tabela;
     },
+    obterTabelaPropostasCriadas: (state) => {
+      const tabela = [];
+      state.propostas.forEach(proposta => {
+        if (proposta.id_criador == state.utilizadorAutenticado.id_utilizador) {
+          const tipo_proposta = state.tipo_propostas.find(t => proposta.id_tipo == t.id_tipo).proposta;
+          const estagio = tipo_proposta == 'Estágio' ?
+            state.estagios.find(est => est.id_proposta == proposta.id_proposta) : null;
+          const dados = {
+            id: proposta.id_proposta,
+            tipo: tipo_proposta,
+            titulo: proposta.titulo,
+            entidade: estagio != null ?
+              state.empresas.find(emp => emp.id_empresa == estagio.id_empresa).nome : "---",
+            tutor: estagio != null ? estagio.nome_tutor : "---",
+            estado: state.estados.find(e => proposta.id_estado == e.id_estado).estado
+          }
+          tabela.push(dados);
+        }
+      });
+      return tabela;
+    },
+    obterTabelaPropostasInscritas: (state) => {
+      const tabela = [];
+      state.inscricoes.forEach(inscricao => {
+        if (inscricao.id_utilizador == state.utilizadorAutenticado.id_utilizador) {
+          const proposta = state.propostas.find(p => inscricao.id_proposta == p.id_proposta);
+          const tipo_proposta = state.tipo_propostas.find(t => proposta.id_tipo == t.id_tipo).proposta;
+          const estagio = tipo_proposta == 'Estágio' ?
+            state.estagios.find(est => est.id_proposta == proposta.id_proposta) : null;
+          const dados = {
+            id: inscricao.id_inscricao,
+            ordem: inscricao.preferencia,
+            tipo: tipo_proposta,
+            titulo: proposta.titulo,
+            entidade: estagio != null ?
+              state.empresas.find(emp => emp.id_empresa == estagio.id_empresa).nome : "---",
+            tutor: estagio != null ? estagio.nome_tutor : "---",
+            estado: state.estados.find(e => inscricao.id_estado == e.id_estado).estado
+          }
+          tabela.push(dados);
+        }
+      });
+      return tabela;
+    }
   },
   mutations: {
     AUTENTICADO(state, utilizador){
