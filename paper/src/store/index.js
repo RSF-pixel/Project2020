@@ -179,7 +179,7 @@ export default new Vuex.Store({
     obterTabelaUsers: (state, getters) => (tipo) => {
       const tabela = [];
       state.utilizadores.forEach(utilizador => {
-        if (getters.obterTipoUtilizadorePorId(utilizador.id_tipo) == tipo) {
+        if (getters.obterTipoUtilizadorePorId(utilizador.id_tipo) == tipo && utilizador.id_estado !== 0) {
           const dados = {
             id: utilizador.id_utilizador,
             nome: utilizador.nome + " " + utilizador.apelido,
