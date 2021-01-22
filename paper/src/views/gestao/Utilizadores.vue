@@ -39,11 +39,11 @@
                 <td>{{user.complementar}}</td>
                 <td>
                   <template v-if="select == 'Docente'" >
-                  <button v-if="obterCCA(user.id)" @click="adicionarCCA(user.id)">Adicionar ao CCA</button>
+                  <button v-if="!user.cca" @click="adicionarCCA(user.id)">Adicionar ao CCA</button>
                   <button v-else @click="removerCCA(user.id)">Remover do CCA</button>
                   </template>
-                  <button v-if="!obterBanido(user.id)" @click="banir(user.id)">Banir</button>
-                  <button v-else @click="reverter(user.id)">Reverter</button>
+                  <button v-if="user.id_estado != 2" @click="banirUtilizador(user.id)">Banir</button>
+                  <button v-else @click="reverterBan(user.id)">Reverter</button>
                 </td>
               </tr> 
             </table>
@@ -71,25 +71,17 @@ export default {
     }
   },
   methods: {
-    obterCCA(id) {
-      console.log(id)
-      return true;
+    banirUtilizador(id) {
+      this.$store.dispatch("banirUtilizador", id);
     },
-    obterBanido(id) {
-      console.log(id)
-      return false;
+    reverterBan(id) {
+      this.$store.dispatch("reverterBan", id);
     },
     adicionarCCA(id) {
-      alert("adicionado " + id)
+      this.$store.dispatch("adicionarCCA", id);
     },
     removerCCA(id) {
-      alert("removido " + id)
-    },
-    banir(id) {
-      alert("banido " + id)
-    },
-    reverter(id) {
-      alert("revertido " + id)
+      this.$store.dispatch("removerCCA", id);
     }
   }
 };
