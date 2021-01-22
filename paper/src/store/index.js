@@ -21,7 +21,7 @@ export default new Vuex.Store({
     utilizadores: localStorage.getItem('utilizadores') ? JSON.parse(localStorage.getItem('utilizadores')) : [
       { 
         id_utilizador: 0,
-        id_estado: 1,
+        id_estado: 0,
         nome: "João",
         apelido: "Silva",
         correio: "js@gmail.com",
@@ -133,16 +133,13 @@ export default new Vuex.Store({
       state.utilizadores[state.utilizadores.length - 1].id_utilizador + 1
       : 1;
     },
-    obterIdEstado: (state) => (estado) => {
-      return state.estados.find(e => estado == e.estado).id_estado
-    },
     obterTipoUtilizadorePorId: (state) => (id) => {
       return state.tipo_utilizadores.find(tu => id == tu.id).tipo
     },
     obterTabelaAprovarUsers: (state, getters) => {
       const tabela = [];
       state.utilizadores.forEach(utilizador => {
-        if (utilizador.id_estado == getters.obterIdEstado("Em análise")) {
+        if (utilizador.id_estado == 0) {
           const dados = {
             id: utilizador.id_utilizador,
             tipo: getters.obterTipoUtilizadorePorId(utilizador.id_tipo),
@@ -158,7 +155,7 @@ export default new Vuex.Store({
     obterTabelaAprovarPropostas: (state, getters) => {
       const tabela = [];
       state.propostas.forEach(proposta => {
-        if (proposta.id_estado == getters.obterIdEstado("Em análise")) {
+        if (proposta.id_estado == 0) {
           const criador = state.utilizadores.find(u => proposta.id_criador == u.id_utilizador);
           const dados = {
             id: proposta.id_proposta,
@@ -282,6 +279,18 @@ export default new Vuex.Store({
         }
         return utilizador;
       })
+    },
+    APROVARUTILIZADOR(state, payload) {
+      state.utilizadores = state.utilizadores.map(utilizador => {
+        if (utilizador.id_utilizador == payload) {
+          utilizador.id_estado = 1;
+        }
+        return utilizador;
+      })
+    },
+    NEGARUTILIZADOR(state, payload) {
+      state.utilizadores = state.utilizadores.filter(utilizador =>
+        utilizador.id_utilizador != payload);
     }
   },
   actions: {
@@ -324,6 +333,14 @@ export default new Vuex.Store({
     },
     editarPerfil(context, payload){
       context.commit('EDITARPERFIL', payload);
+      localStorage.setItem('utilizadores', JSON.stringify(context.state.utilizadores));
+    },
+    aprovarUtilizador(context, payload) {
+      context.commit('APROVARUTILIZADOR', payload);
+      localStorage.setItem('utilizadores', JSON.stringify(context.state.utilizadores));
+    },
+    negarUtilizador(context, payload) {
+      context.commit('NEGARUTILIZADOR', payload);
       localStorage.setItem('utilizadores', JSON.stringify(context.state.utilizadores));
     }
   }

@@ -90,10 +90,10 @@ export default {
   },
   methods: {
     aprovarUtilizador(id) {
-      alert("aprovado " + id);
+      this.$store.dispatch("aprovarUtilizador", id);
     },
     negarUtilizador(id) {
-      alert("negado " + id);
+      this.$store.dispatch("negarUtilizador", id);
     },
   },
 };
