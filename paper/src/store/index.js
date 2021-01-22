@@ -8,6 +8,7 @@ export default new Vuex.Store({
     estados: [
       {id_estado: 0, estado: "Em análise"},
       {id_estado: 1, estado: "Aprovado"},
+      {id_estado: 2, estado: "Banido"}
     ],
     tipo_utilizadores: [ 
       {id: 0, tipo: "Docente"},
@@ -122,8 +123,8 @@ export default new Vuex.Store({
       ? JSON.parse(localStorage.getItem('utilizadorAutenticado')) : ""
     },
   getters:{
-    obterUtilizadorAutenticado: (state) => state.utilizadorAutenticado,
-    ativoUtilizadorAutenticado: (state) => (state.utilizadorAutenticado == "" ? false : true),
+    obterUtilizadorAutenticado: (state) => state.utilizadores.find(u => u.id_utilizador == state.utilizadorAutenticado),
+    ativoUtilizadorAutenticado: (state) => (state.utilizadorAutenticado === "" ? false : true),
     obterTipoUtilizadores: (state) => state.tipo_utilizadores.map((tipo_utilizador) => ({
       value: tipo_utilizador.id,
       text: tipo_utilizador.tipo
@@ -174,7 +175,7 @@ export default new Vuex.Store({
       data_hora: notificacao.data_hora,
       tema: state.temas.find(t => notificacao.id_tema == t.id_tema).tema,
       texto: notificacao.texto
-    })).filter(n => n.id_utilizador == state.utilizadorAutenticado.id_utilizador),
+    })).filter(n => n.id_utilizador == state.utilizadorAutenticado),
     obterTabelaUsers: (state, getters) => (tipo) => {
       const tabela = [];
       state.utilizadores.forEach(utilizador => {
@@ -184,7 +185,9 @@ export default new Vuex.Store({
             nome: utilizador.nome + " " + utilizador.apelido,
             correio: utilizador.correio,
             complementar: tipo == 'Estudante' ? utilizador.numero_estudante :
-            tipo == 'Docente' ? utilizador.cca : utilizador.nome_empresa
+            tipo == 'Docente' ? utilizador.cca : utilizador.nome_empresa,
+            id_estado: utilizador.id_estado,
+            cca: utilizador.cca
           }
           tabela.push(dados);
         }
@@ -214,7 +217,7 @@ export default new Vuex.Store({
     obterTabelaPropostasCriadas: (state) => {
       const tabela = [];
       state.propostas.forEach(proposta => {
-        if (proposta.id_criador == state.utilizadorAutenticado.id_utilizador) {
+        if (proposta.id_criador == state.utilizadorAutenticado) {
           const tipo_proposta = state.tipo_propostas.find(t => proposta.id_tipo == t.id_tipo).proposta;
           const estagio = tipo_proposta == 'Estágio' ?
             state.estagios.find(est => est.id_proposta == proposta.id_proposta) : null;
@@ -235,7 +238,7 @@ export default new Vuex.Store({
     obterTabelaPropostasInscritas: (state) => {
       const tabela = [];
       state.inscricoes.forEach(inscricao => {
-        if (inscricao.id_utilizador == state.utilizadorAutenticado.id_utilizador) {
+        if (inscricao.id_utilizador == state.utilizadorAutenticado) {
           const proposta = state.propostas.find(p => inscricao.id_proposta == p.id_proposta);
           const tipo_proposta = state.tipo_propostas.find(t => proposta.id_tipo == t.id_tipo).proposta;
           const estagio = tipo_proposta == 'Estágio' ?
@@ -303,12 +306,44 @@ export default new Vuex.Store({
     NEGARPROPOSTA(state, payload) {
       state.propostas = state.propostas.filter(proposta =>
         proposta.id_proposta != payload);
+    },
+    BANIRUTILIZADOR(state, payload) {
+      state.utilizadores = state.utilizadores.map(utilizador => {
+        if (utilizador.id_utilizador == payload) {
+          utilizador.id_estado = 2;
+        }
+        return utilizador;
+      })
+    },
+    REVERTERBAN(state, payload) {
+      state.utilizadores = state.utilizadores.map(utilizador => {
+        if (utilizador.id_utilizador == payload) {
+          utilizador.id_estado = 1;
+        }
+        return utilizador;
+      })
+    },
+    ADCIONARCCA(state, payload) {
+      state.utilizadores = state.utilizadores.map(utilizador => {
+        if (utilizador.id_utilizador == payload) {
+          utilizador.cca = true;
+        }
+        return utilizador;
+      })
+    },
+    REMOVERCCA(state, payload) {
+      state.utilizadores = state.utilizadores.map(utilizador => {
+        if (utilizador.id_utilizador == payload) {
+          utilizador.cca = false;
+        }
+        return utilizador;
+      })
     }
   },
   actions: {
     autenticacao(context, payload) {
       const utilizador = context.state.utilizadores.find(
-        (utilizador) => utilizador.correio === payload.correio && utilizador.passe === payload.passe)
+        (utilizador) => utilizador.correio === payload.correio && utilizador.passe === payload.passe).id_utilizador;
       if (utilizador != undefined){
         context.commit('AUTENTICADO', utilizador)
         if(payload.manter_conectado){
@@ -362,6 +397,22 @@ export default new Vuex.Store({
     negarProposta(context, payload) {
       context.commit('NEGARPROPOSTA', payload);
       localStorage.setItem('propostas', JSON.stringify(context.state.propostas));
+    },
+    banirUtilizador(context, payload) {
+      context.commit('BANIRUTILIZADOR', payload);
+      localStorage.setItem('utilizadores', JSON.stringify(context.state.utilizadores));
+    },
+    reverterBan(context, payload) {
+      context.commit('REVERTERBAN', payload);
+      localStorage.setItem('utilizadores', JSON.stringify(context.state.utilizadores));
+    },
+    adicionarCCA(context, payload) {
+      context.commit('ADCIONARCCA', payload);
+      localStorage.setItem('utilizadores', JSON.stringify(context.state.utilizadores));
+    },
+    removerCCA(context, payload) {
+      context.commit('REMOVERCCA', payload);
+      localStorage.setItem('utilizadores', JSON.stringify(context.state.utilizadores));
     }
   }
 });
