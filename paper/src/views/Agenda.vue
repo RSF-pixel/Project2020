@@ -16,6 +16,8 @@
             <!-- Hora da entrevista -->
             <label for="hora">Hora</label>
             <input type="time" id="hora" />
+            
+            <!-- FIXME:BUTTON TO REMOVE ENTREVISTA AFTER PROPOSTAS -->
 
             <!-- Inscrito convidado -->
             <label for="convidado">Convidado</label>
