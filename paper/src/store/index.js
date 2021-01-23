@@ -112,14 +112,6 @@ export default new Vuex.Store({
         id_estado: 0,
         preferencia: 1,
         ano_letivo: ""
-      },
-      {
-        id_inscricao: 1,
-        id_utilizador: 0,
-        id_proposta: 1,
-        id_estado: 0,
-        preferencia: 2,
-        ano_letivo: ""
       }
     ],
     prazos: [
@@ -160,6 +152,9 @@ export default new Vuex.Store({
     },
     obterTipoUtilizadorePorId: (state) => (id) => {
       return state.tipo_utilizadores.find(tu => id == tu.id).tipo
+    },
+    obterTipoPropostas: (state) => () => {
+      return state.tipo_propostas
     },
     obterTabelaAprovarUsers: (state, getters) => {
       const tabela = [];
@@ -411,6 +406,9 @@ export default new Vuex.Store({
         }
         return inscricao;
       })
+    },
+    CRIARPROPOSTA(state, payload) {
+      state.propostas.push(payload)
     }
   },
   actions: {
@@ -530,6 +528,10 @@ export default new Vuex.Store({
       context.commit('DIMINUIRORDEM', payload);
       context.commit('AUMENTARORDEM', id);
       localStorage.setItem('inscricoes', JSON.stringify(context.state.inscricoes));
+    },
+    criarProposta(context, payload) {
+      context.commit('CRIARPROPOSTA', payload);
+      localStorage.setItem('propostas', JSON.stringify(context.state.propostas));
     }
   }
 });

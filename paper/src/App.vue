@@ -104,6 +104,7 @@
   /* Tamanhos */
   .fonte-10{font-size: 10px;}
   .fonte-12{font-size: 12px;}
+  .fonte-13{font-size: 13px;}
   .fonte-14{font-size: 14px;}
   .fonte-16{font-size: 16px;}
   .fonte-18{font-size: 18px;}
@@ -121,13 +122,14 @@
   .width-35{width: 35%;}
   .width-42{width: 42%;}
   .width-45{width: 45%;}
+  .width-48{width: 48%;}
   .width-50{width: 50%;}
   .width-55{width: 55%;}
   .width-100{width: 100% !important;}
 
   /*Height*/
   .height-2{height: 2px !important;}
-  .height-150{height: 150px !important;}
+  .height-165{height: 165px !important;}
 
   /*Placeholder*/
   ::placeholder{font-size: 12px;}

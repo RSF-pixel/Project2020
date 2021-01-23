@@ -15,216 +15,224 @@
         </div>
 
         <div class="d-flex justify-content-between anim-sombra-area-conteudo fundo-f4 borda-r5 sombra-area-conteudo padding-all8">
-          <div class="d-flex flex-column width-55">
-            <div class="d-flex align-align-items-start sem-margens width-100">
-              <div class="sem-padding width-50">
-                <div class="mukta-m font-16 align-left weight-500">Título da proposta</div>
-                <b-form-input
-                  v-model="form.tituloProposta"
-                  class="opensans-l font-12"
-                  type="text"
-                  required
-                  placeholder="Aplicação de maratonas (Obrigatório)"
-                  size="sm"
-                  
-                />
-              </div>
-              <div class="sem-padding margem-l16 width-25">
-                <div class="mukta-m font-16 align-left weight-50">Tipo da proposta</div>
-                <b-form-select v-model="form.tipoProposta" :options="options" @change = "onChangeTipo"></b-form-select>    
-              </div>
-            </div>
-            <div class="d-flex sem-margens width-100 margem-t15">
-              <div class="sem-padding width-50">
-                <div class="mukta-m font-16 align-left weight-500 width-100">Objetivos e descrição da proposta</div>
-                <b-form-textarea
-                  id="textarea"
-                  v-model="form.descricaoProposta"
-                  class="opensans-l font-12 width-100 height-150"
-                  placeholder="Descreva sucintamente os objetivos do projeto e as principais atividades que o compõem. (Obrigatório)"
-                ></b-form-textarea>
-              </div>
-              <div class="sem-padding margem-l32 width-50">
-                <div class="mukta-m font-16 align-left weight-500 width-100">Plano provisório de trabalho</div>
-                <b-form-textarea
-                  id="textarea"
-                  v-model="form.planoProvisorio"
-                  class="opensans-l font-12 width-100 height-150"
-                  placeholder="Resuma o plano de trabalhos ao longo das 15 semanas do estágio/projeto. (Obrigatório)"
-                ></b-form-textarea>
-              </div>
-            </div>
-            <div class="d-flex sem-margens width-100 margem-t15">
-              <div class="sem-padding width-50">
-                <div class="mukta-m font-16 align-left weight-500">Resultados esperados</div>
-                <b-form-textarea
-                  id="textarea"
-                  v-model="form.resultadosEsperados"
-                  class="opensans-l font-12 height-150"
-                  placeholder="Descreva o que pretende obter no final do estágio/projeto. (Obrigatório)"
-                ></b-form-textarea>
-              </div>
-              <div class="sem-padding margem-l32 width-50">
-                <div class="mukta-m font-16 align-left weight-500">Perfil do candidato desejado</div>
-                <b-form-textarea
-                  id="textarea"
-                  v-model="form.perfilDesejado"
-                  class="opensans-l font-12 height-150"
-                  placeholder="Perfil desejado do candidato (competências, entre outras). (Obrigatório)"
-                ></b-form-textarea>
-              </div>
-            </div>
-            <div class="d-flex sem-margens width-100 margem-t15">
-              <div class="sem-padding width-50">
-                <div class="mukta-m font-16 align-left weight-500">Outros dados relevantes</div>
-                <b-form-textarea
-                  id="textarea"
-                  v-model="form.resultadosEsperados"
-                  class="opensans-l font-12 height-150"
-                  placeholder="Exemplo: o estudante tem que estar disponível aos fins de semana."
-                ></b-form-textarea>
-              </div>
-              <div class="sem-padding margem-l32 width-50">
-                <div class="mukta-m font-16 align-left weight-500">Recursos necessários</div>
-                <b-form-textarea
-                  id="textarea"
-                  v-model="form.perfilDesejado"
-                  class="opensans-l font-12 height-150"
-                  placeholder="Descreva necessidades específicas para o projeto como hardware e software necessário. (Obrigatório)"
-                ></b-form-textarea>
-              </div>
-            </div>
-          </div>
-
-          <div class="d-flex flex-column width-42">
-            <div class="d-flex flex-column justify-content-between fundo-ff borda-r5 borda-solida borda-w1 borda-bb padding-all8 margem-t32">
-              <div class="mukta-m font-16 align-left weight-500 margem-t7">Identificação da entidade acolhedora</div>
-              <div class="d-flex justify-content-between sem-margens width-100 margem-t7">
-                <div class="d-flex flex-column sem-padding width-50">
-                  <div class="mukta-m font-14 cor-60 align-left weight-500">Nome da Empresa</div>
-                  <b-form-input
-                    v-model="form.nomeEmpresa"
-                    class="width-input opensans-l font-12"
-                    type="text"
-                    placeholder=""
-                    size="sm"
-                    :disabled = "form.tipoProposta === 2"
-                  />
+          <b-form @submit.stop.prevent="onSubmit">
+            <div class="d-flex justify-content-between">
+              <div class="d-flex flex-column justify-content-between width-55">
+                <div class="d-flex align-align-items-start sem-margens width-100">
+                  <div class="sem-padding width-48">
+                    <div class="mukta-m fonte-16 align-left weight-500">Título da proposta *</div>
+                    <b-form-input
+                      v-model="form.tituloProposta"
+                      class="width-input opensans-l fonte-12"
+                      type="text"
+                      required
+                      placeholder="Aplicação de maratonas (Obrigatório)"
+                      size="sm"
+                    />
+                  </div>
+                  <div class="sem-padding margem-l32 width-25">
+                    <div class="mukta-m fonte-16 align-left">Tipo da proposta *</div>
+                    <b-form-select v-model="form.tipoProposta" class="mukta-m fonte-12 cor-60 align-left height-42" @change="onChangeTipo">
+                      <b-form-select-option v-for="tipo in tiposPropostas" :value="tipo.id_tipo" :label="tipo.proposta" :key="tipo.id_tipo">{{ tipo.proposta }}</b-form-select-option>
+                    </b-form-select>
+                  </div>
                 </div>
-                <div class="d-flex flex-column sem-padding width-50">
-                  <div class="mukta-m font-14 cor-60 font-16 align-left weight-500">Correio electrónico</div>
-                  <b-form-input
-                    v-model="form.correioElectronicoEmpresa"
-                    class="width-input opensans-l font-12"
-                    type="email"
-                    placeholder=""
-                    size="sm"
-                    :disabled = "form.tipoProposta === 2"
-                  />
+                <div class="d-flex sem-margens width-100">
+                  <div class="sem-padding width-48">
+                    <div class="mukta-m fonte-16 align-left weight-500 width-100">Objetivos e descrição da proposta *</div>
+                    <b-form-textarea
+                      id="textarea"
+                      v-model="form.descricaoProposta"
+                      class="opensans-l fonte-12 width-100 height-165"
+                      placeholder="Descreva sucintamente os objetivos do projeto e as principais atividades que o compõem. (Obrigatório)"
+                      required
+                    />
+                  </div>
+                  <div class="sem-padding margem-l32 width-48">
+                    <div class="mukta-m fonte-16 align-left weight-500 width-100">Plano provisório de trabalho *</div>
+                    <b-form-textarea
+                      id="textarea"
+                      v-model="form.planoProvisorio"
+                      class="opensans-l fonte-12 width-100 height-165"
+                      placeholder="Resuma o plano de trabalhos ao longo das 15 semanas do estágio/projeto. (Obrigatório)"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="d-flex sem-margens width-100">
+                  <div class="sem-padding width-48">
+                    <div class="mukta-m fonte-16 align-left weight-500">Resultados esperados *</div>
+                    <b-form-textarea
+                      id="textarea"
+                      v-model="form.resultadosEsperados"
+                      class="opensans-l fonte-12 height-165"
+                      placeholder="Descreva o que pretende obter no final do estágio/projeto. (Obrigatório)"
+                      required
+                    />
+                  </div>
+                  <div class="sem-padding margem-l32 width-48">
+                    <div class="mukta-m fonte-16 align-left weight-500">Perfil do candidato desejado *</div>
+                    <b-form-textarea
+                      id="textarea"
+                      v-model="form.perfilDesejado"
+                      class="opensans-l fonte-12 height-165"
+                      placeholder="Perfil desejado do candidato (competências, entre outras). (Obrigatório)"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="d-flex sem-margens width-100">
+                  <div class="sem-padding width-48">
+                    <div class="mukta-m fonte-16 align-left weight-500">Outros dados relevantes *</div>
+                    <b-form-textarea
+                      id="textarea"
+                      v-model="form.outrosDados"
+                      class="opensans-l fonte-12 height-165"
+                      placeholder="Exemplo: o estudante tem que estar disponível aos fins de semana. (Obrigatório)"
+                      required
+                    />
+                  </div>
+                  <div class="sem-padding margem-l32 width-48">
+                    <div class="mukta-m fonte-16 align-left weight-500">Recursos necessários *</div>
+                    <b-form-textarea
+                      id="textarea"
+                      v-model="form.recursosNecessarios"
+                      class="opensans-l fonte-12 height-165"
+                      placeholder="Descreva necessidades específicas para o projeto como hardware e software necessário. (Obrigatório)"
+                      required
+                    />
+                  </div>
                 </div>
               </div>
-              <div class="d-flex justify-content-between sem-margens width-100 margem-t7">
-                <div class="d-flex flex-column sem-padding width-50">
-                  <div class="mukta-m font-14 cor-60 align-left weight-500">Morada da Empresa</div>
-                  <b-form-input
-                    v-model="form.moradaEmpresa"
-                    class="width-input opensans-l font-12"
-                    type="text"
-                    placeholder=""
-                    size="sm"
-                    :disabled = "form.tipoProposta === 2"
-                  />
+              <div class="d-flex flex-column width-42">
+                <div class="d-flex flex-column justify-content-between fundo-ff borda-r5 borda-solida borda-w1 borda-bb padding-all8 margem-t32">
+                  <div class="mukta-m fonte-16 align-left weight-500 margem-t7">Identificação da entidade acolhedora</div>
+                  <div class="d-flex justify-content-between sem-margens width-100 margem-t7">
+                    <div class="d-flex flex-column sem-padding width-48">
+                      <div class="mukta-m fonte-14 cor-60 align-left weight-500">Nome da Empresa</div>
+                      <b-form-input
+                        v-model="form.nomeEmpresa"
+                        class="width-input opensans-l fonte-12"
+                        type="text"
+                        placeholder=""
+                        size="sm"
+                        :disabled="form.tipoProposta === 0"
+                      />
+                    </div>
+                    <div class="d-flex flex-column sem-padding width-48">
+                      <div class="mukta-m fonte-14 cor-60 fonte-16 align-left weight-500">Correio electrónico</div>
+                      <b-form-input
+                        v-model="form.correioElectronicoEmpresa"
+                        class="width-input opensans-l fonte-12"
+                        type="email"
+                        placeholder=""
+                        size="sm"
+                        :disabled="form.tipoProposta === 0"
+                      />
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-between sem-margens width-100 margem-t7">
+                    <div class="d-flex flex-column sem-padding width-48">
+                      <div class="mukta-m fonte-14 cor-60 align-left weight-500">Morada da Empresa</div>
+                      <b-form-input
+                        v-model="form.moradaEmpresa"
+                        class="width-input opensans-l fonte-12"
+                        type="text"
+                        placeholder=""
+                        size="sm"
+                        :disabled="form.tipoProposta === 0"
+                      />
+                    </div>
+                    <div class="d-flex flex-column sem-padding width-48">
+                      <div class="mukta-m fonte-14 cor-60 fonte-16 align-left weight-500">Website</div>
+                      <b-form-input
+                        v-model="form.website"
+                        class="width-input opensans-l fonte-12"
+                        type="email"
+                        placeholder=""
+                        size="sm"
+                        :disabled="form.tipoProposta === 0"
+                      />
+                    </div>
+                  </div>
+                  <div class="fundo-aa height-2 width-100 margem-t15"></div>
+                  <div class="mukta-m fonte-16 align-left weight-500 margem-t15">Tutor da entidade acolhedora</div>
+                  <div class="d-flex justify-content-between sem-margens width-100 margem-t7">
+                    <div class="d-flex flex-column sem-padding width-48">
+                      <div class="mukta-m fonte-14 cor-60 align-left weight-500">Nome e apelido do tutor</div>
+                      <b-form-input
+                        v-model="form.nomeApelidoTutor"
+                        class="width-input opensans-l fonte-12"
+                        type="text"
+                        placeholder=""
+                        size="sm"
+                        :disabled="form.tipoProposta === 0"
+                      />
+                    </div>
+                    <div class="d-flex flex-column sem-padding width-48">
+                      <div class="mukta-m fonte-14 cor-60 fonte-16 align-left weight-500">Correio electrónico</div>
+                      <b-form-input
+                        v-model="form.correioElectronicoTutor"
+                        class="width-input opensans-l fonte-12"
+                        type="email"
+                        placeholder=""
+                        size="sm"
+                        :disabled="form.tipoProposta === 0"
+                      />
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-between sem-margens width-100 margem-t7">
+                    <div class="d-flex flex-column sem-padding width-48">
+                      <div class="mukta-m fonte-14 cor-60 align-left weight-500">Cargo na Empresa</div>
+                      <b-form-input
+                        v-model="form.cargoEmpresa"
+                        class="width-input opensans-l fonte-12"
+                        type="text"
+                        placeholder=""
+                        size="sm"
+                        :disabled="form.tipoProposta === 0"
+                      />
+                    </div>
+                    <div class="d-flex flex-column sem-padding width-48">
+                      <div class="mukta-m fonte-14 cor-60 fonte-16 align-left weight-500">Contacto telefónico</div>
+                      <b-form-input
+                        v-model="form.contactoTelefonico"
+                        class="width-input opensans-l fonte-12"
+                        type="email"
+                        placeholder=""
+                        size="sm"
+                        :disabled="form.tipoProposta === 0"
+                      />
+                    </div>
+                  </div>
                 </div>
-                <div class="d-flex flex-column sem-padding width-50">
-                  <div class="mukta-m font-14 cor-60 font-16 align-left weight-500">Website</div>
-                  <b-form-input
-                    v-model="form.website"
-                    class="width-input opensans-l font-12"
-                    type="email"
-                    placeholder=""
-                    size="sm"
-                    :disabled = "form.tipoProposta === 2"
-                  />
+                <div class="fundo-ff borda-r5 borda-solida borda-w1 borda-bb padding-all8 margem-t7">
+                  <p class="align-left fonte-13 cor-60 sem-margens">Por favor, preencha os campos com dados legítimos e corretos. A nossa plataforma não se responsabiliza por enganos no caso de dados falsos e/ou incorretos.<br />Cada proposta submetida, seja este estágio ou projeto, passa por verificação e validação por parte de uma comissão de docentes responsáveis pela Licenciatura de Tecnologias e Sistemas de Informação para a Web da Escola Superior de Media Artes e Design.</p>
                 </div>
-              </div>
-              <div class="fundo-aa height-2 width-100 margem-t15"></div>
-              <div class="mukta-m font-16 align-left weight-500 margem-t15">Tutor da entidade acolhedora</div>
-              <div class="d-flex justify-content-between sem-margens width-100 margem-t7">
-                <div class="d-flex flex-column sem-padding width-50">
-                  <div class="mukta-m font-14 cor-60 align-left weight-500">Nome e apelido do tutor</div>
-                  <b-form-input
-                    v-model="form.nomeApelidoTutor"
-                    class="width-input opensans-l font-12"
-                    type="text"
+                <div class="d-flex align-bottom margem-t7 align-left">
+                  <b-form-checkbox
+                    v-model="form.concordar"
+                    name="concordar"
+                    value="1"
+                    unchecked-value="0"
                     required
-                    placeholder=""
-                    size="sm"
-                    :disabled = "form.tipoProposta === 2"
                   />
+                  <div class="fonte-10 margem-t5">Concordo com os termos de funcionamento e a não responsabilização da plataforma em caso de dados incorretos.</div>
                 </div>
-                <div class="d-flex flex-column sem-padding width-50">
-                  <div class="mukta-m font-14 cor-60 font-16 align-left weight-500">Correio electrónico</div>
-                  <b-form-input
-                    v-model="form.correioElectronicoTutor"
-                    class="width-input opensans-l font-12"
-                    type="email"
+                <div class="d-flex align-bottom align-left">
+                  <b-form-checkbox
+                    v-model="form.confirmar"
+                    name="confirmar"
+                    value="1"
+                    unchecked-value="0"
                     required
-                    placeholder=""
-                    size="sm"
-                    :disabled = "form.tipoProposta === 2"
                   />
+                  <div class="fonte-10 margem-t5">Confirmo que os dados inseridos são legítimos e corretos.</div>
                 </div>
-              </div>
-              <div class="d-flex justify-content-between sem-margens width-100 margem-t7">
-                <div class="d-flex flex-column sem-padding width-50">
-                  <div class="mukta-m font-14 cor-60 align-left weight-500">Cargo na Empresa</div>
-                  <b-form-input
-                    v-model="form.cargoEmpresa"
-                    class="width-input opensans-l font-12"
-                    type="text"
-                    required
-                    placeholder=""
-                    size="sm"
-                    :disabled = "form.tipoProposta === 2"
-                  />
-                </div>
-                <div class="d-flex flex-column sem-padding width-50">
-                  <div class="mukta-m font-14 cor-60 font-16 align-left weight-500">Contacto telefónico</div>
-                  <b-form-input
-                    v-model="form.contactoTelefonico"
-                    class="width-input opensans-l font-12"
-                    type="email"
-                    required
-                    placeholder=""
-                    size="sm"
-                    :disabled = "form.tipoProposta === 2"
-                  />
-                </div>
+                <b-button type="submit" class="margem-t7 fundo-0084c0">Criar a proposta</b-button>
               </div>
             </div>
-            <div class="fundo-ff borda-r5 borda-solida borda-w1 borda-bb padding-all8 margem-t15">
-              <p class="align-left fonte-14 cor-60 sem-margens">Por favor, preencha os campos com dados legítimos e corretos. A nossa plataforma não se responsabiliza por enganos no caso de dados falsos e/ou incorretos.<br />Cada proposta submetida, seja este estágio ou projeto, passa por verificação e validação por parte de uma comissão de docentes responsáveis pela Licenciatura de Tecnologias e Sistemas de Informação para a Web da Escola Superior de Media Artes e Design.</p>
-            </div>
-            <div class="d-flex align-bottom margem-t7 align-left">
-              <b-form-checkbox
-                v-model="form.concordar"
-                name="concordar"
-                value="1"
-                unchecked-value="0"
-              />
-              <div class="fonte-10 margem-t5">Concordo com os termos de funcionamento e a não responsabilização da plataforma em caso de dados incorretos.</div>
-            </div>
-            <div class="d-flex align-bottom align-left">
-              <b-form-checkbox
-                v-model="form.confirmar"
-                name="confirmar"
-                value="1"
-                unchecked-value="0"
-              />
-              <div class="fonte-10 margem-t5">Confirmo que os dados inseridos são legítimos e corretos.</div>
-            </div>
-            <b-button class="margem-t15 fundo-0084c0" @click="onSubmit">Criar a proposta</b-button>
-          </div>
+          </b-form>
         </div>
       </div>
     </div>
@@ -232,7 +240,10 @@
 </template>
 
 <script>
-import SideBar from "@/components/SideBar.vue";
+import SideBar from "@/components/SideBar.vue"
+import { mapGetters, mapActions } from 'vuex'
+import moment from 'moment'
+
 export default {
   components: {
     SideBar
@@ -241,7 +252,7 @@ export default {
     return {
       form: {
         tituloProposta: '',
-        tipoProposta: 0,
+        tipoProposta: '',
         descricaoProposta: '',
         planoProvisorio: '',
         resultadosEsperados: '',
@@ -259,19 +270,34 @@ export default {
         concordar: 0,
         confirmar: 0
       },
-      options: [
-        { value: 0, text: 'Seleccione' },
-        { value: 1, text: 'Estágio' },
-        { value: 2, text: 'Projeto' },
-      ],
+      tiposPropostas: [],
+      utilizador: null
     }
   },
+  created() {
+    this.utilizador = this.obterUtilizadorAutenticado
+
+    if (this.utilizador.id_tipo == 0) {
+      this.tiposPropostas = [this.obterTipoPropostas()[0]]
+      this.form.tipoProposta = 0
+    } else if (this.utilizador.id_tipo == 1) {
+      this.tiposPropostas = this.obterTipoPropostas()
+      this.form.tipoProposta = 0
+    } else {
+      this.tiposPropostas = [this.obterTipoPropostas()[1]]
+      this.form.tipoProposta = 1
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'obterTipoPropostas',
+      'obterUtilizadorAutenticado',
+    ])
+  },
   methods: {
-    onSubmit() {
-      // TODO enviar os dados para a view de gerir propostas
-    },
-    onChangeTipo(){
-      if(this.form.tipoProposta === 2){
+    ...mapActions(['criarProposta']),
+    onChangeTipo() {
+      if(this.form.tipoProposta === 0) {
         this.form.nomeEmpresa = ''
         this.form.correioElectronicoEmpresa = ''
         this.form.moradaEmpresa = ''
@@ -281,6 +307,35 @@ export default {
         this.form.cargoEmpresa = ''
         this.form.contactoTelefonico = ''
       }
+    },
+    onSubmit(event) {
+      event.preventDefault()
+      let propostas = localStorage.getItem('propostas') ? JSON.parse(localStorage.getItem('propostas')) : null
+
+      const objProposta = {
+        id_estado: 0,
+        motivo: "",
+        id_criador: this.utilizador.id_utilizador,
+        id_docente: this.utilizador.id_tipo === 0 ? this.utilizador.id_utilizador : null,
+        id_tipo: this.form.tipoProposta,
+        titulo: this.form.tituloProposta,
+        objetivos: this.form.descricaoProposta,
+        planos: this.form.planoProvisorio,
+        resultados: this.form.resultadosEsperados,
+        perfil: this.form.perfilDesejado,
+        dados: this.form.outrosDados,
+        recursos: this.form.recursosNecessarios,
+        data_hora: moment().format("DD/MM/YYYY HH:mm"),
+        ano_letivo: "2020/2021"
+      }
+      if (propostas == null) {
+        objProposta.id_proposta = 0
+      } else {
+        const ultimaProposta = propostas[propostas.length - 1]
+        objProposta.id_proposta = ultimaProposta.id_proposta + 1
+      }
+      this.criarProposta(objProposta)
+      this.$router.push({name: 'Propostas'})
     }
   }
 };
@@ -291,5 +346,5 @@ export default {
 .area-navegacao-propostas a{color: #000000 !important; text-decoration: none;}
 .lista-propostas-link-btn{ height: 42px; padding: 0px 10px;  }
 .lista-propostas-link-btn:hover a{ color: #707070 !important; }
-.width-input{width: 95% !important;}
+.width-input{width: 100% !important;}
 </style>
