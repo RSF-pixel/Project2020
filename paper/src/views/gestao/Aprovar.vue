@@ -57,11 +57,28 @@
                   <td>{{proposta.tipo_criador}}</td>
                   <td>{{proposta.nome_criador}}</td>
                   <td>{{proposta.tipo_proposta}}</td>
-                  <td><a href="">Ver detalhes</a></td>
+                  <td><a v-b-modal.modalDetalhes @click="obterModalVerDetalhes(proposta.id)">Ver detalhes</a></td>
                   <td><button @click="aprovarProposta(proposta.id)">Aprovar</button><button @click="negarProposta(proposta.id)">Negar</button></td>
                 </tr>
               </table>
             </div>
+          </div>
+          <div>
+            <b-modal id="modalDetalhes" :title="dadosModal[0].titulo">
+              <p>Objetivos: {{dadosModal[0].objetivos}}</p>
+              <p>Plano Provisório: {{dadosModal[0].planos}}</p>
+              <p>Resultados Esperados: {{dadosModal[0].resultados}}</p>
+              <p>Perfil Desejado: {{dadosModal[0].perfil}}</p>
+              <p>Dados Relevantes: {{dadosModal[0].dados}}</p>
+              <p>Recursos Necessários: {{dadosModal[0].recursos}}</p>
+              <template v-if="dadosModal[0].id_tipo == 1">
+                <p>Empresa: {{dadosModal[2]}}</p>
+                <p>Nome Tutor: {{dadosModal[1].nome_tutor}}</p>
+                <p>Cargo Tutor: {{dadosModal[1].cargo_tutor}}</p>
+                <p>Contacto Tutor: {{dadosModal[1].contacto_tutor}}</p>
+                <p>Correio Tutor: {{dadosModal[1].correio_tutor}}</p>
+              </template>
+            </b-modal>
           </div>
         </div>
       </div>
@@ -78,6 +95,7 @@ export default {
   data() {
     return {
       select: "utilizadores",
+      dadosModal: [{titulo:""}]
     };
   },
   computed: {
@@ -100,6 +118,9 @@ export default {
     },
     negarProposta(id) {
       this.$store.dispatch("negarProposta", id);
+    },
+    obterModalVerDetalhes(id) {
+      this.dadosModal = this.$store.getters.obterModalVerDetalhes(id);
     }
   },
 };

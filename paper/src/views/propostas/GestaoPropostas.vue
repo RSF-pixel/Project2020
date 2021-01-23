@@ -11,7 +11,6 @@
           <th>Entidade acolhedora</th>
           <th>Tutor</th>
           <th>Estado</th>
-          <th>Detalhes</th>
           <th>Ações</th>
         </tr>
           <tr v-for="(proposta) in obterTabelaPropostasCriadas" :key="proposta.id">              
@@ -20,7 +19,6 @@
             <td>{{proposta.entidade}}</td>
             <td>{{proposta.tutor}}</td>
             <td>{{proposta.estado}}</td>
-            <td><a href="">Ver detalhes</a></td>
             <td><button @click="removerProposta(proposta.id)">Remover</button></td>
           </tr>
       </table>
