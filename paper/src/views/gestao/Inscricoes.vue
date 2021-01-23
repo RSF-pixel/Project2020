@@ -27,15 +27,15 @@
                 <th>Detalhes</th>
                 <th>Ações</th>
               </tr>
-                <tr v-for="(inscricoes) in obterTabelaInscricoes" :key="inscricoes.id">              
-                  <td>{{inscricoes.id}}</td>
-                  <td>{{inscricoes.nome_inscrito}}</td>
-                  <td>{{inscricoes.tipo_proposta}}</td>
-                  <td>{{inscricoes.entidade}}</td>
-                  <td>{{inscricoes.tutor}}</td>
-                  <td><a href="">Ver detalhes</a></td>
-                  <td><button @click="AprovarInscricao(proposta.id)">Aprovar</button><button @click="negarInscricao(proposta.id)">Negar</button></td>
-                </tr>
+              <tr v-for="(inscricoes) in obterTabelaInscricoes" :key="inscricoes.id">              
+                <td>{{inscricoes.id}}</td>
+                <td>{{inscricoes.nome_inscrito}}</td>
+                <td>{{inscricoes.tipo_proposta}}</td>
+                <td>{{inscricoes.entidade}}</td>
+                <td>{{inscricoes.tutor}}</td>
+                <td><a href="">Ver detalhes</a></td>
+                <td><button @click="aprovarInscricao(inscricoes.id)">Aprovar</button><button @click="negarInscricao(inscricoes.id)">Negar</button></td>
+              </tr>
             </table>
           </div>
         </div>
@@ -56,11 +56,11 @@ export default {
     }
   },
   methods: {
-    AprovarInscricao(id) {
-      alert("aprovado " + id);
+    aprovarInscricao(id) {
+      this.$store.dispatch("aprovarInscricao", id)
     },
     negarInscricao(id) {
-      alert("negado " + id);
+      this.$store.dispatch("negarInscricao", id)
     },
   }
 };
