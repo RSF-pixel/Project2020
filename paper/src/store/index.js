@@ -66,6 +66,23 @@ export default new Vuex.Store({
         recursos: "",
         data_hora: "",
         ano_letivo: ""
+      },
+      {
+        id_proposta: 1,
+        id_estado: 0,
+        motivo: "",
+        id_criador: 0,
+        id_docente: 0,
+        id_tipo: 0,
+        titulo: "Swift",
+        objetivos: "",
+        planos: "",
+        resultados: "",
+        perfil: "",
+        dados: "",
+        recursos: "",
+        data_hora: "",
+        ano_letivo: ""
       }
     ],
     empresas: localStorage.getItem('empresas') ? JSON.parse(localStorage.getItem('empresas')) : [
@@ -94,6 +111,14 @@ export default new Vuex.Store({
         id_proposta: 0,
         id_estado: 0,
         preferencia: 1,
+        ano_letivo: ""
+      },
+      {
+        id_inscricao: 1,
+        id_utilizador: 0,
+        id_proposta: 1,
+        id_estado: 0,
+        preferencia: 2,
         ano_letivo: ""
       }
     ],
@@ -351,6 +376,30 @@ export default new Vuex.Store({
     NEGARINSCRICAO(state, payload) {
       state.inscricoes = state.inscricoes.filter(inscricao =>
         inscricao.id_inscricao != payload);
+    },
+    REMOVERPROPOSTA(state, payload) {
+      state.propostas = state.propostas.filter(proposta =>
+        proposta.id_proposta != payload);
+    },
+    REMOVERINSCRICAO(state, payload) {
+      state.inscricoes = state.inscricoes.filter(inscricao =>
+        inscricao.id_inscricao != payload);
+    },
+    AUMENTARORDEM(state, payload) {
+      state.inscricoes = state.inscricoes.map(inscricao => {
+        if (inscricao.id_inscricao == payload) {
+          inscricao.preferencia--;
+        }
+        return inscricao;
+      })
+    },
+    DIMINUIRORDEM(state, payload) {
+      state.inscricoes = state.inscricoes.map(inscricao => {
+        if (inscricao.id_inscricao == payload) {
+          inscricao.preferencia++;
+        }
+        return inscricao;
+      })
     }
   },
   actions: {
@@ -433,6 +482,42 @@ export default new Vuex.Store({
     },
     negarInscricao(context, payload) {
       context.commit('NEGARINSCRICAO', payload);
+      localStorage.setItem('inscricoes', JSON.stringify(context.state.inscricoes));
+    },
+    removerProposta(context, payload) {
+      context.commit('REMOVERPROPOSTA', payload);
+      context.state.inscricoes.forEach(inscricao => {
+        if (inscricao.id_proposta === payload) {
+          context.dispatch("removerInscricao", inscricao.id_inscricao)
+        }
+      });
+      localStorage.setItem('propostas', JSON.stringify(context.state.propostas));
+    },
+    removerInscricao(context, payload) {
+      const insc = context.state.inscricoes.find(i => i.id_inscricao == payload);
+      context.commit('REMOVERINSCRICAO', payload);
+      for (let index = insc.preferencia; index <= 5; index++) {
+        try {
+          const id = context.state.inscricoes.find(i => i.id_utilizador == insc.id_utilizador && i.preferencia == insc.preferencia+1).id_inscricao
+          context.commit('AUMENTARORDEM', id);
+        } catch (error) {
+          break;
+        }
+      }
+      localStorage.setItem('inscricoes', JSON.stringify(context.state.inscricoes));
+    },
+    aumentarOrdem(context, payload) {
+      const insc = context.state.inscricoes.find(i => i.id_inscricao == payload);
+      const id = context.state.inscricoes.find(i => i.id_utilizador == insc.id_utilizador && i.preferencia == insc.preferencia-1).id_inscricao
+      context.commit('AUMENTARORDEM', payload);
+      context.commit('DIMINUIRORDEM', id);
+      localStorage.setItem('inscricoes', JSON.stringify(context.state.inscricoes));
+    },
+    diminuirOrdem(context, payload) {
+      const insc = context.state.inscricoes.find(i => i.id_inscricao == payload);
+      const id = context.state.inscricoes.find(i => i.id_utilizador == insc.id_utilizador && i.preferencia == insc.preferencia+1).id_inscricao
+      context.commit('DIMINUIRORDEM', payload);
+      context.commit('AUMENTARORDEM', id);
       localStorage.setItem('inscricoes', JSON.stringify(context.state.inscricoes));
     }
   }
