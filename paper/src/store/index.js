@@ -58,12 +58,12 @@ export default new Vuex.Store({
         id_docente: 0,
         id_tipo: 0,
         titulo: "Paper",
-        objetivos: "",
-        planos: "",
-        resultados: "",
-        perfil: "",
-        dados: "",
-        recursos: "",
+        objetivos: "Passar",
+        planos: "Plataforma Projetos",
+        resultados: "Bons",
+        perfil: "Qualquer um",
+        dados: "Nada",
+        recursos: "VSCode",
         data_hora: "",
         ano_letivo: ""
       },
@@ -73,7 +73,7 @@ export default new Vuex.Store({
         motivo: "",
         id_criador: 0,
         id_docente: 0,
-        id_tipo: 0,
+        id_tipo: 1,
         titulo: "Swift",
         objetivos: "",
         planos: "",
@@ -96,7 +96,7 @@ export default new Vuex.Store({
     ],
     estagios: localStorage.getItem('estagios') ? JSON.parse(localStorage.getItem('estagios')) : [
       {
-        id_proposta: 0,
+        id_proposta: 1,
         id_empresa: 0,
         nome_tutor: "Jorge Cunha",
         contacto_tutor: "",
@@ -233,7 +233,8 @@ export default new Vuex.Store({
             tipo_proposta: tipo_proposta,
             entidade: estagio != null ?
               state.empresas.find(emp => emp.id_empresa == estagio.id_empresa).nome : "---",
-            tutor: estagio != null ? estagio.nome_tutor : "---"
+            tutor: estagio != null ? estagio.nome_tutor : "---",
+            id_proposta: proposta.id_proposta
           }
           tabela.push(dados);
         }
@@ -283,6 +284,16 @@ export default new Vuex.Store({
         }
       });
       return tabela;
+    },
+    obterModalVerDetalhes: (state) => (id) => {
+      const dados = []
+      dados.push(state.propostas.find(p => p.id_proposta == id));
+      if (dados[0].id_tipo == "1") {
+        const estagio = state.estagios.find(e => e.id_proposta == id)
+        dados.push(estagio);
+        dados.push(state.empresas.find(e => e.id_empresa == estagio.id_empresa).nome);
+      }
+      return dados;
     }
   },
   mutations: {
