@@ -48,7 +48,6 @@ export default new Vuex.Store({
       data: "",
       hora: "",
       detalhes: "",
-      ano_letivo: ""
     },
     propostas: localStorage.getItem('propostas') ? JSON.parse(localStorage.getItem('propostas')) : [
       {
@@ -197,20 +196,22 @@ export default new Vuex.Store({
     obterTabelaInscricoes: (state) => {
       const tabela = [];
       state.inscricoes.forEach(inscricao => {
-        const inscrito = state.utilizadores.find(u => inscricao.id_utilizador == u.id_utilizador);
-        const proposta = state.propostas.find(p => inscricao.id_proposta == p.id_proposta);
-        const tipo_proposta = state.tipo_propostas.find(t => proposta.id_tipo == t.id_tipo).proposta;
-        const estagio = tipo_proposta == 'Estágio' ?
-          state.estagios.find(est => est.id_proposta == proposta.id_proposta) : null;
-        const dados = {
-          id: inscricao.id_proposta,
-          nome_inscrito: inscrito.nome + " " + inscrito.apelido,
-          tipo_proposta: tipo_proposta,
-          entidade: estagio != null ?
-            state.empresas.find(emp => emp.id_empresa == estagio.id_empresa).nome : "---",
-          tutor: estagio != null ? estagio.nome_tutor : "---"
+        if (inscricao.id_estado == 0) {
+          const inscrito = state.utilizadores.find(u => inscricao.id_utilizador == u.id_utilizador);
+          const proposta = state.propostas.find(p => inscricao.id_proposta == p.id_proposta);
+          const tipo_proposta = state.tipo_propostas.find(t => proposta.id_tipo == t.id_tipo).proposta;
+          const estagio = tipo_proposta == 'Estágio' ?
+            state.estagios.find(est => est.id_proposta == proposta.id_proposta) : null;
+          const dados = {
+            id: inscricao.id_proposta,
+            nome_inscrito: inscrito.nome + " " + inscrito.apelido,
+            tipo_proposta: tipo_proposta,
+            entidade: estagio != null ?
+              state.empresas.find(emp => emp.id_empresa == estagio.id_empresa).nome : "---",
+            tutor: estagio != null ? estagio.nome_tutor : "---"
+          }
+          tabela.push(dados);
         }
-        tabela.push(dados);
       });
       return tabela;
     },
@@ -338,6 +339,18 @@ export default new Vuex.Store({
         }
         return utilizador;
       })
+    },
+    APROVARINSCRICAO(state, payload) {
+      state.inscricoes = state.inscricoes.map(inscricao => {
+        if (inscricao.id_inscricao == payload) {
+          inscricao.id_estado = 1;
+        }
+        return inscricao;
+      })
+    },
+    NEGARINSCRICAO(state, payload) {
+      state.inscricoes = state.inscricoes.filter(inscricao =>
+        inscricao.id_inscricao != payload);
     }
   },
   actions: {
@@ -413,6 +426,14 @@ export default new Vuex.Store({
     removerCCA(context, payload) {
       context.commit('REMOVERCCA', payload);
       localStorage.setItem('utilizadores', JSON.stringify(context.state.utilizadores));
+    },
+    aprovarInscricao(context, payload) {
+      context.commit('APROVARINSCRICAO', payload);
+      localStorage.setItem('inscricoes', JSON.stringify(context.state.inscricoes));
+    },
+    negarInscricao(context, payload) {
+      context.commit('NEGARINSCRICAO', payload);
+      localStorage.setItem('inscricoes', JSON.stringify(context.state.inscricoes));
     }
   }
 });
