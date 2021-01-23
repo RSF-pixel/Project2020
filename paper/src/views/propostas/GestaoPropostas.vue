@@ -29,7 +29,7 @@
       <h3>Propostas inscritas pelo utilizador</h3>
       <table>
         <tr>
-          <th>Ordem</th>
+          <th>Preferência</th>
           <th>Tipo</th>
           <th>Título</th>
           <th>Entidade acolhedora</th>
@@ -37,7 +37,7 @@
           <th>Estado</th>
           <th>Ações</th>
         </tr>
-          <tr v-for="(proposta) in obterTabelaPropostasInscritas" :key="proposta.id">
+          <tr v-for="(proposta) in obterTabelaPropostasInscritas" :key="proposta.ordem">
             <td>{{proposta.ordem}}</td>
             <td>{{proposta.tipo}}</td>
             <td>{{proposta.titulo}}</td>
@@ -45,9 +45,9 @@
             <td>{{proposta.tutor}}</td>
             <td>{{proposta.estado}}</td>
             <td>
-              <button @click="aumentarOrdem(proposta.id)">^</button>
-              <button @click="diminuirOrdem(proposta.id)">v</button>
-              <button @click="removerProposta(proposta.id)">Remover</button>
+              <button @click="aumentarOrdem(proposta.id)" :disabled="proposta.ordem == 1">^</button>
+              <button @click="diminuirOrdem(proposta.id)" :disabled="proposta.ordem == obterTabelaPropostasInscritas.length">v</button>
+              <button @click="removerInscricao(proposta.id)">Remover</button>
             </td>
           </tr>
       </table>
@@ -71,13 +71,16 @@ export default {
   },
   methods: {
     removerProposta(id) {
-      alert("removido " + id);
+      this.$store.dispatch("removerProposta", id)
+    },
+    removerInscricao(id) {
+      this.$store.dispatch("removerInscricao", id)
     },
     aumentarOrdem(id) {
-      alert("aumentado " + id)
+      this.$store.dispatch("aumentarOrdem", id)
     },
     diminuirOrdem(id) {
-      alert("diminuido " + id)
+      this.$store.dispatch("diminuirOrdem", id)
     }
   }
 };
