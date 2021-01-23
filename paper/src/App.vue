@@ -15,24 +15,30 @@
 /* Fundo de todas as páginas */
   html, body, #app, .container-autenticacao-registo, .view{height: 100%; background-color: #e7e7e7; min-height: 754px; min-width: 400px;} 
 /* Margens */
-  .sem-margens{margin: 0px 0px;}
+  .sem-margens{margin: 0px;}
   .margem-l5{margin-left: 5px;}
+  .margem-l16{margin-left: 16px;}
+  .margem-l32{margin-left: 32px;}
+  .margem-t5{margin-top: 5px;}
   .margem-t7{margin-top: 7px;}
   .margem-t15{margin-top: 15px;}
+  .margem-t32{margin-top: 32px;}
   .margem-b10{margin-bottom: 10px;}
   .margem-b20{margin-bottom: 20px;}
   .margem-b30{margin-bottom: 30px;}
   .margem-x5{margin: 0px 5px;}
   .margem-x10{margin: 0px 10px;}
   .margem-y8{margin: 8px 0px;}
-  .margem-all4{margin: 4px 4px;}
-  .margem-all50{margin: 50px 50px;}
+  .margem-all4{margin: 4px;}
+  .margem-all8{margin: 8px;}
+  .margem-all50{margin: 50px;}
 /* Paddings */
   .padding-t8{padding-top: 8px;}
   .padding-l4{padding-left: 4px;}
   .padding-l8{padding-left: 8px;}
   .padding-all4{padding: 4px 4px;}
   .padding-all8{padding: 8px 8px;}
+  .sem-padding{padding: 0px !important;}
 /* Paleta de cores */
   /* Fundos */
   .fundo-20{background-color: #202020;}
@@ -63,6 +69,7 @@
   .fundo-e33131{background-color: #e33131;}
   /* Textos e outros */
   .cor-20{color: #202020;}
+  .cor-30{color: #303030;}
   .cor-40{color: #404040;}
   .cor-60{color: #606060;}
   .cor-70{color: #707070;}
@@ -99,7 +106,32 @@
   .fonte-12{font-size: 12px;}
   .fonte-14{font-size: 14px;}
   .fonte-16{font-size: 16px;}
+  .fonte-18{font-size: 18px;}
   .fonte-24{font-size: 24px;}
+
+  /*Align*/
+  .align-left{text-align: left;}
+
+  /*Bold*/
+  .weight-500{font-weight: 500;}
+
+  /*Width*/
+  .width-25{width: 25%;}
+  .width-30{width: 30%;}
+  .width-35{width: 35%;}
+  .width-42{width: 42%;}
+  .width-45{width: 45%;}
+  .width-50{width: 50%;}
+  .width-55{width: 55%;}
+  .width-100{width: 100% !important;}
+
+  /*Height*/
+  .height-2{height: 2px !important;}
+  .height-150{height: 150px !important;}
+
+  /*Placeholder*/
+  ::placeholder{font-size: 12px;}
+
 
 /* Bordas */
   /* Estilo */ 

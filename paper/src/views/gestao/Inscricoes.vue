@@ -27,6 +27,15 @@
                 <th>Detalhes</th>
                 <th>Ações</th>
               </tr>
+                <tr v-for="(inscricoes) in obterTabelaInscricoes" :key="inscricoes.id">              
+                  <td>{{inscricoes.id}}</td>
+                  <td>{{inscricoes.nome_inscrito}}</td>
+                  <td>{{inscricoes.tipo_proposta}}</td>
+                  <td>{{inscricoes.entidade}}</td>
+                  <td>{{inscricoes.tutor}}</td>
+                  <td><a href="">Ver detalhes</a></td>
+                  <td><button @click="AprovarInscricao(proposta.id)">Aprovar</button><button @click="negarInscricao(proposta.id)">Negar</button></td>
+                </tr>
             </table>
           </div>
         </div>
@@ -41,6 +50,19 @@ export default {
   components: {
     SideBar,
   },
+  computed: {
+    obterTabelaInscricoes() {
+      return this.$store.getters.obterTabelaInscricoes;
+    }
+  },
+  methods: {
+    AprovarInscricao(id) {
+      alert("aprovado " + id);
+    },
+    negarInscricao(id) {
+      alert("negado " + id);
+    },
+  }
 };
 </script>
 
