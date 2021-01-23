@@ -19,8 +19,10 @@
   .margem-l5{margin-left: 5px;}
   .margem-l16{margin-left: 16px;}
   .margem-l32{margin-left: 32px;}
+  .margem-t5{margin-top: 5px;}
   .margem-t7{margin-top: 7px;}
   .margem-t15{margin-top: 15px;}
+  .margem-t32{margin-top: 32px;}
   .margem-b10{margin-bottom: 10px;}
   .margem-b20{margin-bottom: 20px;}
   .margem-b30{margin-bottom: 30px;}
@@ -114,10 +116,17 @@
   .weight-500{font-weight: 500;}
 
   /*Width*/
+  .width-25{width: 25%;}
+  .width-30{width: 30%;}
+  .width-35{width: 35%;}
+  .width-42{width: 42%;}
+  .width-45{width: 45%;}
   .width-50{width: 50%;}
+  .width-55{width: 55%;}
   .width-100{width: 100% !important;}
 
   /*Height*/
+  .height-2{height: 2px !important;}
   .height-150{height: 150px !important;}
 
   /*Placeholder*/
