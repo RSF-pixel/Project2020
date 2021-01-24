@@ -42,6 +42,27 @@ export default new Vuex.Store({
         github: null,
         discord: null,
         ano: "2020/2021"
+      },
+      { 
+        id_utilizador: 1,
+        id_estado: 1,
+        nome: "Admin",
+        apelido: "Paper",
+        correio: "admin@gmail.com",
+        passe: "Esmad_2021",
+        id_tipo: 0,
+        numero_estudante: null,
+        nome_empresa: null,
+        cca: true,
+        foto: "https://www.tenforums.com/geek/gars/images/2/types/thumb_15951118880user.png",
+        inscricao: null,
+        cv: null,
+        portfolio: null,
+        facebook: null,
+        instagram: null,
+        github: null,
+        discord: null,
+        ano: "2020/2021"
       }
     ],
     agenda: {
