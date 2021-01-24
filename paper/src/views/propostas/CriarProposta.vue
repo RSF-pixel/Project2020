@@ -109,7 +109,7 @@
                   <div class="mukta-m fonte-16 align-left weight-500 margem-t7">Identificação da entidade acolhedora</div>
                   <div class="d-flex justify-content-between sem-margens width-100 margem-t7">
                     <div class="d-flex flex-column sem-padding width-48">
-                      <div class="mukta-m fonte-14 cor-60 align-left weight-500">Nome da Empresa</div>
+                      <div class="mukta-m fonte-14 cor-60 align-left weight-500">Nome da Empresa *</div>
                       <b-form-input
                         v-model="form.nomeEmpresa"
                         class="width-input opensans-l fonte-12"
@@ -117,10 +117,11 @@
                         placeholder=""
                         size="sm"
                         :disabled="form.tipoProposta === 0"
+                        required
                       />
                     </div>
                     <div class="d-flex flex-column sem-padding width-48">
-                      <div class="mukta-m fonte-14 cor-60 fonte-16 align-left weight-500">Correio electrónico</div>
+                      <div class="mukta-m fonte-14 cor-60 fonte-16 align-left weight-500">Correio electrónico *</div>
                       <b-form-input
                         v-model="form.correioElectronicoEmpresa"
                         class="width-input opensans-l fonte-12"
@@ -128,12 +129,13 @@
                         placeholder=""
                         size="sm"
                         :disabled="form.tipoProposta === 0"
+                        required
                       />
                     </div>
                   </div>
                   <div class="d-flex justify-content-between sem-margens width-100 margem-t7">
                     <div class="d-flex flex-column sem-padding width-48">
-                      <div class="mukta-m fonte-14 cor-60 align-left weight-500">Morada da Empresa</div>
+                      <div class="mukta-m fonte-14 cor-60 align-left weight-500">Morada da Empresa *</div>
                       <b-form-input
                         v-model="form.moradaEmpresa"
                         class="width-input opensans-l fonte-12"
@@ -141,17 +143,19 @@
                         placeholder=""
                         size="sm"
                         :disabled="form.tipoProposta === 0"
+                        required
                       />
                     </div>
                     <div class="d-flex flex-column sem-padding width-48">
-                      <div class="mukta-m fonte-14 cor-60 fonte-16 align-left weight-500">Website</div>
+                      <div class="mukta-m fonte-14 cor-60 fonte-16 align-left weight-500">Website *</div>
                       <b-form-input
                         v-model="form.website"
                         class="width-input opensans-l fonte-12"
-                        type="email"
+                        type="url"
                         placeholder=""
                         size="sm"
                         :disabled="form.tipoProposta === 0"
+                        required
                       />
                     </div>
                   </div>
@@ -159,7 +163,7 @@
                   <div class="mukta-m fonte-16 align-left weight-500 margem-t15">Tutor da entidade acolhedora</div>
                   <div class="d-flex justify-content-between sem-margens width-100 margem-t7">
                     <div class="d-flex flex-column sem-padding width-48">
-                      <div class="mukta-m fonte-14 cor-60 align-left weight-500">Nome e apelido do tutor</div>
+                      <div class="mukta-m fonte-14 cor-60 align-left weight-500">Nome e apelido do tutor *</div>
                       <b-form-input
                         v-model="form.nomeApelidoTutor"
                         class="width-input opensans-l fonte-12"
@@ -167,10 +171,11 @@
                         placeholder=""
                         size="sm"
                         :disabled="form.tipoProposta === 0"
+                        required
                       />
                     </div>
                     <div class="d-flex flex-column sem-padding width-48">
-                      <div class="mukta-m fonte-14 cor-60 fonte-16 align-left weight-500">Correio electrónico</div>
+                      <div class="mukta-m fonte-14 cor-60 fonte-16 align-left weight-500">Correio electrónico *</div>
                       <b-form-input
                         v-model="form.correioElectronicoTutor"
                         class="width-input opensans-l fonte-12"
@@ -178,12 +183,13 @@
                         placeholder=""
                         size="sm"
                         :disabled="form.tipoProposta === 0"
+                        required
                       />
                     </div>
                   </div>
                   <div class="d-flex justify-content-between sem-margens width-100 margem-t7">
                     <div class="d-flex flex-column sem-padding width-48">
-                      <div class="mukta-m fonte-14 cor-60 align-left weight-500">Cargo na Empresa</div>
+                      <div class="mukta-m fonte-14 cor-60 align-left weight-500">Cargo na Empresa *</div>
                       <b-form-input
                         v-model="form.cargoEmpresa"
                         class="width-input opensans-l fonte-12"
@@ -191,17 +197,19 @@
                         placeholder=""
                         size="sm"
                         :disabled="form.tipoProposta === 0"
+                        required
                       />
                     </div>
                     <div class="d-flex flex-column sem-padding width-48">
-                      <div class="mukta-m fonte-14 cor-60 fonte-16 align-left weight-500">Contacto telefónico</div>
+                      <div class="mukta-m fonte-14 cor-60 fonte-16 align-left weight-500">Contacto telefónico *</div>
                       <b-form-input
                         v-model="form.contactoTelefonico"
                         class="width-input opensans-l fonte-12"
-                        type="email"
+                        type="number"
                         placeholder=""
                         size="sm"
                         :disabled="form.tipoProposta === 0"
+                        required
                       />
                     </div>
                   </div>
