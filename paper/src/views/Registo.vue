@@ -92,6 +92,7 @@ export default {
           id_tipo: this.utilizador.tipo_utilizador,
           numero_estudante: this.utilizador.numero_estudante,
           nome_empresa: this.utilizador.nome_empresa,
+          cca: false,
           foto: "https://lh3.googleusercontent.com/-4yFaWmS7-Pg/X_xzGKwqwHI/AAAAAAAAAAY/L78mg1HQzvELjdvv5xiLqZT6keuBmoGSACMICGAYYCw/s83-c/foto_default.png",
           inscricao: null,
           cv: null,
@@ -103,6 +104,7 @@ export default {
           ano: ""
         }
         const empresa = this.utilizador.tipo_utilizador == 2 ? {
+          id_empresa: this.$store.getters.proximoIDEmpresa,
           nome: this.utilizador.nome_empresa,
           correio: this.utilizador.correio_empresa,
           morada: this.utilizador.morada_empresa,

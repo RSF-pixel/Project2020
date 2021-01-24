@@ -6,13 +6,13 @@
       <!-- Barra de navegação da gestão -->
         <div class="navegador-area-conteudo opcoes-gestao anim-sombra-area-conteudo d-flex justify-content-start align-items-center fundo-f4 margem-b20 borda-r5 sombra-area-conteudo">
           <!-- Aprovações de utilizadores e propostas -->
-          <router-link :to="{name:'Aprovacoes'}" v-if="obterInfoUtilizador.id_utilizador === 0">
+          <router-link :to="{name:'Aprovacoes'}" v-if="obterInfoUtilizador.id_tipo === 0">
             <div class="opcao-gestao d-flex justify-content-start align-items-center fundo-cc borda-solida borda-aa borda-w05 margem-l8 borda-r5 opensans-sb fonte-14">
               <a id="a-gestao">Aprovações</a>
             </div>
           </router-link>
           <!-- Gestão de utilizadores - estudantes, entidades externas e docentes -->
-          <router-link :to="{name:'Utilizadores'}" v-if="obterInfoUtilizador.id_utilizador === 0">
+          <router-link :to="{name:'Utilizadores'}" v-if="obterInfoUtilizador.id_tipo === 0">
             <div class="opcao-gestao d-flex justify-content-start align-items-center fundo-cc borda-solida borda-aa borda-w05 margem-l8 borda-r5 opensans-sb fonte-14">
               <a id="a-gestao">Utilizadores</a>
             </div>
@@ -24,7 +24,7 @@
             </div>
           </router-link>
           <!-- Criar um novo docente no sistema - apenas os membros do CCA o podem fazer -->
-          <router-link :to="{name:'AdicionarDocentes'}" v-if="obterInfoUtilizador.cca === false">
+          <router-link :to="{name:'AdicionarDocentes'}" v-if="obterInfoUtilizador.cca">
             <div class="opcao-gestao d-flex justify-content-start align-items-center fundo-cc borda-solida borda-aa borda-w05 margem-l8 borda-r5 opensans-sb fonte-14">
               <a id="a-gestao">Adicionar Docente</a>
             </div>
