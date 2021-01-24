@@ -11,7 +11,6 @@
             </select>
           </div>
           <div class="area-navegacao-propostas d-flex justify-content-start align-items-center">
-            <!--<button>Prazos</button>-->
             <router-link :to="{name:'GestaoP'}" class="gerir-propostas-link-a">
               <button class="gerir-propostas-link-btn d-flex align-items-center fundo-40 borda-solida borda-w05 borda-20 borda-r5 opensans-sb fonte-14">
               <svg id="gerir-propostas-svg" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" width="22px" viewBox="0 0 19 19.67"><path class="cls-1" d="M18.5,6.83H1.5a1,1,0,0,0-1,1v4.34a1,1,0,0,0,1,1h17a1,1,0,0,0,1-1V7.83A1,1,0,0,0,18.5,6.83ZM2.82,10.91a.41.41,0,0,1-.41.41H1.9a.41.41,0,0,1-.41-.41V9.06a.41.41,0,0,1,.41-.41h.51a.41.41,0,0,1,.41.41Zm3.69,0a.41.41,0,0,1-.41.41H4.25a.41.41,0,0,1-.41-.41V9.09a.42.42,0,0,1,.41-.41H6.1a.41.41,0,0,1,.41.41Z" transform="translate(-0.5 -0.17)"/><path class="cls-1" d="M18.5,13.5H1.5a1,1,0,0,0-1,1v4.33a1,1,0,0,0,1,1h17a1,1,0,0,0,1-1V14.5A1,1,0,0,0,18.5,13.5ZM2.82,17.58a.4.4,0,0,1-.41.4H1.9a.4.4,0,0,1-.41-.4V15.73a.41.41,0,0,1,.41-.41h.51a.41.41,0,0,1,.41.41Zm3.69,0A.41.41,0,0,1,6.1,18H4.25a.42.42,0,0,1-.41-.41V15.76a.41.41,0,0,1,.41-.41H6.1a.41.41,0,0,1,.41.41Z" transform="translate(-0.5 -0.17)"/><path class="cls-1" d="M18.5.17H1.5a1,1,0,0,0-1,1V5.5a1,1,0,0,0,1,1h17a1,1,0,0,0,1-1V1.17A1,1,0,0,0,18.5.17ZM2.82,4.24a.41.41,0,0,1-.41.41H1.9a.41.41,0,0,1-.41-.41V2.39A.41.41,0,0,1,1.9,2h.51a.41.41,0,0,1,.41.41Zm3.69,0a.41.41,0,0,1-.41.41H4.25a.41.41,0,0,1-.41-.41V2.42A.41.41,0,0,1,4.25,2H6.1a.4.4,0,0,1,.41.4Z" transform="translate(-0.5 -0.17)"/></svg>
@@ -23,10 +22,40 @@
           </div>
         </div>
         <div class="area-conteudo-se-navegador anim-sombra-area-conteudo d-flex justify-content-start fundo-f4 borda-r5 sombra-area-conteudo">
-          <!-- Por fazer -->
-          <div class="div1">Área de seleção das propostas</div>
-          <div class="div2">Proposta selecionada</div>
-          <!-- Por fazer -->
+          <div class="area-selecao-proposta">
+            <!-- Cards das propostas -->
+          </div>
+          <div class="area-proposta-selecionada d-flex flex-wrap">
+            <div class="info-proposta-principal fundo-ff borda-solida borda-r5 borda-w05 borda-aa">
+              <!-- Lista dos dados da proposta com h1 e p-->
+            </div>
+            <div class="info-proposta-secundaria d-flex flex-wrap fundo-ff borda-solida borda-r5 borda-w05 borda-aa">
+              <div class="dados-empresa fundo-f4 borda-r5 sombra-caixa-detalhes">
+                <!-- Empresa (nome) -->
+              </div>
+              <div class="dados-empresa fundo-f4 borda-r5 sombra-caixa-detalhes">
+                <!-- Morada -->
+              </div>
+              <div class="dados-empresa fundo-f4 borda-r5 sombra-caixa-detalhes">
+                <!-- Website -->
+              </div>
+            </div>
+            <div class="info-proposta-terciaria d-flex flex-wrap fundo-ff borda-solida borda-r5 borda-w05 borda-aa">
+              <div class="info-proposta-e-tutor fundo-f4 borda-r5 sombra-caixa-detalhes">
+                <div class="info-proposta-selecionada"> 
+                  <!-- Nome e tipo de proposta (label) -->
+                  <!-- Título (p)-->
+                  <!-- Tipo de proposta entre () (p) -->
+                </div>
+                <div class="info-tutor-selecionada"> 
+                  <!-- Tutor e cargo na empresa (label) -->
+                  <!-- Nome do tutor (p)-->
+                  <!-- Cargo entre () (p) -->
+                </div>
+                <!-- Um botão para inscrever-->
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -44,7 +73,7 @@ export default {
 </script>
 <style>
 .area-pesquisa-propostas input, .area-pesquisa-propostas select, .area-navegacao-propostas button{margin: 4px 4px;}
-.area-navegacao-propostas a{color: #eeeeee !important; text-decoration: none;}
+.area-navegacao-propostas a {color: #eeeeee !important; text-decoration: none;}
 .select-pesquisa-proposta{width: 152px; background-position-x: 128px; margin: 4px 4px;}
 .gerir-propostas-link-btn, .criar-proposta-link-btn{height: 42px; padding: 0px 10px;}
 .area-navegacao-propostas button a{text-decoration: none; padding-left: 10px;}
@@ -53,5 +82,12 @@ export default {
 .gerir-propostas-link-btn:hover #gerir-propostas-svg{fill: #707070;}
 .criar-proposta-link-btn:hover a{color: #004666 !important;}
 .criar-proposta-link-btn:hover #criar-proposta-svg{fill: #004666;}
-.div1, .div2{background-color: grey; color: blue; width: 50%; margin: 8px 8px;}
+.area-selecao-proposta, .area-proposta-selecionada{width: 50%; margin: 8px 8px;}
+.area-selecao-proposta{overflow: auto;}
+.info-proposta-principal{height: 60%; width: 100%; margin-bottom: 16px;}
+.info-proposta-secundaria{height: calc(40% - 16px); width: calc(50% - 8px); margin-right: 16px;}
+.info-proposta-terciaria{height: calc(40% - 16px); width: calc(50% - 8px);}
+.dados-empresa{height: auto; width: 100%; margin: 4px 4px;}
+.info-proposta-e-tutor{height: 72%; width: 100%; margin: 4px 4px;}
+.info-proposta-selecionada, .info-tutor-selecionada{height: 50%;}
 </style>

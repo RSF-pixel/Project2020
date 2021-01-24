@@ -149,6 +149,7 @@
   /* Caixas */
   .sombra-caixa{box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);}
   .sombra-area-conteudo{box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);}
+  .sombra-caixa-detalhes{box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.1);}
   /* Textos */
 /* Checkboxes */
   .checkbox{width: 20px; height: 20px;}
@@ -191,9 +192,9 @@
   .area-conteudo-se-navegador{height: calc(100% - 70px);}
   .area-tabela{width: 100%; padding: 8px 8px;}
 /* Tabelas */
-.tabela{width: 100%; border: 1px solid #707070; border-radius: 5px; border-collapse: collapse; overflow:hidden; color: #202020;}
-.tabela th{background-color: #d2d2d2; font-family: mukta-light; font-size: 14px; border: 1px solid #707070}
-.tabela td{background-color: #f4f4f4; font-family: opensans-light; font-size: 12px; border: 1px solid #707070}
+  .tabela{width: 100%; border: 1px solid #707070; border-radius: 5px; border-collapse: collapse; overflow:hidden; color: #202020;}
+  .tabela th{background-color: #d2d2d2; font-family: mukta-light; font-size: 14px; border: 1px solid #707070; height: 36px;}
+  .tabela td{background-color: #f4f4f4; font-family: opensans-light; font-size: 12px; border: 1px solid #707070; height: 36px;}
 /* Anti-Bootstrap */
   *{outline: none;}
   button:focus{outline: none;} 

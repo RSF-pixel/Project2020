@@ -22,12 +22,13 @@ export default new Vuex.Store({
       {id_tipo: 1, proposta: "Estágio"}
     ],
     utilizadores: localStorage.getItem('utilizadores') ? JSON.parse(localStorage.getItem('utilizadores')) : [
+      // Estudante
       { 
         id_utilizador: 0,
         id_estado: 0,
         nome: "João",
         apelido: "Silva",
-        correio: "js@gmail.com",
+        correio: "40190120@esmad.ipp.pt",
         passe: "123",
         id_tipo: 1,
         numero_estudante: 40190158,
@@ -43,17 +44,40 @@ export default new Vuex.Store({
         discord: null,
         ano: "2020/2021"
       },
+      // Docente 
       { 
         id_utilizador: 1,
         id_estado: 1,
-        nome: "Admin",
-        apelido: "Paper",
-        correio: "admin@gmail.com",
-        passe: "Esmad_2021",
+        nome: "Miguel",
+        apelido: "Almeida",
+        correio: "miguelalmeida@esmad.ipp.pt",
+        passe: "123",
         id_tipo: 0,
         numero_estudante: null,
         nome_empresa: null,
         cca: true,
+        foto: "https://www.tenforums.com/geek/gars/images/2/types/thumb_15951118880user.png",
+        inscricao: null,
+        cv: null,
+        portfolio: null,
+        facebook: null,
+        instagram: null,
+        github: null,
+        discord: null,
+        ano: "2020/2021"
+      },
+      // Entidade Externa
+      {
+        id_utilizador: 1,
+        id_estado: 1,
+        nome: "Samuel",
+        apelido: "Ribeiro",
+        correio: "samribas@gmail.com",
+        passe: "123",
+        id_tipo: 0,
+        numero_estudante: null,
+        nome_empresa: "MeetUp",
+        cca: false,
         foto: "https://www.tenforums.com/geek/gars/images/2/types/thumb_15951118880user.png",
         inscricao: null,
         cv: null,
@@ -111,10 +135,10 @@ export default new Vuex.Store({
     empresas: localStorage.getItem('empresas') ? JSON.parse(localStorage.getItem('empresas')) : [
       {
         id_empresa: 0,
-        nome: "Pepega",
-        correio: "",
-        morada: "",
-        website: ""
+        nome: "MeetUp",
+        correio: "meetup@contactos.pt",
+        morada: "Rua Óscar da Silva, Porto, Portugal",
+        website: "www.meetup.pt"
       }
     ],
     estagios: localStorage.getItem('estagios') ? JSON.parse(localStorage.getItem('estagios')) : [
