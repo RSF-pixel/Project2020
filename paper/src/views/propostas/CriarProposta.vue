@@ -13,7 +13,6 @@
             </router-link>
           </div>
         </div>
-
         <div class="d-flex justify-content-between anim-sombra-area-conteudo fundo-f4 borda-r5 sombra-area-conteudo padding-all8">
           <b-form @submit.stop.prevent="onSubmit">
             <div class="d-flex justify-content-between">
