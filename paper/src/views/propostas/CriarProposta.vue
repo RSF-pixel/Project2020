@@ -32,14 +32,14 @@
                   </div>
                   <div class="sem-padding margem-l32 width-25">
                     <div class="mukta-m fonte-16 align-left">Tipo da proposta *</div>
-                    <b-form-select v-model="form.tipoProposta" class="mukta-m fonte-12 cor-60 align-left height-42" @change="onChangeTipo">
+                    <b-form-select v-model="form.tipoProposta" class="mukta-m fonte-14 cor-60 align-left height-42" @change="onChangeTipo">
                       <b-form-select-option v-for="tipo in tiposPropostas" :value="tipo.id_tipo" :label="tipo.proposta" :key="tipo.id_tipo">{{ tipo.proposta }}</b-form-select-option>
                     </b-form-select>
                   </div>
                 </div>
                 <div class="d-flex sem-margens width-100">
                   <div class="sem-padding width-48">
-                    <div class="mukta-m fonte-16 align-left weight-500 width-100">Objetivos e descrição da proposta *</div>
+                    <div class="mukta-m fonte-16 align-left weight-500 width-100 padding-t8">Objetivos e descrição da proposta *</div>
                     <b-form-textarea
                       id="textarea"
                       v-model="form.descricaoProposta"
@@ -49,7 +49,7 @@
                     />
                   </div>
                   <div class="sem-padding margem-l32 width-48">
-                    <div class="mukta-m fonte-16 align-left weight-500 width-100">Plano provisório de trabalho *</div>
+                    <div class="mukta-m fonte-16 align-left weight-500 width-100 padding-t8">Plano provisório de trabalho *</div>
                     <b-form-textarea
                       id="textarea"
                       v-model="form.planoProvisorio"
@@ -83,13 +83,12 @@
                 </div>
                 <div class="d-flex sem-margens width-100">
                   <div class="sem-padding width-48">
-                    <div class="mukta-m fonte-16 align-left weight-500">Outros dados relevantes *</div>
+                    <div class="mukta-m fonte-16 align-left weight-500">Outros dados relevantes </div>
                     <b-form-textarea
                       id="textarea"
                       v-model="form.outrosDados"
                       class="opensans-l fonte-12 height-165"
-                      placeholder="Exemplo: o estudante tem que estar disponível aos fins de semana. (Obrigatório)"
-                      required
+                      placeholder="Exemplo: o estudante tem que estar disponível aos fins de semana."
                     />
                   </div>
                   <div class="sem-padding margem-l32 width-48">
@@ -121,9 +120,9 @@
                       />
                     </div>
                     <div class="d-flex flex-column sem-padding width-48">
-                      <div class="mukta-m fonte-14 cor-60 fonte-16 align-left weight-500">Correio electrónico *</div>
+                      <div class="mukta-m fonte-14 cor-60 align-left weight-500">Correio eletrónico *</div>
                       <b-form-input
-                        v-model="form.correioElectronicoEmpresa"
+                        v-model="form.correioEletronicoEmpresa"
                         class="width-input opensans-l fonte-12"
                         type="email"
                         placeholder=""
@@ -147,10 +146,10 @@
                       />
                     </div>
                     <div class="d-flex flex-column sem-padding width-48">
-                      <div class="mukta-m fonte-14 cor-60 fonte-16 align-left weight-500">Website *</div>
+                      <div class="mukta-m fonte-14 cor-60 align-left weight-500">Website *</div>
                       <b-form-input
                         v-model="form.website"
-                        class="width-input opensans-l fonte-12"
+                        class="width-input opensans-l fonte-12 height-42 borda-aa"
                         type="url"
                         placeholder=""
                         size="sm"
@@ -175,9 +174,9 @@
                       />
                     </div>
                     <div class="d-flex flex-column sem-padding width-48">
-                      <div class="mukta-m fonte-14 cor-60 fonte-16 align-left weight-500">Correio electrónico *</div>
+                      <div class="mukta-m fonte-14 cor-60 align-left weight-500">Correio eletrónico *</div>
                       <b-form-input
-                        v-model="form.correioElectronicoTutor"
+                        v-model="form.correioEletronicoTutor"
                         class="width-input opensans-l fonte-12"
                         type="email"
                         placeholder=""
@@ -201,7 +200,7 @@
                       />
                     </div>
                     <div class="d-flex flex-column sem-padding width-48">
-                      <div class="mukta-m fonte-14 cor-60 fonte-16 align-left weight-500">Contacto telefónico *</div>
+                      <div class="mukta-m fonte-14 cor-60 align-left weight-500">Contacto telefónico *</div>
                       <b-form-input
                         v-model="form.contactoTelefonico"
                         class="width-input opensans-l fonte-12"
@@ -268,11 +267,11 @@ export default {
         outrosDados: '',
         recursosNecessarios: '',
         nomeEmpresa: '',
-        correioElectronicoEmpresa: '',
+        correioEletronicoEmpresa: '',
         moradaEmpresa: '',
         website: '',
         nomeApelidoTutor: '',
-        correioElectronicoTutor: '',
+        correioEletronicoTutor: '',
         cargoEmpresa: '',
         contactoTelefonico: '',
         concordar: 0,
@@ -307,11 +306,11 @@ export default {
     onChangeTipo() {
       if(this.form.tipoProposta === 0) {
         this.form.nomeEmpresa = ''
-        this.form.correioElectronicoEmpresa = ''
+        this.form.correioEletronicoEmpresa = ''
         this.form.moradaEmpresa = ''
         this.form.website = ''
         this.form.nomeApelidoTutor = ''
-        this.form.correioElectronicoTutor = ''
+        this.form.correioEletronicoTutor = ''
         this.form.cargoEmpresa = ''
         this.form.contactoTelefonico = ''
       }

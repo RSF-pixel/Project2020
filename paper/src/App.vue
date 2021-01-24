@@ -129,6 +129,7 @@
 
   /*Height*/
   .height-2{height: 2px !important;}
+  .height-42{height: 42px !important;}
   .height-165{height: 165px !important;}
 
   /*Placeholder*/
