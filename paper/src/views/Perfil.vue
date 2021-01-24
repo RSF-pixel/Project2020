@@ -225,7 +225,6 @@ export default {
     },
     obterTabelaNotificacoes() {
       const table = this.$store.getters.obterTabelaNotificacoes
-      console.log(table)
       return table;
     }
   }

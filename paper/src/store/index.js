@@ -132,18 +132,10 @@ export default new Vuex.Store({
         data_hora: ""
       }
     ],
-    notificacoes: localStorage.getItem('notificacoes') ? JSON.parse(localStorage.getItem('notificacoes')) : 
-    [
-      {
-        id_notificacao: 0,
-        id_utilizador: 0,
-        id_tema: 0,
-        texto: "O utilizador foi admitido",
-        data_hora: "08-04-21 | 15:31"
-      }
-    ],
+    notificacoes: localStorage.getItem('notificacoes') ? JSON.parse(localStorage.getItem('notificacoes')) : [],
     temas: [
       {id_tema: 0, tema: "Inscrição"},
+      {id_tema: 1, tema: "Propostas"}
     ],
     utilizadorAutenticado: localStorage.getItem('utilizadorAutenticado') 
       ? JSON.parse(localStorage.getItem('utilizadorAutenticado')) : ""
@@ -163,6 +155,11 @@ export default new Vuex.Store({
     proximoIDEmpresa: (state) =>  {
       return state.empresas.length > 0 ?
       state.empresas[state.empresas.length - 1].id_empresa + 1
+      : 0;
+    },
+    proximoIDNotificacao: (state) =>  {
+      return state.notificacoes.length > 0 ?
+      state.notificacoes[state.notificacoes.length - 1].id_notificacao + 1
       : 0;
     },
     obterTipoUtilizadorePorId: (state) => (id) => {
@@ -203,13 +200,27 @@ export default new Vuex.Store({
       });
       return tabela;
     },
-    obterTabelaNotificacoes: (state) => state.notificacoes.map((notificacao) => ({
-      id: notificacao.id_notificacao,
-      id_utilizador: notificacao.id_utilizador,
-      data_hora: notificacao.data_hora,
-      tema: state.temas.find(t => notificacao.id_tema == t.id_tema).tema,
-      texto: notificacao.texto
-    })).filter(n => n.id_utilizador == state.utilizadorAutenticado),
+    obterTabelaNotificacoes: (state) => {
+      const tabela = [];
+      state.notificacoes.forEach(notificacao => {
+        try {
+          if (notificacao.id_utilizador == state.utilizadorAutenticado) {
+            const dados = {
+              id: notificacao.id_notificacao,
+              id_utilizador: notificacao.id_utilizador,
+              data_hora: notificacao.data_hora,
+              tema: state.temas.find(t => notificacao.id_tema == t.id_tema).tema,
+              texto: notificacao.texto
+            }
+            tabela.push(dados);
+            if (tabela.length >= 15) throw "";
+          }
+        } catch (error) {
+          console.log()
+        }
+      });
+      return tabela.sort(function(a, b) {return -(a.id - b.id);})
+    },
     obterTabelaUtilizadores: (state, getters) => (tipo) => {
       const tabela = [];
       state.utilizadores.forEach(utilizador => {
@@ -281,6 +292,7 @@ export default new Vuex.Store({
       state.inscricoes.forEach(inscricao => {
         if (inscricao.id_utilizador == state.utilizadorAutenticado) {
           const proposta = state.propostas.find(p => inscricao.id_proposta == p.id_proposta);
+          console.log(proposta)
           const tipo_proposta = state.tipo_propostas.find(t => proposta.id_tipo == t.id_tipo).proposta;
           const estagio = tipo_proposta == 'Estágio' ?
             state.estagios.find(est => est.id_proposta == proposta.id_proposta) : null;
@@ -393,7 +405,6 @@ export default new Vuex.Store({
     APROVARINSCRICAO(state, payload) {
       state.inscricoes = state.inscricoes.map(inscricao => {
         if (inscricao.id_inscricao == payload.id_inscricao) {
-          console.log(payload.tipo)
           if (payload.tipo == 0) {
             inscricao.id_estado = 1;
           } else {
@@ -437,6 +448,9 @@ export default new Vuex.Store({
     },
     CRIARPROPOSTA(state, payload) {
       state.propostas.push(payload)
+    },
+    GERARNOTIFICACAO(state, payload) {
+      state.notificacoes.push(payload)
     }
   },
   actions: {
@@ -496,12 +510,26 @@ export default new Vuex.Store({
       localStorage.setItem('utilizadores', JSON.stringify(context.state.utilizadores));
     },
     aprovarProposta(context, payload) {
+      const notificacao = {
+        id: context.state.propostas.find(p => p.id_proposta == payload).id_criador,
+        tema: 1,
+        texto: "A sua proposta foi aprovada."
+      }
       context.commit('APROVARPROPOSTA', payload);
       localStorage.setItem('propostas', JSON.stringify(context.state.propostas));
+      context.dispatch("gerarNotificacao", notificacao);
+      localStorage.setItem('notificacoes', JSON.stringify(context.state.notificacoes));
     },
     negarProposta(context, payload) {
+      const notificacao = {
+        id: context.state.propostas.find(p => p.id_proposta == payload).id_criador,
+        tema: 1,
+        texto: "A sua proposta foi negada."
+      }
       context.commit('NEGARPROPOSTA', payload);
       localStorage.setItem('propostas', JSON.stringify(context.state.propostas));
+      context.dispatch("gerarNotificacao", notificacao);
+      localStorage.setItem('notificacoes', JSON.stringify(context.state.notificacoes));
     },
     banirUtilizador(context, payload) {
       context.commit('BANIRUTILIZADOR', payload);
@@ -524,16 +552,30 @@ export default new Vuex.Store({
       localStorage.setItem('utilizadores', JSON.stringify(context.state.utilizadores));
     },
     aprovarInscricao(context, payload) {
+      const notificacao = {
+        id: context.state.inscricoes.find(i => i.id_inscricao == payload.id).id_utilizador,
+        tema: 0,
+        texto: "A sua inscrição foi aprovada."
+      }
       context.commit('APROVARINSCRICAO', {
         id_inscricao: payload.id,
         id_useraut: context.getters.obterUtilizadorAutenticado.id_tipo,
         tipo: context.state.tipo_propostas.find(tp => tp.proposta == payload.tipo_proposta).id_tipo
       });
       localStorage.setItem('inscricoes', JSON.stringify(context.state.inscricoes));
+      context.dispatch("gerarNotificacao", notificacao);
+      localStorage.setItem('notificacoes', JSON.stringify(context.state.notificacoes));
     },
     negarInscricao(context, payload) {
+      const notificacao = {
+        id: context.state.inscricoes.find(i => i.id_inscricao == payload).id_utilizador,
+        tema: 0,
+        texto: "A sua inscrição foi negada."
+      }
       context.commit('NEGARINSCRICAO', payload);
       localStorage.setItem('inscricoes', JSON.stringify(context.state.inscricoes));
+      context.dispatch("gerarNotificacao", notificacao);
+      localStorage.setItem('notificacoes', JSON.stringify(context.state.notificacoes));
     },
     removerProposta(context, payload) {
       context.commit('REMOVERPROPOSTA', payload);
@@ -574,6 +616,18 @@ export default new Vuex.Store({
     criarProposta(context, payload) {
       context.commit('CRIARPROPOSTA', payload);
       localStorage.setItem('propostas', JSON.stringify(context.state.propostas));
+    },
+    gerarNotificacao(context, payload) {
+      const date = new Date();
+      const data_hora = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear() + " | " + date.getHours() + ":" + date.getMinutes();
+      const notificacao = {
+        id_notificacao: context.getters.proximoIDNotificacao,
+        id_utilizador: payload.id,
+        id_tema: payload.tema,
+        texto: payload.texto,
+        data_hora: data_hora,
+      }
+      context.commit("GERARNOTIFICACAO", notificacao)
     }
   }
 });
