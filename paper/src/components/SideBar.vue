@@ -9,7 +9,7 @@
             <svg id="icone-sb" xmlns="http://www.w3.org/2000/svg" width="26px" viewBox="0 0 20 20"><path class="cls-1" d="M18,0H2A2,2,0,0,0,0,2V18a2,2,0,0,0,2,2H18a2,2,0,0,0,2-2V2A2,2,0,0,0,18,0ZM11.49,15h-7a.5.5,0,0,1,0-1h7a.5.5,0,1,1,0,1Zm4-3H4.5a.5.5,0,0,1,0-1h11a.5.5,0,0,1,0,1Zm0-3H4.5a.5.5,0,0,1,0-1h11a.5.5,0,0,1,0,1Z"/></svg>
             <a id="a-sb">Propostas</a>
           </div></router-link>
-          <router-link :to="{name:'Gestao'}" class="opcoes"><div class="opcao d-flex justify-content-start align-items-center fundo-30 margem-x10 borda-r5">
+          <router-link :to="{name:'Gestao'}" class="opcoes" v-if="obterInfoUtilizador.id_utilizador !== 1"><div class="opcao d-flex justify-content-start align-items-center fundo-30 margem-x10 borda-r5">
             <svg id="icone-sb" xmlns="http://www.w3.org/2000/svg" width="26px" viewBox="0 0 20 20"><path class="cls-1" d="M18.5,6.83H1.5a1,1,0,0,0-1,1v4.34a1,1,0,0,0,1,1h17a1,1,0,0,0,1-1V7.83A1,1,0,0,0,18.5,6.83ZM2.82,10.91a.41.41,0,0,1-.41.41H1.9a.41.41,0,0,1-.41-.41V9.06a.41.41,0,0,1,.41-.41h.51a.41.41,0,0,1,.41.41Zm3.69,0a.41.41,0,0,1-.41.41H4.25a.41.41,0,0,1-.41-.41V9.09a.42.42,0,0,1,.41-.41H6.1a.41.41,0,0,1,.41.41Z" transform="translate(-0.5 -0.17)"/><path class="cls-1" d="M18.5,13.5H1.5a1,1,0,0,0-1,1v4.33a1,1,0,0,0,1,1h17a1,1,0,0,0,1-1V14.5A1,1,0,0,0,18.5,13.5ZM2.82,17.58a.4.4,0,0,1-.41.4H1.9a.4.4,0,0,1-.41-.4V15.73a.41.41,0,0,1,.41-.41h.51a.41.41,0,0,1,.41.41Zm3.69,0A.41.41,0,0,1,6.1,18H4.25a.42.42,0,0,1-.41-.41V15.76a.41.41,0,0,1,.41-.41H6.1a.41.41,0,0,1,.41.41Z" transform="translate(-0.5 -0.17)"/><path class="cls-1" d="M18.5.17H1.5a1,1,0,0,0-1,1V5.5a1,1,0,0,0,1,1h17a1,1,0,0,0,1-1V1.17A1,1,0,0,0,18.5.17ZM2.82,4.24a.41.41,0,0,1-.41.41H1.9a.41.41,0,0,1-.41-.41V2.39A.41.41,0,0,1,1.9,2h.51a.41.41,0,0,1,.41.41Zm3.69,0a.41.41,0,0,1-.41.41H4.25a.41.41,0,0,1-.41-.41V2.42A.41.41,0,0,1,4.25,2H6.1a.4.4,0,0,1,.41.4Z" transform="translate(-0.5 -0.17)"/></svg>
             <a id="a-sb">Gestão</a>
           </div></router-link>
@@ -19,7 +19,7 @@
           </div></router-link>
           </div>
           <router-link :to="{name:'Perfil'}" class="opcoes margem-b30"><div class="opcao d-flex justify-content-start align-items-center fundo-30 margem-x10 borda-r5">
-            <img :src="obterInfoUtilizador.foto" class="foto-perfil-sb"/>
+            <img :src="obterInfoUtilizador.foto" class="foto-perfil-sb borda-r3"/>
             <a class="limitar-texto-sb" id="a-sb">{{obterInfoUtilizador.nome + ' ' + obterInfoUtilizador.apelido}}</a>
           </div></router-link>
       </div>
@@ -39,7 +39,9 @@ a.router-link-exact-active, .router-link-exact-active:hover a,
 #icone-sb{fill: #aaaaaa; margin: 0px 10px;}
 .foto-perfil-sb{margin: 0px 10px; width: 26px; height: 26px;}
 .opcao:hover #icone-sb{fill: #707070;}
+.opcao:hover .foto-perfil-sb, .router-link-exact-active .opcao .foto-perfil-sb, .router-link-exact-active:hover .opcao .foto-perfil-sb{opacity: 80%;}
 .router-link-exact-active #icone-sb, .router-link-exact-active:hover #icone-sb{ fill: #3586aa;}
+.router-link-exact-active .foto-perfil-sb, .router-link-exact-active:hover .foto-perfil-sb{opacity: 100%;}
 .limitar-texto-sb{width: 90px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; text-align: left;}
 </style>
 <script>

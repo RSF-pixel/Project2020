@@ -112,14 +112,6 @@ export default new Vuex.Store({
         id_estado: 0,
         preferencia: 1,
         ano_letivo: ""
-      },
-      {
-        id_inscricao: 1,
-        id_utilizador: 0,
-        id_proposta: 1,
-        id_estado: 0,
-        preferencia: 2,
-        ano_letivo: ""
       }
     ],
     prazos: [
@@ -161,6 +153,9 @@ export default new Vuex.Store({
     obterTipoUtilizadorePorId: (state) => (id) => {
       return state.tipo_utilizadores.find(tu => id == tu.id).tipo
     },
+    obterTipoPropostas: (state) => () => {
+      return state.tipo_propostas
+    },
     obterTabelaAprovarUsers: (state, getters) => {
       const tabela = [];
       state.utilizadores.forEach(utilizador => {
@@ -200,7 +195,7 @@ export default new Vuex.Store({
       tema: state.temas.find(t => notificacao.id_tema == t.id_tema).tema,
       texto: notificacao.texto
     })).filter(n => n.id_utilizador == state.utilizadorAutenticado),
-    obterTabelaUsers: (state, getters) => (tipo) => {
+    obterTabelaUtilizadores: (state, getters) => (tipo) => {
       const tabela = [];
       state.utilizadores.forEach(utilizador => {
         if (getters.obterTipoUtilizadorePorId(utilizador.id_tipo) == tipo && utilizador.id_estado !== 0) {
@@ -411,6 +406,9 @@ export default new Vuex.Store({
         }
         return inscricao;
       })
+    },
+    CRIARPROPOSTA(state, payload) {
+      state.propostas.push(payload)
     }
   },
   actions: {
@@ -530,6 +528,10 @@ export default new Vuex.Store({
       context.commit('DIMINUIRORDEM', payload);
       context.commit('AUMENTARORDEM', id);
       localStorage.setItem('inscricoes', JSON.stringify(context.state.inscricoes));
+    },
+    criarProposta(context, payload) {
+      context.commit('CRIARPROPOSTA', payload);
+      localStorage.setItem('propostas', JSON.stringify(context.state.propostas));
     }
   }
 });

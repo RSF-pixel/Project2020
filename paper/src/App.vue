@@ -17,6 +17,7 @@
 /* Margens */
   .sem-margens{margin: 0px;}
   .margem-l5{margin-left: 5px;}
+  .margem-l8{margin-left: 8px;}
   .margem-l16{margin-left: 16px;}
   .margem-l32{margin-left: 32px;}
   .margem-t5{margin-top: 5px;}
@@ -84,7 +85,6 @@
   .cor-e33131{color: #e33131;}
   .cor-ff8a8a{color: #ff8a8a;}
   .cor-ffdcdc{color: #ffdcdc;}
-
 /* Fontes de texto e tamanhos*/
   /* Fontes */
   @font-face {font-family: mukta-extralight; src: url(assets/fonts/Mukta-ExtraLight.ttf);}
@@ -104,35 +104,31 @@
   /* Tamanhos */
   .fonte-10{font-size: 10px;}
   .fonte-12{font-size: 12px;}
+  .fonte-13{font-size: 13px;}
   .fonte-14{font-size: 14px;}
   .fonte-16{font-size: 16px;}
   .fonte-18{font-size: 18px;}
   .fonte-24{font-size: 24px;}
-
-  /*Align*/
+  /* Align */
   .align-left{text-align: left;}
-
-  /*Bold*/
+  /* Bold */
   .weight-500{font-weight: 500;}
-
-  /*Width*/
+  /* Width */
   .width-25{width: 25%;}
   .width-30{width: 30%;}
   .width-35{width: 35%;}
   .width-42{width: 42%;}
   .width-45{width: 45%;}
+  .width-48{width: 48%;}
   .width-50{width: 50%;}
   .width-55{width: 55%;}
   .width-100{width: 100% !important;}
-
-  /*Height*/
+  /* Height */
   .height-2{height: 2px !important;}
-  .height-150{height: 150px !important;}
-
-  /*Placeholder*/
+  .height-42{height: 42px !important;}
+  .height-165{height: 165px !important;}
+  /* Placeholder */
   ::placeholder{font-size: 12px;}
-
-
 /* Bordas */
   /* Estilo */ 
   .borda-solida{border-style: solid;}
@@ -146,15 +142,14 @@
   .borda-bb{border-color: #bbbbbb;}
   .borda-004666{border-color: #004666;}
   /* Raio */
-  .borda-r10{border-radius: 10px;}
+  .borda-r3{border-radius: 3px;}
   .borda-r5{border-radius: 5px;}
-
+  .borda-r10{border-radius: 10px;}
 /* Sombras */
   /* Caixas */
   .sombra-caixa{box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);}
   .sombra-area-conteudo{box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);}
   /* Textos */
-
 /* Checkboxes */
   .checkbox{width: 20px; height: 20px;}
   .checkbox-content{display: block; position: relative; padding-left: 25px; user-select: none; height: 20px;}
@@ -194,6 +189,11 @@
   /* Caso tenha, usa-se o anterior mais estes dois: */
   .navegador-area-conteudo{height: 50px;}
   .area-conteudo-se-navegador{height: calc(100% - 70px);}
+  .area-tabela{width: 100%; padding: 8px 8px;}
+/* Tabelas */
+.tabela{width: 100%; border: 1px solid #707070; border-radius: 5px; border-collapse: collapse; overflow:hidden; color: #202020;}
+.tabela th{background-color: #d2d2d2; font-family: mukta-light; font-size: 14px; border: 1px solid #707070}
+.tabela td{background-color: #f4f4f4; font-family: opensans-light; font-size: 12px; border: 1px solid #707070}
 /* Anti-Bootstrap */
   *{outline: none;}
   button:focus{outline: none;} 

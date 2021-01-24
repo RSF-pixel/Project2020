@@ -60,8 +60,8 @@
                 </div>
               <div class="area-notificacoes">
                 <label class="area-label fonte-24 mukta-m cor-20 padding-l8 sem-margens" for="notificacoes-conteudo">Notificações</label>
-                <div class="area-notificacoes-conteudo d-flex justify-content-center align-items-center fundo-ff borda-solida borda-w05 borda-aa borda-r5" name="notificacoes-conteudo">
-                  <table>
+                <div class="area-notificacoes-conteudo fundo-ff borda-solida borda-w05 borda-aa borda-r5" name="notificacoes-conteudo">
+                  <table class="tabela-notificacoes">
                     <tr>
                       <th>Data e Hora</th>
                       <th>Tema</th>
@@ -101,7 +101,7 @@
                   <!-- Input para inserir o link do portfólio -->
                   <input class="cor-60 fundo-fa fonte-12 opensans-l borda-r5 sem-margens" type="link" v-model="dados.link_portfolio" placeholder="Insira o link do seu portfólio">
                   <!--<label class="area-label fonte-18 mukta-m cor-20 padding-l8 sem-margens margem-t7" for="">Currículo do utilizador</label>
-                  <button type="button" class="botao-adicionar-cv">Adicione um ficheiro</button>-->
+                  <button type="button" class="botao-adicionar-cv">Adicione um ficheiro</button> Esta opção será ativada mais tarde-->
                   <div class="d-flex flex-wrap align-content-end">
                     <button type="submit" class="botao-guardar fundo-40 fonte-16 opensans-sb cor-ee borda-solida borda-w05 borda-20 borda-r5">Guardar</button>
                     <button type="reset" class="botao-anular fundo-dd fonte-16 opensans-sb cor-20 borda-solida borda-w05 borda-aa borda-r5">Anular</button>
@@ -121,7 +121,7 @@
 .area-notificacoes{width: 100%; height: 50%;}
 .area-definicoes{width: 256px; height: auto;}
 .area-perfil-conteudo{height: calc(100% - 36px);}
-.area-notificacoes-conteudo{height: calc(100% - 36px);}
+.area-notificacoes-conteudo{height: calc(100% - 36px); padding: 8px 8px;}
 .area-definicoes-conteudo{height: calc(100% - 36px);}
 .area-label{text-align: left; width: 100%;}
 .ajuste-f{min-height: 644px;}
@@ -157,6 +157,9 @@ a.texto-desconectar{text-decoration: none; color: #ffdcdc; transition: color 0.2
 a.texto-desconectar:hover{color: #ff8a8a;}
 .botao-guardar, .botao-anular{height: 42px; padding: 0px 8px; transition: color 0.4s ease-in-out; margin: 8px 4px;}
 .botao-guardar:hover, .botao-anular:hover{color:#707070;}
+.tabela-notificacoes{width: 100%; border: 1px solid #707070; border-radius: 5px; border-collapse: collapse; overflow:hidden; color: #202020;}
+.tabela-notificacoes th{background-color: #d2d2d2; font-family: mukta-regular; font-size: 14px; border: 1px solid #707070}
+.tabela-notificacoes td{background-color: #f4f4f4; font-family: opensans-light; font-size: 12px; border: 1px solid #707070}
 </style>
 <script>
 import SideBar from "@/components/SideBar.vue";
