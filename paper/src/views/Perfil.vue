@@ -15,7 +15,7 @@
                       <div class="area-dados-perfil-utilizador d-flex flex-wrap align-content-between margem-y8">
                         <div class="nome-e-tipo-utilizador">
                           <p class="fonte-24 opensans-sb cor-20 sem-margens text-left">{{obterInfoUtilizador.nome + ' ' + obterInfoUtilizador.apelido}}</p>
-                          <p class="fonte-14 mukta-l cor-40 sem-margens text-left">({{obterInfoUtilizador.id_tipo}})</p>
+                          <p class="fonte-14 mukta-l cor-40 sem-margens text-left">({{this.$store.getters.obterTipoUtilizadorePorId(obterInfoUtilizador.id_tipo)}})</p>
                         </div>
                         <div v-if="obterInfoUtilizador.id_tipo == 1" class="area-documentos">
                           <label class="d-flex justify-content-start fonte-16 mukta-m cor-20 sem-margens" for="documentos">Documentos</label>

@@ -97,7 +97,7 @@ export default new Vuex.Store({
     estagios: localStorage.getItem('estagios') ? JSON.parse(localStorage.getItem('estagios')) : [
       {
         id_proposta: 1,
-        id_empresa: 0,
+        id_empresa: 1,
         nome_tutor: "Jorge Cunha",
         contacto_tutor: "",
         cargo_tutor: "",
@@ -111,6 +111,14 @@ export default new Vuex.Store({
         id_proposta: 0,
         id_estado: 0,
         preferencia: 1,
+        ano_letivo: ""
+      },
+      {
+        id_inscricao: 1,
+        id_utilizador: 0,
+        id_proposta: 1,
+        id_estado: 0,
+        preferencia: 2,
         ano_letivo: ""
       }
     ],
@@ -148,6 +156,11 @@ export default new Vuex.Store({
     proximoIDUtilizador: (state) =>  {
       return state.utilizadores.length > 0 ?
       state.utilizadores[state.utilizadores.length - 1].id_utilizador + 1
+      : 0;
+    },
+    proximoIDEmpresa: (state) =>  {
+      return state.empresas.length > 0 ?
+      state.empresas[state.empresas.length - 1].id_empresa + 1
       : 0;
     },
     obterTipoUtilizadorePorId: (state) => (id) => {
@@ -213,7 +226,7 @@ export default new Vuex.Store({
       });
       return tabela;
     },
-    obterTabelaInscricoes: (state) => {
+    obterTabelaInscricoes: (state, getters) => {
       const tabela = [];
       state.inscricoes.forEach(inscricao => {
         if (inscricao.id_estado == 0) {
@@ -231,7 +244,11 @@ export default new Vuex.Store({
             tutor: estagio != null ? estagio.nome_tutor : "---",
             id_proposta: proposta.id_proposta
           }
-          tabela.push(dados);
+          const userAut = getters.obterUtilizadorAutenticado;
+          console.log(userAut)
+          if (userAut.nome_empresa == null || userAut.nome_empresa == dados.entidade) {
+            tabela.push(dados);
+          }
         }
       });
       return tabela;
@@ -300,7 +317,7 @@ export default new Vuex.Store({
     },
     REGISTADO(state, payload){
       state.utilizadores.push(payload.utilizador);
-      if (payload.empresas != null) { state.empresas.push(payload.empresa); }
+      if (payload.empresa != null) { state.empresas.push(payload.empresa); }
     },
     EDITARPERFIL(state, payload){
       state.utilizadores = state.utilizadores.map(utilizador => {
@@ -416,13 +433,19 @@ export default new Vuex.Store({
       const utilizador = context.state.utilizadores.find(
         (utilizador) => utilizador.correio === payload.correio && utilizador.passe === payload.passe).id_utilizador;
       if (utilizador != undefined){
-        context.commit('AUTENTICADO', utilizador)
-        if(payload.manter_conectado){
-          localStorage.setItem('utilizadorAutenticado', JSON.stringify(utilizador))
-          console.log(payload.manter_conectado)
-        }
-        else{
-          sessionStorage.setItem('utilizadorAutenticado', JSON.stringify(utilizador))
+        if (utilizador.id_estado === 0) {
+          throw("Espere aprovação");
+        } else if (utilizador.id_estado === 2) {
+          throw("Foi banido da aplicação por tempo indefinido")
+        } else {
+          context.commit('AUTENTICADO', utilizador)
+          if(payload.manter_conectado){
+            localStorage.setItem('utilizadorAutenticado', JSON.stringify(utilizador))
+            console.log(payload.manter_conectado)
+          }
+          else{
+            sessionStorage.setItem('utilizadorAutenticado', JSON.stringify(utilizador))
+          }
         }
       }
       else{
@@ -431,12 +454,12 @@ export default new Vuex.Store({
     },
     registo(context, payload){
       const utilizador = context.state.utilizadores.find(
-        (utilizador) => utilizador.correio === payload.utilizador.correio || utilizador.numero_estudante === payload.utilizador.numero_estudante)
+        (utilizador) => utilizador.correio === payload.utilizador.correio || (utilizador.numero_estudante === payload.utilizador.numero_estudante && payload.utilizador.numero_estudante != null))
       if(utilizador == undefined){
-        if (payload.empresas != null) {
+        if (payload.empresa != null) {
           const empresa = context.state.empresas.find(
             (empresa) => empresa.nome === payload.empresa.nome)
-          payload.empresa = empresa != undefined ? payload.empresa : null;
+          payload.empresa = empresa == undefined ? payload.empresa : null;
         }
         context.commit('REGISTADO', payload);
         localStorage.setItem('utilizadores', JSON.stringify(context.state.utilizadores))
@@ -482,7 +505,11 @@ export default new Vuex.Store({
       localStorage.setItem('utilizadores', JSON.stringify(context.state.utilizadores));
     },
     removerCCA(context, payload) {
-      context.commit('REMOVERCCA', payload);
+      if (payload !== context.state.utilizadorAutenticado) {
+        context.commit('REMOVERCCA', payload);
+      } else {
+        alert("Não pode remover o seu próprio estatuto CCA")
+      }
       localStorage.setItem('utilizadores', JSON.stringify(context.state.utilizadores));
     },
     aprovarInscricao(context, payload) {
