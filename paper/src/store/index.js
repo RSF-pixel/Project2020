@@ -8,7 +8,9 @@ export default new Vuex.Store({
     estados: [
       {id_estado: 0, estado: "Em análise"},
       {id_estado: 1, estado: "Aprovado"},
-      {id_estado: 2, estado: "Banido"}
+      {id_estado: 2, estado: "Banido"},
+      {id_estado: 3, estado: "Aprovado por Docente (1/2)"},
+      {id_estado: 4, estado: "Aprovado por Entidade (1/2)"}
     ],
     tipo_utilizadores: [ 
       {id: 0, tipo: "Docente"},
@@ -229,7 +231,7 @@ export default new Vuex.Store({
     obterTabelaInscricoes: (state, getters) => {
       const tabela = [];
       state.inscricoes.forEach(inscricao => {
-        if (inscricao.id_estado == 0) {
+        if (inscricao.id_estado != 1) {
           const inscrito = state.utilizadores.find(u => inscricao.id_utilizador == u.id_utilizador);
           const proposta = state.propostas.find(p => inscricao.id_proposta == p.id_proposta);
           const tipo_proposta = state.tipo_propostas.find(t => proposta.id_tipo == t.id_tipo).proposta;
@@ -245,8 +247,8 @@ export default new Vuex.Store({
             id_proposta: proposta.id_proposta
           }
           const userAut = getters.obterUtilizadorAutenticado;
-          console.log(userAut)
-          if (userAut.nome_empresa == null || userAut.nome_empresa == dados.entidade) {
+          if ((userAut.nome_empresa == null && inscricao.id_estado != 3)
+            || (userAut.nome_empresa == dados.entidade && inscricao.id_estado != 4)) {
             tabela.push(dados);
           }
         }
@@ -390,8 +392,17 @@ export default new Vuex.Store({
     },
     APROVARINSCRICAO(state, payload) {
       state.inscricoes = state.inscricoes.map(inscricao => {
-        if (inscricao.id_inscricao == payload) {
-          inscricao.id_estado = 1;
+        if (inscricao.id_inscricao == payload.id_inscricao) {
+          console.log(payload.tipo)
+          if (payload.tipo == 0) {
+            inscricao.id_estado = 1;
+          } else {
+            if (payload.id_useraut == 0) {
+              inscricao.id_estado = inscricao.id_estado == 4 ? 1 : 3;
+            } else if (payload.id_useraut == 2) {
+              inscricao.id_estado = inscricao.id_estado == 3 ? 1 : 4;
+            }
+          }
         }
         return inscricao;
       })
@@ -513,7 +524,11 @@ export default new Vuex.Store({
       localStorage.setItem('utilizadores', JSON.stringify(context.state.utilizadores));
     },
     aprovarInscricao(context, payload) {
-      context.commit('APROVARINSCRICAO', payload);
+      context.commit('APROVARINSCRICAO', {
+        id_inscricao: payload.id,
+        id_useraut: context.getters.obterUtilizadorAutenticado.id_tipo,
+        tipo: context.state.tipo_propostas.find(tp => tp.proposta == payload.tipo_proposta).id_tipo
+      });
       localStorage.setItem('inscricoes', JSON.stringify(context.state.inscricoes));
     },
     negarInscricao(context, payload) {
