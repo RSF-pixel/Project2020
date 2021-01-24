@@ -3,64 +3,75 @@
     <SideBar />
     <div class="area-principal anim-area-principal d-flex">
       <div class="area-conteudo">
-        <div
-          class="navegador-area-conteudo anim-sombra-area-conteudo d-flex justify-content-between fundo-f4 margem-b20 borda-r5 sombra-area-conteudo"
-        >
-          <h1>Aprovar Propostas</h1>
-          <router-link :to="{ name: 'Aprovar' }"
-            ><div><a>Aprovar</a></div></router-link
-          >
-          |
-          <router-link :to="{ name: 'Utilizadores' }"
-            ><div><a>Utilizadores</a></div></router-link
-          >
-          |
-          <router-link :to="{ name: 'Inscricoes' }"
-            ><div><a>Inscrições</a></div></router-link
-          >
-          |
-          <router-link :to="{ name: 'AdicionarDocentes' }"
-            ><div><a>Adicionar Docente</a></div></router-link
-          >
+        <!-- Barra de navegação da gestão -->
+        <div class="navegador-area-conteudo opcoes-gestao anim-sombra-area-conteudo d-flex justify-content-start align-items-center fundo-f4 margem-b20 borda-r5 sombra-area-conteudo">
+          <!-- Aprovações de utilizadores e propostas -->
+          <router-link :to="{name:'Aprovacoes'}" v-if="obterInfoUtilizador.id_utilizador === 0">
+            <div class="opcao-gestao d-flex justify-content-start align-items-center fundo-cc borda-solida borda-aa borda-w05 margem-l8 borda-r5 opensans-sb fonte-14">
+              <a id="a-gestao">Aprovações</a>
+            </div>
+          </router-link>
+          <!-- Gestão de utilizadores - estudantes, entidades externas e docentes -->
+          <router-link :to="{name:'Utilizadores'}" v-if="obterInfoUtilizador.id_utilizador === 0">
+            <div class="opcao-gestao d-flex justify-content-start align-items-center fundo-cc borda-solida borda-aa borda-w05 margem-l8 borda-r5 opensans-sb fonte-14">
+              <a id="a-gestao">Utilizadores</a>
+            </div>
+          </router-link>
+          <!-- Gestão das inscrições -->
+          <router-link :to="{name:'Inscricoes'}">
+            <div class="opcao-gestao d-flex justify-content-start align-items-center fundo-cc borda-solida borda-aa borda-w05 margem-l8 borda-r5 opensans-sb fonte-14">
+              <a id="a-gestao">Inscrições</a>
+            </div>
+          </router-link>
+          <!-- Criar um novo docente no sistema - apenas os membros do CCA o podem fazer -->
+          <router-link :to="{name:'AdicionarDocentes'}" v-if="obterInfoUtilizador.cca === false">
+            <div class="opcao-gestao d-flex justify-content-start align-items-center fundo-cc borda-solida borda-aa borda-w05 margem-l8 borda-r5 opensans-sb fonte-14">
+              <a id="a-gestao">Adicionar Docente</a>
+            </div>
+          </router-link>
         </div>
-        <div class="area-conteudo-se-navegador anim-sombra-area-conteudo d-flex justify-content-start fundo-f4 borda-r5 sombra-area-conteudo">
-          <div>
+        <!-- Área de adição de um novo docente -->
+        <div class="area-conteudo-se-navegador anim-sombra-area-conteudo d-flex justify-content-start fundo-f4 borda-r5 sombra-area-conteudo padding-all8">
+          <div class="form-docente fundo-ff borda-solida borda-w05 borda-r5 borda-aa">
+            <!-- Formulário para a introdução de dados do novo docente a ser criado -->
             <form @submit.prevent="register">
-              <label for="firstName">Nome </label>
-              <input type="text" id="firstName" v-model="utilizador.primeiroNome" />
-              <!-- FIXME:REMOVE LATER WITH CSS -->
-              <br />
-              <br />
-              <label for="lastName">Apelido </label>
-              <input type="text" id="lastName" v-model="utilizador.apelido" />
-
-              <!-- FIXME:REMOVE LATER WITH CSS -->
-              <br />
-              <br />
-              <label for="email">Correio Eletrónico(institucional) </label>
-              <input type="email" id="email" v-model="utilizador.correio" />
-
-              <!-- FIXME:REMOVE LATER WITH CSS -->
-              <br />
-              <br />
-
-              <label for="password">Palavra-passe </label>
-              <input type="password" id="password" v-model="utilizador.password" />
-              <!-- FIXME:REMOVE LATER WITH CSS -->
-              <br />
-              <br />
-
-              <input type="checkbox" id="ccaCheck" v-model="utilizador.ccaCheck" />
-              <label for="ccaCheck">Membro da CCA </label>
-
-              <br />
-              <br />
-
-              <input type="submit" value="Criar o docente" />
-              <!-- FIXME:REMOVE LATER WITH CSS -->
-              <br>
-
-              <h3>{{this.estado}}</h3>
+              <!-- Introdução do nome do docente -->
+              <label class="area-label fonte-14 mukta-m cor-20 padding-l8 sem-margens margem-t7" for="nome_docente">
+                Nome
+              </label>
+              <input class="cor-60 fundo-fa fonte-12 opensans-l borda-r5 sem-margens" type="text" id="nome_docente" 
+              v-model="utilizador.nome" required="required" autocomplete="off"/>
+              <!-- Introdução do apelido do docente -->
+              <label class="area-label fonte-14 mukta-m cor-20 padding-l8 sem-margens margem-t7" for="apelido">
+                Apelido
+              </label>
+              <input type="text" id="apelido" class="cor-60 fundo-fa fonte-12 opensans-l borda-r5 sem-margens" 
+              v-model="utilizador.apelido" required="required" autocomplete="off"/>
+              <!-- Introdução do correio eletrónico institucional do docente -->
+              <label class="area-label fonte-14 mukta-m cor-20 padding-l8 sem-margens margem-t7" for="correio">
+                Correio eletrónico
+              </label>
+              <input type="email" id="correio" class="cor-60 fundo-fa fonte-12 opensans-l borda-r5 sem-margens"
+              v-model="utilizador.correio" required="required" autocomplete="off"/>
+              <!-- Introdução da palavra-passe do docente -->
+              <label class="area-label fonte-14 mukta-m cor-20 padding-l8 sem-margens margem-t7" for="passe">
+                Palavra-passe
+              </label>
+              <input :type="type" id="passe" class="cor-60 fundo-fa fonte-12 opensans-l borda-r5 sem-margens"
+              v-model="utilizador.passe" required="required" autocomplete="off"/>
+              <div class="ver-helper d-flex justify-content-end sem-margens">
+                <svg @click="mostrar" class="ver cursor-pointer sem-margens ajuste-mostrar-passe-docente" xmlns="http://www.w3.org/2000/svg" width="16" viewBox="0 0 24 24"><path d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 7.449-11.985 7.449c-7.18 0-12.015-7.449-12.015-7.449s4.446-6.551 12.015-6.551c7.694 0 11.985 6.551 11.985 6.551zm-7 .449c0-2.761-2.238-5-5-5-2.761 0-5 2.239-5 5 0 2.762 2.239 5 5 5 2.762 0 5-2.238 5-5z"/></svg>
+              </div>
+              <!-- Checkbox para definir o docente como membro do CCA ou não -->
+              <label class="checkbox-content cca-cb d-flex justify-content-start align-items-center cursor-pointer cor-20 fonte-10 mukta-r sem-margens margem-t15">
+                <input class="checkbox" type="checkbox" v-model="utilizador.cca">
+                Membro do CCA
+                <span class="marcado sem-margens"></span>
+              </label>
+              <!-- Submissão do formulário -->
+              <button class="botao-criar-docente fundo-40 borda-solida borda-20 borda-w05 borda-r5 cor-ee fonte-16 opensans-sb margem-t15" type="submit">
+                Criar o docente
+              </button>
             </form>
           </div>
         </div>
@@ -68,78 +79,78 @@
     </div>
   </div>
 </template>
-
 <script>
 import SideBar from "@/components/SideBar.vue";
 export default {
   components: {
     SideBar,
   },
-  data()
-  {
+  data(){
     return{
-      estado:"",
       utilizador:{
-      primeiroNome: "",
-      apelido:"",
-      correio:"",
-      password:"",
-      ccaCheck: false,
-      tipo_utilizador: null,
-      numero_estudante: null,
-      nome_empresa: null,
-      correio_empresa: null,
-      morada_empresa: null,
-      website_empresa: null
-      }
+        nome: "",
+        apelido: "",
+        correio: "",
+        passe: "",
+        cca: false,
+      },
+      type: 'password'
     }
-
   },
   methods:{
-    //Metodo do registo do docente
-    register()
-    {
+    register(){
       let utilizador = {
-          id_utilizador: this.$store.getters.proximoIDUtilizador,
-          id_estado: 1,
-          nome: this.utilizador.primeiroNome,
-          apelido: this.utilizador.apelido,
-          correio: this.utilizador.correio,
-          passe: this.utilizador.password,
-          id_tipo: 0,
-          numero_estudante: null,
-          nome_empresa: null,
-          foto: "https://lh3.googleusercontent.com/-4yFaWmS7-Pg/X_xzGKwqwHI/AAAAAAAAAAY/L78mg1HQzvELjdvv5xiLqZT6keuBmoGSACMICGAYYCw/s83-c/foto_default.png",
-          inscricao: null,
-          cv: null,
-          portfolio: null,
-          facebook: null,
-          instagram: null,
-          github: null,
-          discord: null,
-          ano: ""
-        }
-        const empresa = this.utilizador.tipo_utilizador == 2 ? {
-          nome: this.utilizador.nome_empresa,
-          correio: this.utilizador.correio_empresa,
-          morada: this.utilizador.morada_empresa,
-          website: this.utilizador.website_empresa,
-        } : null;
-        const dados = {
-          utilizador: utilizador,
-          empresa: empresa
-        }
-        try {
-
-          this.$store.dispatch("registo", dados)
-          this.estado = "Docente Criado com sucesso"
-        }
-        catch(error){
-          this.estado = "Erro a criar o docente"                                     
-        }
+        id_utilizador: this.$store.getters.proximoIDUtilizador,
+        id_estado: 1,
+        nome: this.utilizador.nome,
+        apelido: this.utilizador.apelido,
+        correio: this.utilizador.correio,
+        passe: this.utilizador.passe,
+        id_tipo: 0,
+        numero_estudante: null,
+        nome_empresa: null,
+        foto: "https://lh3.googleusercontent.com/-4yFaWmS7-Pg/X_xzGKwqwHI/AAAAAAAAAAY/L78mg1HQzvELjdvv5xiLqZT6keuBmoGSACMICGAYYCw/s83-c/foto_default.png",
+        inscricao: null,
+        cv: null,
+        portfolio: null,
+        facebook: null,
+        instagram: null,
+        github: null,
+        discord: null,
+        ano: ""
+      }
+      const empresa = this.utilizador.tipo_utilizador == 2 ? {
+        nome: this.utilizador.nome_empresa,
+        correio: this.utilizador.correio_empresa,
+        morada: this.utilizador.morada_empresa,
+        website: this.utilizador.website_empresa,
+      } : null;
+      const dados = {
+        utilizador: utilizador,
+        empresa: empresa
+      }
+      try {
+        this.$store.dispatch("registo", dados)
+      }
+      catch(error){
+        alert("Tente novamente.")                                
+      }
+    },
+    mostrar(){
+      this.type==='password'?this.type='text':this.type='password';
     }
-
+  },
+  computed:{
+    obterInfoUtilizador(){
+      return this.$store.getters.obterUtilizadorAutenticado;
+    }
   }
-  
 };
 </script>
+<style>
+.form-docente{width: 256px;}
+.cca-cb{margin-left: 8px;}
+.botao-criar-docente{height: 42px; width: calc(100% - 16px); outline: none; transition: color 0.4s ease-in-out;}
+.botao-criar-docente:hover{color: #707070;}
+.ajuste-mostrar-passe-docente{right: 18px;}
+</style>

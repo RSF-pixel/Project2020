@@ -3,21 +3,36 @@
     <SideBar />
     <div class="area-principal anim-area-principal d-flex">
       <div class="area-conteudo">
-        <div class="navegador-area-conteudo anim-sombra-area-conteudo d-flex justify-content-between fundo-f4 margem-b20 borda-r5 sombra-area-conteudo">
-          <h1>Inscrições</h1>
-          <router-link :to="{ name: 'Aprovar' }">
-            <div><a>Aprovar</a></div></router-link> |
-          <router-link :to="{ name: 'Utilizadores' }">
-            <div><a>Utilizadores</a></div></router-link> |
-          <router-link :to="{ name: 'Inscricoes' }">
-            <div><a>Inscrições</a></div></router-link> |
-          <router-link :to="{ name: 'AdicionarDocentes' }">
-            <div><a>Adicionar Docente</a></div></router-link>
+        <!-- Barra de navegação da gestão -->
+        <div class="navegador-area-conteudo opcoes-gestao anim-sombra-area-conteudo d-flex justify-content-start align-items-center fundo-f4 margem-b20 borda-r5 sombra-area-conteudo">
+          <!-- Aprovações de utilizadores e propostas -->
+          <router-link :to="{name:'Aprovacoes'}" v-if="obterInfoUtilizador.id_utilizador === 0">
+            <div class="opcao-gestao d-flex justify-content-start align-items-center fundo-cc borda-solida borda-aa borda-w05 margem-l8 borda-r5 opensans-sb fonte-14">
+              <a id="a-gestao">Aprovações</a>
+            </div>
+          </router-link>
+          <!-- Gestão de utilizadores - estudantes, entidades externas e docentes -->
+          <router-link :to="{name:'Utilizadores'}" v-if="obterInfoUtilizador.id_utilizador === 0">
+            <div class="opcao-gestao d-flex justify-content-start align-items-center fundo-cc borda-solida borda-aa borda-w05 margem-l8 borda-r5 opensans-sb fonte-14">
+              <a id="a-gestao">Utilizadores</a>
+            </div>
+          </router-link>
+          <!-- Gestão das inscrições -->
+          <router-link :to="{name:'Inscricoes'}">
+            <div class="opcao-gestao d-flex justify-content-start align-items-center fundo-cc borda-solida borda-aa borda-w05 margem-l8 borda-r5 opensans-sb fonte-14">
+              <a id="a-gestao">Inscrições</a>
+            </div>
+          </router-link>
+          <!-- Criar um novo docente no sistema - apenas os membros do CCA o podem fazer -->
+          <router-link :to="{name:'AdicionarDocentes'}" v-if="obterInfoUtilizador.cca === false">
+            <div class="opcao-gestao d-flex justify-content-start align-items-center fundo-cc borda-solida borda-aa borda-w05 margem-l8 borda-r5 opensans-sb fonte-14">
+              <a id="a-gestao">Adicionar Docente</a>
+            </div>
+          </router-link>
         </div>
         <div class="area-conteudo-se-navegador anim-sombra-area-conteudo d-flex justify-content-start fundo-f4 borda-r5 sombra-area-conteudo">
-          <!-- Por fazer -->
-          <div>
-            <table>
+          <div class="area-tabela">
+            <table class="tabela">
               <tr>
                 <th>ID</th>
                 <th>Nome</th>
@@ -38,7 +53,6 @@
               </tr>
             </table>
           </div>
-          <div>
             <b-modal id="modalDetalhes" :title="dadosModal[0].titulo">
               <p>Objetivos: {{dadosModal[0].objetivos}}</p>
               <p>Plano Provisório: {{dadosModal[0].planos}}</p>
@@ -52,7 +66,6 @@
                 <p>Correio Tutor: {{dadosModal[1].correio_tutor}}</p>
               </template>
             </b-modal>
-          </div>
         </div>
       </div>
     </div>
@@ -73,6 +86,9 @@ export default {
   computed: {
     obterTabelaInscricoes() {
       return this.$store.getters.obterTabelaInscricoes;
+    },
+    obterInfoUtilizador(){
+      return this.$store.getters.obterUtilizadorAutenticado;
     }
   },
   methods: {

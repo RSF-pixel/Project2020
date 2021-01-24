@@ -195,7 +195,7 @@ export default new Vuex.Store({
       tema: state.temas.find(t => notificacao.id_tema == t.id_tema).tema,
       texto: notificacao.texto
     })).filter(n => n.id_utilizador == state.utilizadorAutenticado),
-    obterTabelaUsers: (state, getters) => (tipo) => {
+    obterTabelaUtilizadores: (state, getters) => (tipo) => {
       const tabela = [];
       state.utilizadores.forEach(utilizador => {
         if (getters.obterTipoUtilizadorePorId(utilizador.id_tipo) == tipo && utilizador.id_estado !== 0) {
