@@ -119,12 +119,7 @@ export default {
         discord: null,
         ano: ""
       }
-      const empresa = this.utilizador.tipo_utilizador == 2 ? {
-        nome: this.utilizador.nome_empresa,
-        correio: this.utilizador.correio_empresa,
-        morada: this.utilizador.morada_empresa,
-        website: this.utilizador.website_empresa,
-      } : null;
+      const empresa = null;
       const dados = {
         utilizador: utilizador,
         empresa: empresa
