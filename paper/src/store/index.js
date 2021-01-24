@@ -48,7 +48,6 @@ export default new Vuex.Store({
       data: "",
       hora: "",
       detalhes: "",
-      ano_letivo: ""
     },
     propostas: localStorage.getItem('propostas') ? JSON.parse(localStorage.getItem('propostas')) : [
       {
@@ -59,6 +58,23 @@ export default new Vuex.Store({
         id_docente: 0,
         id_tipo: 0,
         titulo: "Paper",
+        objetivos: "Passar",
+        planos: "Plataforma Projetos",
+        resultados: "Bons",
+        perfil: "Qualquer um",
+        dados: "Nada",
+        recursos: "VSCode",
+        data_hora: "",
+        ano_letivo: ""
+      },
+      {
+        id_proposta: 1,
+        id_estado: 0,
+        motivo: "",
+        id_criador: 0,
+        id_docente: 0,
+        id_tipo: 1,
+        titulo: "Swift",
         objetivos: "",
         planos: "",
         resultados: "",
@@ -80,7 +96,7 @@ export default new Vuex.Store({
     ],
     estagios: localStorage.getItem('estagios') ? JSON.parse(localStorage.getItem('estagios')) : [
       {
-        id_proposta: 0,
+        id_proposta: 1,
         id_empresa: 0,
         nome_tutor: "Jorge Cunha",
         contacto_tutor: "",
@@ -136,6 +152,9 @@ export default new Vuex.Store({
     },
     obterTipoUtilizadorePorId: (state) => (id) => {
       return state.tipo_utilizadores.find(tu => id == tu.id).tipo
+    },
+    obterTipoPropostas: (state) => () => {
+      return state.tipo_propostas
     },
     obterTabelaAprovarUsers: (state, getters) => {
       const tabela = [];
@@ -197,20 +216,23 @@ export default new Vuex.Store({
     obterTabelaInscricoes: (state) => {
       const tabela = [];
       state.inscricoes.forEach(inscricao => {
-        const inscrito = state.utilizadores.find(u => inscricao.id_utilizador == u.id_utilizador);
-        const proposta = state.propostas.find(p => inscricao.id_proposta == p.id_proposta);
-        const tipo_proposta = state.tipo_propostas.find(t => proposta.id_tipo == t.id_tipo).proposta;
-        const estagio = tipo_proposta == 'Estágio' ?
-          state.estagios.find(est => est.id_proposta == proposta.id_proposta) : null;
-        const dados = {
-          id: inscricao.id_proposta,
-          nome_inscrito: inscrito.nome + " " + inscrito.apelido,
-          tipo_proposta: tipo_proposta,
-          entidade: estagio != null ?
-            state.empresas.find(emp => emp.id_empresa == estagio.id_empresa).nome : "---",
-          tutor: estagio != null ? estagio.nome_tutor : "---"
+        if (inscricao.id_estado == 0) {
+          const inscrito = state.utilizadores.find(u => inscricao.id_utilizador == u.id_utilizador);
+          const proposta = state.propostas.find(p => inscricao.id_proposta == p.id_proposta);
+          const tipo_proposta = state.tipo_propostas.find(t => proposta.id_tipo == t.id_tipo).proposta;
+          const estagio = tipo_proposta == 'Estágio' ?
+            state.estagios.find(est => est.id_proposta == proposta.id_proposta) : null;
+          const dados = {
+            id: inscricao.id_proposta,
+            nome_inscrito: inscrito.nome + " " + inscrito.apelido,
+            tipo_proposta: tipo_proposta,
+            entidade: estagio != null ?
+              state.empresas.find(emp => emp.id_empresa == estagio.id_empresa).nome : "---",
+            tutor: estagio != null ? estagio.nome_tutor : "---",
+            id_proposta: proposta.id_proposta
+          }
+          tabela.push(dados);
         }
-        tabela.push(dados);
       });
       return tabela;
     },
@@ -257,6 +279,16 @@ export default new Vuex.Store({
         }
       });
       return tabela;
+    },
+    obterModalVerDetalhes: (state) => (id) => {
+      const dados = []
+      dados.push(state.propostas.find(p => p.id_proposta == id));
+      if (dados[0].id_tipo == "1") {
+        const estagio = state.estagios.find(e => e.id_proposta == id)
+        dados.push(estagio);
+        dados.push(state.empresas.find(e => e.id_empresa == estagio.id_empresa).nome);
+      }
+      return dados;
     }
   },
   mutations: {
@@ -338,6 +370,45 @@ export default new Vuex.Store({
         }
         return utilizador;
       })
+    },
+    APROVARINSCRICAO(state, payload) {
+      state.inscricoes = state.inscricoes.map(inscricao => {
+        if (inscricao.id_inscricao == payload) {
+          inscricao.id_estado = 1;
+        }
+        return inscricao;
+      })
+    },
+    NEGARINSCRICAO(state, payload) {
+      state.inscricoes = state.inscricoes.filter(inscricao =>
+        inscricao.id_inscricao != payload);
+    },
+    REMOVERPROPOSTA(state, payload) {
+      state.propostas = state.propostas.filter(proposta =>
+        proposta.id_proposta != payload);
+    },
+    REMOVERINSCRICAO(state, payload) {
+      state.inscricoes = state.inscricoes.filter(inscricao =>
+        inscricao.id_inscricao != payload);
+    },
+    AUMENTARORDEM(state, payload) {
+      state.inscricoes = state.inscricoes.map(inscricao => {
+        if (inscricao.id_inscricao == payload) {
+          inscricao.preferencia--;
+        }
+        return inscricao;
+      })
+    },
+    DIMINUIRORDEM(state, payload) {
+      state.inscricoes = state.inscricoes.map(inscricao => {
+        if (inscricao.id_inscricao == payload) {
+          inscricao.preferencia++;
+        }
+        return inscricao;
+      })
+    },
+    CRIARPROPOSTA(state, payload) {
+      state.propostas.push(payload)
     }
   },
   actions: {
@@ -413,6 +484,54 @@ export default new Vuex.Store({
     removerCCA(context, payload) {
       context.commit('REMOVERCCA', payload);
       localStorage.setItem('utilizadores', JSON.stringify(context.state.utilizadores));
+    },
+    aprovarInscricao(context, payload) {
+      context.commit('APROVARINSCRICAO', payload);
+      localStorage.setItem('inscricoes', JSON.stringify(context.state.inscricoes));
+    },
+    negarInscricao(context, payload) {
+      context.commit('NEGARINSCRICAO', payload);
+      localStorage.setItem('inscricoes', JSON.stringify(context.state.inscricoes));
+    },
+    removerProposta(context, payload) {
+      context.commit('REMOVERPROPOSTA', payload);
+      context.state.inscricoes.forEach(inscricao => {
+        if (inscricao.id_proposta === payload) {
+          context.dispatch("removerInscricao", inscricao.id_inscricao)
+        }
+      });
+      localStorage.setItem('propostas', JSON.stringify(context.state.propostas));
+    },
+    removerInscricao(context, payload) {
+      const insc = context.state.inscricoes.find(i => i.id_inscricao == payload);
+      context.commit('REMOVERINSCRICAO', payload);
+      for (let index = insc.preferencia; index <= 5; index++) {
+        try {
+          const id = context.state.inscricoes.find(i => i.id_utilizador == insc.id_utilizador && i.preferencia == insc.preferencia+1).id_inscricao
+          context.commit('AUMENTARORDEM', id);
+        } catch (error) {
+          break;
+        }
+      }
+      localStorage.setItem('inscricoes', JSON.stringify(context.state.inscricoes));
+    },
+    aumentarOrdem(context, payload) {
+      const insc = context.state.inscricoes.find(i => i.id_inscricao == payload);
+      const id = context.state.inscricoes.find(i => i.id_utilizador == insc.id_utilizador && i.preferencia == insc.preferencia-1).id_inscricao
+      context.commit('AUMENTARORDEM', payload);
+      context.commit('DIMINUIRORDEM', id);
+      localStorage.setItem('inscricoes', JSON.stringify(context.state.inscricoes));
+    },
+    diminuirOrdem(context, payload) {
+      const insc = context.state.inscricoes.find(i => i.id_inscricao == payload);
+      const id = context.state.inscricoes.find(i => i.id_utilizador == insc.id_utilizador && i.preferencia == insc.preferencia+1).id_inscricao
+      context.commit('DIMINUIRORDEM', payload);
+      context.commit('AUMENTARORDEM', id);
+      localStorage.setItem('inscricoes', JSON.stringify(context.state.inscricoes));
+    },
+    criarProposta(context, payload) {
+      context.commit('CRIARPROPOSTA', payload);
+      localStorage.setItem('propostas', JSON.stringify(context.state.propostas));
     }
   }
 });

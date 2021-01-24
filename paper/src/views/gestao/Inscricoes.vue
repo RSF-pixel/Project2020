@@ -27,16 +27,31 @@
                 <th>Detalhes</th>
                 <th>Ações</th>
               </tr>
-                <tr v-for="(inscricoes) in obterTabelaInscricoes" :key="inscricoes.id">              
-                  <td>{{inscricoes.id}}</td>
-                  <td>{{inscricoes.nome_inscrito}}</td>
-                  <td>{{inscricoes.tipo_proposta}}</td>
-                  <td>{{inscricoes.entidade}}</td>
-                  <td>{{inscricoes.tutor}}</td>
-                  <td><a href="">Ver detalhes</a></td>
-                  <td><button @click="AprovarInscricao(proposta.id)">Aprovar</button><button @click="negarInscricao(proposta.id)">Negar</button></td>
-                </tr>
+              <tr v-for="(inscricoes) in obterTabelaInscricoes" :key="inscricoes.id">              
+                <td>{{inscricoes.id}}</td>
+                <td>{{inscricoes.nome_inscrito}}</td>
+                <td>{{inscricoes.tipo_proposta}}</td>
+                <td>{{inscricoes.entidade}}</td>
+                <td>{{inscricoes.tutor}}</td>
+                <td><a v-b-modal.modalDetalhes @click="obterModalVerDetalhes(inscricoes.id_proposta)">Ver detalhes</a></td>
+                <td><button @click="aprovarInscricao(inscricoes.id)">Aprovar</button><button @click="negarInscricao(inscricoes.id)">Negar</button></td>
+              </tr>
             </table>
+          </div>
+          <div>
+            <b-modal id="modalDetalhes" :title="dadosModal[0].titulo">
+              <p>Objetivos: {{dadosModal[0].objetivos}}</p>
+              <p>Plano Provisório: {{dadosModal[0].planos}}</p>
+              <p>Resultados Esperados: {{dadosModal[0].resultados}}</p>
+              <p>Perfil Desejado: {{dadosModal[0].perfil}}</p>
+              <p>Dados Relevantes: {{dadosModal[0].dados}}</p>
+              <p>Recursos Necessários: {{dadosModal[0].recursos}}</p>
+              <template v-if="dadosModal[0].id_tipo == 1">
+                <p>Cargo Tutor: {{dadosModal[1].cargo_tutor}}</p>
+                <p>Contacto Tutor: {{dadosModal[1].contacto_tutor}}</p>
+                <p>Correio Tutor: {{dadosModal[1].correio_tutor}}</p>
+              </template>
+            </b-modal>
           </div>
         </div>
       </div>
@@ -50,18 +65,26 @@ export default {
   components: {
     SideBar,
   },
+  data() {
+    return {
+      dadosModal: [{titulo:""}]
+    };
+  },
   computed: {
     obterTabelaInscricoes() {
       return this.$store.getters.obterTabelaInscricoes;
     }
   },
   methods: {
-    AprovarInscricao(id) {
-      alert("aprovado " + id);
+    aprovarInscricao(id) {
+      this.$store.dispatch("aprovarInscricao", id)
     },
     negarInscricao(id) {
-      alert("negado " + id);
+      this.$store.dispatch("negarInscricao", id)
     },
+    obterModalVerDetalhes(id) {
+      this.dadosModal = this.$store.getters.obterModalVerDetalhes(id);
+    }
   }
 };
 </script>
