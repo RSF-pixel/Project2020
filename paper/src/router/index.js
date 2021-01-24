@@ -9,7 +9,7 @@ import Agenda from "../views/Agenda.vue";
 import Perfil from "../views/Perfil.vue";
 import GestaoPropostas from "../views/propostas/GestaoPropostas.vue";
 import CriarProposta from "../views/propostas/CriarProposta.vue";
-import Aprovar from "../views/gestao/Aprovar.vue";
+import Aprovacoes from "../views/gestao/Aprovacoes.vue";
 import Utilizadores from "../views/gestao/Utilizadores.vue";
 import Inscricoes from "../views/gestao/Inscricoes.vue";
 import AdicionarDocentes from "../views/gestao/AdicionarDocentes.vue";
@@ -86,9 +86,9 @@ const routes = [{
     }
   },
   {
-    path: "/gestao/aprovar",
-    name: "Aprovar",
-    component: Aprovar,
+    path: "/gestao/aprovacoes",
+    name: "Aprovacoes",
+    component: Aprovacoes,
     meta:{
       requerAutenticacao: true
     }

@@ -23,7 +23,6 @@ export default {
   font-weight: bold;
   color: #000000;
   font-size: 82px;
-     
 }
 #errorButton {
   background-color: #000000;
