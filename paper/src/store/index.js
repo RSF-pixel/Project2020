@@ -68,7 +68,7 @@ export default new Vuex.Store({
       },
       // Entidade Externa
       {
-        id_utilizador: 1,
+        id_utilizador: 2,
         id_estado: 1,
         nome: "Samuel",
         apelido: "Ribeiro",
