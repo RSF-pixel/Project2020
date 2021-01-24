@@ -49,7 +49,7 @@
                 <td>{{inscricoes.entidade}}</td>
                 <td>{{inscricoes.tutor}}</td>
                 <td><a v-b-modal.modalDetalhes @click="obterModalVerDetalhes(inscricoes.id_proposta)">Ver detalhes</a></td>
-                <td><button @click="aprovarInscricao(inscricoes.id)">Aprovar</button><button @click="negarInscricao(inscricoes.id)">Negar</button></td>
+                <td><button @click="aprovarInscricao(inscricoes)">Aprovar</button><button @click="negarInscricao(inscricoes.id)">Negar</button></td>
               </tr>
             </table>
           </div>
