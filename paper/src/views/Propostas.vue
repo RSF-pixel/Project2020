@@ -49,19 +49,19 @@
               <div class="dados-empresa fundo-f4 borda-r5 sombra-caixa-detalhes">
                 <!-- Empresa (nome) -->
                 <template v-if="displayProposta != null && displayProposta.empresa != null">
-                  <h5>Empresa</h5><p>{{displayProposta.empresa}}</p>
+                  <p class="sem-margens fonte-14">Empresa</p><p class="sem-margens fonte-14">{{displayProposta.empresa}}</p>
                 </template>
               </div>
               <div class="dados-empresa fundo-f4 borda-r5 sombra-caixa-detalhes">
                 <!-- Morada -->
                 <template v-if="displayProposta != null && displayProposta.empresa != null">
-                  <h5>Morada</h5><p>{{displayProposta.morada}}</p>
+                  <p class="sem-margens fonte-14">Morada</p><p class="sem-margens fonte-14">{{displayProposta.morada}}</p>
                 </template>
               </div>
               <div class="dados-empresa fundo-f4 borda-r5 sombra-caixa-detalhes">
                 <!-- Website -->
                 <template v-if="displayProposta != null && displayProposta.empresa != null">
-                  <h5>Website</h5><p>{{displayProposta.website}}</p>
+                  <p class="sem-margens fonte-14">Website</p><p class="sem-margens fonte-14">{{displayProposta.website}}</p>
                 </template>
               </div>
             </div>
@@ -70,10 +70,10 @@
                 <div class="info-tutor-selecionada"> 
                   <template v-if="displayProposta != null && displayProposta.empresa != null">
                     <label for="info-tutor-selecionada">Tutor</label>
-                    <p>{{displayProposta.tutor}}</p>
-                    <p>{{displayProposta.cargo}}</p>
-                    <p>{{displayProposta.contacto}}</p>
-                    <p>{{displayProposta.correio}}</p>
+                    <p class="sem-margens">{{displayProposta.tutor}}</p>
+                    <p class="sem-margens">{{displayProposta.cargo}}</p>
+                    <p class="sem-margens">{{displayProposta.contacto}}</p>
+                    <p class="sem-margens">{{displayProposta.correio}}</p>
                   </template>
                 </div>
               </div>
@@ -129,7 +129,7 @@ export default {
 .criar-proposta-link-btn:hover #criar-proposta-svg{fill: #004666;}
 .area-selecao-proposta, .area-proposta-selecionada{width: 50%; margin: 8px 8px;}
 .area-selecao-proposta{overflow: auto;}
-.info-proposta-principal{height: 60%; width: 100%; margin-bottom: 16px;}
+.info-proposta-principal{height: 60%; width: 100%; margin-bottom: 16px; overflow: auto;}
 .info-proposta-secundaria{height: calc(40% - 16px); width: calc(50% - 8px); margin-right: 16px;}
 .info-proposta-terciaria{height: calc(40% - 16px); width: calc(50% - 8px);}
 .dados-empresa{height: auto; width: 100%; margin: 4px 4px;}
