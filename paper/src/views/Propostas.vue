@@ -6,8 +6,10 @@
         <div class="navegador-area-conteudo anim-sombra-area-conteudo d-flex justify-content-between fundo-f4 margem-b20 borda-r5 sombra-area-conteudo">
           <div class="area-pesquisa-propostas">
             <input class="cor-60 fundo-fa fonte-12 opensans-l borda-r5 sem-margens" type="text" placeholder="Escreva alguma coisa...">
-            <select class="select-pesquisa-proposta cor-60 fundo-fa fonte-12 opensans-l borda-r5 sem-margens" name="" id="">
-              <option value="" disabled selected>Tipo de Proposta</option>
+            <select v-model="select" class="select-pesquisa-proposta cor-60 fundo-fa fonte-12 opensans-l borda-r5 sem-margens" name="" id="">
+              <option value="-1">Tipo de Proposta</option>
+              <option value="1">Projetos</option>
+              <option value="0">Estágio</option>
             </select>
           </div>
           <div class="area-navegacao-propostas d-flex justify-content-start align-items-center">
@@ -24,36 +26,58 @@
         <div class="area-conteudo-se-navegador anim-sombra-area-conteudo d-flex justify-content-start fundo-f4 borda-r5 sombra-area-conteudo">
           <div class="area-selecao-proposta">
             <!-- Cards das propostas -->
+            <b-card v-for="(proposta) in obterCardsPropostas[counter]" :key="proposta.id">
+              <h5>#{{proposta.id}} {{proposta.titulo}}</h5>
+              <p>{{proposta.tipo}}</p>
+              <button @click="displayProposta = proposta">Ver Proposta</button>
+            </b-card>
+            <button v-for="(proposta, index) in propostas" :key="index" @click="counter = index"></button>
           </div>
           <div class="area-proposta-selecionada d-flex flex-wrap">
             <div class="info-proposta-principal fundo-ff borda-solida borda-r5 borda-w05 borda-aa">
-              <!-- Lista dos dados da proposta com h1 e p-->
+              <!-- Lista dos dados da proposta com h5 e p-->
+              <template v-if="displayProposta != null">
+                <h5>Objetivos e descrição</h5><p>{{displayProposta.objetivos}}</p>
+                <h5>Plano provisório de trabalho</h5><p>{{displayProposta.planos}}</p>
+                <h5>Resultados esperados</h5><p>{{displayProposta.resultados}}</p>
+                <h5>Perfil do candidato desejado</h5><p>{{displayProposta.perfil}}</p>
+                <h5>Outros dados relevantes</h5><p>{{displayProposta.dados}}</p>
+                <h5>Recursos necessários</h5><p>{{displayProposta.recursos}}</p>
+              </template>
             </div>
             <div class="info-proposta-secundaria d-flex flex-wrap fundo-ff borda-solida borda-r5 borda-w05 borda-aa">
               <div class="dados-empresa fundo-f4 borda-r5 sombra-caixa-detalhes">
                 <!-- Empresa (nome) -->
+                <template v-if="displayProposta != null && displayProposta.empresa != null">
+                  <h5>Empresa</h5><p>{{displayProposta.empresa}}</p>
+                </template>
               </div>
               <div class="dados-empresa fundo-f4 borda-r5 sombra-caixa-detalhes">
                 <!-- Morada -->
+                <template v-if="displayProposta != null && displayProposta.empresa != null">
+                  <h5>Morada</h5><p>{{displayProposta.morada}}</p>
+                </template>
               </div>
               <div class="dados-empresa fundo-f4 borda-r5 sombra-caixa-detalhes">
                 <!-- Website -->
+                <template v-if="displayProposta != null && displayProposta.empresa != null">
+                  <h5>Website</h5><p>{{displayProposta.website}}</p>
+                </template>
               </div>
             </div>
             <div class="info-proposta-terciaria d-flex flex-wrap fundo-ff borda-solida borda-r5 borda-w05 borda-aa">
               <div class="info-proposta-e-tutor fundo-f4 borda-r5 sombra-caixa-detalhes">
-                <div class="info-proposta-selecionada"> 
-                  <!-- Nome e tipo de proposta (label) -->
-                  <!-- Título (p)-->
-                  <!-- Tipo de proposta entre () (p) -->
-                </div>
                 <div class="info-tutor-selecionada"> 
-                  <!-- Tutor e cargo na empresa (label) -->
-                  <!-- Nome do tutor (p)-->
-                  <!-- Cargo entre () (p) -->
+                  <template v-if="displayProposta != null && displayProposta.empresa != null">
+                    <label for="info-tutor-selecionada">Tutor</label>
+                    <p>{{displayProposta.tutor}}</p>
+                    <p>{{displayProposta.cargo}}</p>
+                    <p>{{displayProposta.contacto}}</p>
+                    <p>{{displayProposta.correio}}</p>
+                  </template>
                 </div>
-                <!-- Um botão para inscrever-->
               </div>
+                <button :disabled="displayProposta == null" @click="inscreverProposta">Inscrever na Proposta</button>
             </div>
           </div>
         </div>
@@ -68,6 +92,27 @@ import SideBar from "@/components/SideBar.vue";
 export default {
   components: {
     SideBar
+  },
+  data() {
+    return {
+      select: -1,
+      counter: 0,
+      displayProposta: null,
+    }
+  },
+  computed: {
+    obterCardsPropostas(){
+      return this.$store.getters.obterCardsPropostas(this.select)
+    }
+  },
+  methods: {
+    inscreverProposta() {
+      try {
+        this.$store.dispatch("inscreverProposta", this.displayProposta)
+      } catch (error) {
+        alert(error)
+      }
+    }
   }
 };
 </script>
