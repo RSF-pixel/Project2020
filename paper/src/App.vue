@@ -3,17 +3,28 @@
     <router-view />
   </div>
 </template>
-
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-/* Fundo de todas as páginas */
-  html, body, #app, .container-autenticacao-registo, .view{height: 100%; background-color: #e7e7e7; min-height: 754px; min-width: 400px;} 
+#app{text-align: center;}
+/* 
+  De modo a reduzir a quantidade de CSS escrito, tudo o que for escrito no
+  style da App.vue é comum a toda a plataforma. Desta forma nenhum outro ficheiro
+  do tipo .vue tem o style definido como scoped, visto que maioria da estilização
+  provém deste mesmo ficheiro.
+
+  Índice/Organização:
+    - Fundo das páginas;
+    - Margens;
+    - Paddings;
+    - Animações e transições;
+    - Outros.
+*/
+/* Fundo das páginas */ 
+  html, body, #app, .container-autenticacao-registo, .view {
+    height: 100%; 
+    background-color: #e7e7e7; 
+    min-height: 754px; /* Alterar mais tarde */ 
+    min-width: 400px; /* Alterar mais tarde */ 
+  }
 /* Margens */
   .sem-margens{margin: 0px;}
   .margem-l5{margin-left: 5px;}
@@ -87,19 +98,19 @@
   .cor-ffdcdc{color: #ffdcdc;}
 /* Fontes de texto e tamanhos*/
   /* Fontes */
-  @font-face {font-family: mukta-extralight; src: url(assets/fonts/Mukta-ExtraLight.ttf);}
+  @font-face {font-family: mukta-extralight; src: url(assets/fonts/Mukta-ExtraLight.woff2);}
   .mukta-el{font-family: mukta-extralight;}
-  @font-face {font-family: mukta-light; src: url(assets/fonts/Mukta-Light.ttf);}
+  @font-face {font-family: mukta-light; src: url(assets/fonts/Mukta-Light.woff2);}
   .mukta-l{font-family: mukta-light;}
-  @font-face {font-family: mukta-medium; src: url(assets/fonts/Mukta-Medium.ttf);}
+  @font-face {font-family: mukta-medium; src: url(assets/fonts/Mukta-Medium.woff2);}
   .mukta-m{font-family: mukta-medium;}
-  @font-face {font-family: mukta-regular; src: url(assets/fonts/Mukta-Regular.ttf);}
+  @font-face {font-family: mukta-regular; src: url(assets/fonts/Mukta-Regular.woff2);}
   .mukta-r{font-family: mukta-regular;}
-  @font-face {font-family: mukta-semibold; src: url(assets/fonts/Mukta-SemiBold.ttf);}
+  @font-face {font-family: mukta-semibold; src: url(assets/fonts/Mukta-SemiBold.woff2);}
   .mukta-sb{font-family: mukta-semibold;}
-  @font-face {font-family: opensans-light; src: url(assets/fonts/OpenSans-Light.ttf);}
+  @font-face {font-family: opensans-light; src: url(assets/fonts/OpenSans-Light.woff2);}
   .opensans-l{font-family: opensans-light;}
-  @font-face {font-family: opensans-semibold; src: url(assets/fonts/OpenSans-SemiBold.ttf);}
+  @font-face {font-family: opensans-semibold; src: url(assets/fonts/OpenSans-SemiBold.woff2);}
   .opensans-sb{font-family: opensans-semibold;}
   /* Tamanhos */
   .fonte-10{font-size: 10px;}
@@ -172,11 +183,31 @@
   .botao-autenticacao-registo{height: 42px; width: 100%; border: none; outline: none;}
   .botao-autenticacao-registo a{color: #202020; text-decoration: none;}
   .botao-autenticacao-registo:focus, .botao-autenticacao-registo:hover{background-color: #0084c0;}
-/* Animações/Transições */
-  .anim-autenticacao-registo{animation: 1.2s ease-in-out 0s 1 surgimento-ar;}
-  @keyframes surgimento-ar{0%{opacity: 0; box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);}100%{opacity:1; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);}}
-  .anim-area-principal{animation: 0.6s ease-in-out 0s 1 surgimento-ap;}
-  @keyframes surgimento-ap{0%{opacity: 0;}100%{opacity: 1;}}
+/* Animações e transições */
+  .animacao-autenticacao-registo {
+    animation: 0.6s ease-in-out 0s 1 a-a-r;
+  }
+  @keyframes a-a-r {
+    from {
+      opacity: 0; 
+      box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+    }
+    to {
+      opacity: 1; 
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+  }
+  .animacao-conteudo-principal {
+    animation: 0.6s ease-in-out 0s 1 a-c-p;
+  }
+  @keyframes a-c-p {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
   /* Área de conteúdo sem navegação */
   .anim-sombra-area-conteudo{animation: 1.2s ease-in-out 0s 1 test;}
   @keyframes test{0%{box-shadow: 2px 2px 2px rgba(0, 0, 0, 0);}50%{box-shadow: 2px 2px 2px rgba(0, 0, 0, 0);}100%{ box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);}}
