@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+import Index from "../views/Index.vue";
 import Autenticacao from "../views/Autenticacao.vue";
 import Registo from "../views/Registo.vue";
 import Propostas from "../views/Propostas.vue";
@@ -13,7 +13,6 @@ import Aprovacoes from "../views/gestao/Aprovacoes.vue";
 import Utilizadores from "../views/gestao/Utilizadores.vue";
 import Inscricoes from "../views/gestao/Inscricoes.vue";
 import AdicionarDocentes from "../views/gestao/AdicionarDocentes.vue";
-import Sair from "../views/Sair.vue";
 import Erro from "../views/Erro.vue"
 import Store from "../store";
 
@@ -21,8 +20,8 @@ Vue.use(VueRouter);
 
 const routes = [{
     path: "/",
-    name: "Home",
-    component: Home,
+    name: "Index",
+    component: Index,
     meta:{
       requerAutenticacao: true
     }
@@ -113,14 +112,6 @@ const routes = [{
     path: "/gestao/adicionardocentes",
     name: "AdicionarDocentes",
     component: AdicionarDocentes,
-    meta:{
-      requerAutenticacao: true
-    }
-  },
-  {
-    path: "/sair",
-    name: "Sair",
-    component: Sair,
     meta:{
       requerAutenticacao: true
     }

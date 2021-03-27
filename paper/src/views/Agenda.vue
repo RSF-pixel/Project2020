@@ -1,8 +1,8 @@
 <template>
   <div class="view d-flex">
     <SideBar />
-    <div class="area-principal anim-area-principal d-flex">
-      <div class="area-conteudo anim-sombra-area-conteudo d-flex justify-content-start fundo-f4 borda-r5 sombra-area-conteudo">
+    <div class="area-visivel animacao-opacidade-sombra-ligeira d-flex">
+      <div class="area-conteudo animacao-opacidade-sombra-ligeira d-flex justify-content-start fundo-f4 borda-r5 sombra-ligeira">
         <!-- Por fazer -->
         <div>Calendário</div>
         <div>
