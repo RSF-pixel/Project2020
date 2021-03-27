@@ -1,25 +1,25 @@
 <template>
   <div class="view d-flex">
     <SideBar />
-    <div class="area-principal anim-area-principal d-flex">
+    <div class="area-visivel animacao-opacidade-sombra-ligeira d-flex">
       <div class="area-conteudo">
-        <div class="navegador-area-conteudo anim-sombra-area-conteudo d-flex justify-content-between fundo-f4 margem-b20 borda-r5 sombra-area-conteudo">
+        <div class="navegador-superior animacao-opacidade-sombra-ligeira d-flex justify-content-between fundo-f4 margem-b20 borda-r5 sombra-area-conteudo">
           <div class="area-navegacao-propostas-2 d-flex justify-content-start align-items-center"> 
             <router-link :to="{name:'Propostas'}" class="lista-propostas-link-a">
-              <button class="lista-propostas-link-btn d-flex align-items-center fundo-dd borda-solida borda-w05 borda-aa borda-r5 opensans-sb fonte-14">
+              <button class="lista-propostas-link-btn d-flex align-items-center fundo-dd borda-fina borda-aa borda-r5 opensans-sb fonte-14">
                 <svg id="voltar2-svg" xmlns="http://www.w3.org/2000/svg" width="22" height="14.667" viewBox="0 0 22 14.667"><path class="a" d="M7.334,15v3.667L0,11.333,7.334,4V7.667h8.185c8.3,0,6.54,8.728,5.806,10.467C20.6,15.892,19.066,15,16.4,15H7.334Z" transform="translate(0 -4)"/></svg>
                 <a>Retornar</a>
               </button>
             </router-link>
           </div>
         </div>
-        <div class="d-flex justify-content-between anim-sombra-area-conteudo fundo-f4 borda-r5 sombra-area-conteudo padding-all8">
+        <div class="area-conteudo-com-navegador d-flex justify-content-between animacao-opacidade-sombra-ligeira fundo-f4 borda-r5 sombra-area-conteudo padding-all8">
           <b-form @submit.stop.prevent="onSubmit">
             <div class="d-flex justify-content-between">
               <div class="d-flex flex-column justify-content-between width-55">
                 <div class="d-flex align-align-items-start sem-margens width-100">
                   <div class="sem-padding width-48">
-                    <div class="mukta-m fonte-16 align-left weight-500">Título da proposta *</div>
+                    <div class="mukta-m fonte-16 align-left texto-bold">Título da proposta *</div>
                     <b-form-input
                       v-model="form.tituloProposta"
                       class="width-input opensans-l fonte-12"
@@ -38,7 +38,7 @@
                 </div>
                 <div class="d-flex sem-margens width-100">
                   <div class="sem-padding width-48">
-                    <div class="mukta-m fonte-16 align-left weight-500 width-100 padding-t8">Objetivos e descrição da proposta *</div>
+                    <div class="mukta-m fonte-16 align-left texto-bold width-100 padding-t8">Objetivos e descrição da proposta *</div>
                     <b-form-textarea
                       id="textarea"
                       v-model="form.descricaoProposta"
@@ -48,7 +48,7 @@
                     />
                   </div>
                   <div class="sem-padding margem-l32 width-48">
-                    <div class="mukta-m fonte-16 align-left weight-500 width-100 padding-t8">Plano provisório de trabalho *</div>
+                    <div class="mukta-m fonte-16 align-left texto-bold width-100 padding-t8">Plano provisório de trabalho *</div>
                     <b-form-textarea
                       id="textarea"
                       v-model="form.planoProvisorio"
@@ -60,7 +60,7 @@
                 </div>
                 <div class="d-flex sem-margens width-100">
                   <div class="sem-padding width-48">
-                    <div class="mukta-m fonte-16 align-left weight-500">Resultados esperados *</div>
+                    <div class="mukta-m fonte-16 align-left texto-bold">Resultados esperados *</div>
                     <b-form-textarea
                       id="textarea"
                       v-model="form.resultadosEsperados"
@@ -70,7 +70,7 @@
                     />
                   </div>
                   <div class="sem-padding margem-l32 width-48">
-                    <div class="mukta-m fonte-16 align-left weight-500">Perfil do candidato desejado *</div>
+                    <div class="mukta-m fonte-16 align-left texto-bold">Perfil do candidato desejado *</div>
                     <b-form-textarea
                       id="textarea"
                       v-model="form.perfilDesejado"
@@ -82,7 +82,7 @@
                 </div>
                 <div class="d-flex sem-margens width-100">
                   <div class="sem-padding width-48">
-                    <div class="mukta-m fonte-16 align-left weight-500">Outros dados relevantes </div>
+                    <div class="mukta-m fonte-16 align-left texto-bold">Outros dados relevantes </div>
                     <b-form-textarea
                       id="textarea"
                       v-model="form.outrosDados"
@@ -91,7 +91,7 @@
                     />
                   </div>
                   <div class="sem-padding margem-l32 width-48">
-                    <div class="mukta-m fonte-16 align-left weight-500">Recursos necessários *</div>
+                    <div class="mukta-m fonte-16 align-left texto-bold">Recursos necessários *</div>
                     <b-form-textarea
                       id="textarea"
                       v-model="form.recursosNecessarios"
@@ -103,11 +103,11 @@
                 </div>
               </div>
               <div class="d-flex flex-column width-42">
-                <div class="d-flex flex-column justify-content-between fundo-ff borda-r5 borda-solida borda-w1 borda-bb padding-all8 margem-t32">
-                  <div class="mukta-m fonte-16 align-left weight-500 margem-t7">Identificação da entidade acolhedora</div>
+                <div class="d-flex flex-column justify-content-between fundo-ff borda-r5 borda-grossa borda-bb padding-all8 margem-t32">
+                  <div class="mukta-m fonte-16 align-left texto-bold margem-t7">Identificação da entidade acolhedora</div>
                   <div class="d-flex justify-content-between sem-margens width-100 margem-t7">
                     <div class="d-flex flex-column sem-padding width-48">
-                      <div class="mukta-m fonte-14 cor-60 align-left weight-500">Nome da Empresa *</div>
+                      <div class="mukta-m fonte-14 cor-60 align-left texto-bold">Nome da Empresa *</div>
                       <b-form-input
                         v-model="form.nomeEmpresa"
                         class="width-input opensans-l fonte-12"
@@ -119,7 +119,7 @@
                       />
                     </div>
                     <div class="d-flex flex-column sem-padding width-48">
-                      <div class="mukta-m fonte-14 cor-60 align-left weight-500">Correio eletrónico *</div>
+                      <div class="mukta-m fonte-14 cor-60 align-left texto-bold">Correio eletrónico *</div>
                       <b-form-input
                         v-model="form.correioEletronicoEmpresa"
                         class="width-input opensans-l fonte-12"
@@ -133,7 +133,7 @@
                   </div>
                   <div class="d-flex justify-content-between sem-margens width-100 margem-t7">
                     <div class="d-flex flex-column sem-padding width-48">
-                      <div class="mukta-m fonte-14 cor-60 align-left weight-500">Morada da Empresa *</div>
+                      <div class="mukta-m fonte-14 cor-60 align-left texto-bold">Morada da Empresa *</div>
                       <b-form-input
                         v-model="form.moradaEmpresa"
                         class="width-input opensans-l fonte-12"
@@ -145,7 +145,7 @@
                       />
                     </div>
                     <div class="d-flex flex-column sem-padding width-48">
-                      <div class="mukta-m fonte-14 cor-60 align-left weight-500">Website *</div>
+                      <div class="mukta-m fonte-14 cor-60 align-left texto-bold">Website *</div>
                       <b-form-input
                         v-model="form.website"
                         class="width-input opensans-l fonte-12 height-42 borda-aa"
@@ -158,10 +158,10 @@
                     </div>
                   </div>
                   <div class="fundo-aa height-2 width-100 margem-t15"></div>
-                  <div class="mukta-m fonte-16 align-left weight-500 margem-t15">Tutor da entidade acolhedora</div>
+                  <div class="mukta-m fonte-16 align-left texto-bold margem-t15">Tutor da entidade acolhedora</div>
                   <div class="d-flex justify-content-between sem-margens width-100 margem-t7">
                     <div class="d-flex flex-column sem-padding width-48">
-                      <div class="mukta-m fonte-14 cor-60 align-left weight-500">Nome e apelido do tutor *</div>
+                      <div class="mukta-m fonte-14 cor-60 align-left texto-bold">Nome e apelido do tutor *</div>
                       <b-form-input
                         v-model="form.nomeApelidoTutor"
                         class="width-input opensans-l fonte-12"
@@ -173,7 +173,7 @@
                       />
                     </div>
                     <div class="d-flex flex-column sem-padding width-48">
-                      <div class="mukta-m fonte-14 cor-60 align-left weight-500">Correio eletrónico *</div>
+                      <div class="mukta-m fonte-14 cor-60 align-left texto-bold">Correio eletrónico *</div>
                       <b-form-input
                         v-model="form.correioEletronicoTutor"
                         class="width-input opensans-l fonte-12"
@@ -187,7 +187,7 @@
                   </div>
                   <div class="d-flex justify-content-between sem-margens width-100 margem-t7">
                     <div class="d-flex flex-column sem-padding width-48">
-                      <div class="mukta-m fonte-14 cor-60 align-left weight-500">Cargo na Empresa *</div>
+                      <div class="mukta-m fonte-14 cor-60 align-left texto-bold">Cargo na Empresa *</div>
                       <b-form-input
                         v-model="form.cargoEmpresa"
                         class="width-input opensans-l fonte-12"
@@ -199,7 +199,7 @@
                       />
                     </div>
                     <div class="d-flex flex-column sem-padding width-48">
-                      <div class="mukta-m fonte-14 cor-60 align-left weight-500">Contacto telefónico *</div>
+                      <div class="mukta-m fonte-14 cor-60 align-left texto-bold">Contacto telefónico *</div>
                       <b-form-input
                         v-model="form.contactoTelefonico"
                         class="width-input opensans-l fonte-12"
@@ -212,8 +212,8 @@
                     </div>
                   </div>
                 </div>
-                <div class="fundo-ff borda-r5 borda-solida borda-w1 borda-bb padding-all8 margem-t7">
-                  <p class="align-left fonte-13 cor-60 sem-margens">Por favor, preencha os campos com dados legítimos e corretos. A nossa plataforma não se responsabiliza por enganos no caso de dados falsos e/ou incorretos.<br />Cada proposta submetida, seja este estágio ou projeto, passa por verificação e validação por parte de uma comissão de docentes responsáveis pela Licenciatura de Tecnologias e Sistemas de Informação para a Web da Escola Superior de Media Artes e Design.</p>
+                <div class="fundo-ff borda-r5 borda-grossa borda-bb padding-all8 margem-t7">
+                  <p class="align-left fonte-14 cor-60 sem-margens">Por favor, preencha os campos com dados legítimos e corretos. A nossa plataforma não se responsabiliza por enganos no caso de dados falsos e/ou incorretos.<br />Cada proposta submetida, seja este estágio ou projeto, passa por verificação e validação por parte de uma comissão de docentes responsáveis pela Licenciatura de Tecnologias e Sistemas de Informação para a Web da Escola Superior de Media Artes e Design.</p>
                 </div>
                 <div class="d-flex align-bottom margem-t7 align-left">
                   <b-form-checkbox

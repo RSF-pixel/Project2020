@@ -1,16 +1,16 @@
 <template>
   <div class="view d-flex">
     <SideBar />
-    <div class="area-principal anim-area-principal d-flex">
-      <div class="area-conteudo ajuste-f anim-sombra-area-conteudo d-flex justify-content-start fundo-f4 borda-r5 sombra-area-conteudo">    
+    <div class="area-visivel animacao-opacidade-sombra-ligeira d-flex">
+      <div class="area-conteudo ajuste-f animacao-opacidade-sombra-ligeira d-flex justify-content-start fundo-f4 borda-r5 sombra-ligeira">    
           <div class="area-utilizador d-flex padding-all8">
             <div class="area-utilizador-perfilenotificacoes">
                 <div class="area-perfil">
                   <label class="area-label fonte-24 mukta-m cor-20 padding-l8 sem-margens" for="perfil-conteudo">Perfil do utilizador</label>  
-                  <div class="area-perfil-conteudo d-flex justify-content-between fundo-ff borda-solida borda-w05 borda-aa borda-r5" name="perfil-conteudo">
+                  <div class="area-perfil-conteudo d-flex justify-content-between fundo-ff borda-fina borda-aa borda-r5" name="perfil-conteudo">
                     <div class="info-perfil-utilizador d-flex flex-wrap-start">
                       <div class="area-foto-perfil-utilizador">
-                        <img :src="obterInfoUtilizador.foto" class="foto-perfil borda-solida borda-w1 borda-70 borda-r5"/>
+                        <img :src="obterInfoUtilizador.foto" class="foto-perfil borda-grossa borda-70 borda-r5"/>
                       </div>
                       <div class="area-dados-perfil-utilizador d-flex flex-wrap align-content-between margem-y8">
                         <div class="nome-e-tipo-utilizador">
@@ -60,8 +60,8 @@
                 </div>
               <div class="area-notificacoes">
                 <label class="area-label fonte-24 mukta-m cor-20 padding-l8 sem-margens" for="notificacoes-conteudo">Notificações</label>
-                <div class="area-notificacoes-conteudo fundo-ff borda-solida borda-w05 borda-aa borda-r5" name="notificacoes-conteudo">
-                  <table class="tabela-notificacoes">
+                <div class="area-notificacoes-conteudo fundo-ff borda-fina borda-aa borda-r5" name="notificacoes-conteudo">
+                  <table class="tabela borda-grossa borda-70 borda-r5 cor-20">
                     <tr>
                       <th>Data e Hora</th>
                       <th>Tema</th>
@@ -78,7 +78,7 @@
             </div>
             <div class="area-definicoes">
               <label class="area-label fonte-24 mukta-m cor-20 padding-l8 sem-margens" for="definicoes-conteudo">Definições</label>
-              <div class="area-definicoes-conteudo fundo-ff borda-solida borda-w05 borda-aa borda-r5" name="definicoes-conteudo">
+              <div class="area-definicoes-conteudo fundo-ff borda-fina borda-aa borda-r5" name="definicoes-conteudo">
                 <form @submit.prevent="editarPerfil" @reset="anular">
                   <label class="area-label fonte-18 mukta-m cor-20 padding-l8 sem-margens margem-t7" for="">Alterar a palavra passe</label>
                   <!-- Input para inserir a atual palavra-passe -->
@@ -103,8 +103,8 @@
                   <!--<label class="area-label fonte-18 mukta-m cor-20 padding-l8 sem-margens margem-t7" for="">Currículo do utilizador</label>
                   <button type="button" class="botao-adicionar-cv">Adicione um ficheiro</button> Esta opção será ativada mais tarde-->
                   <div class="d-flex flex-wrap align-content-end">
-                    <button type="submit" class="botao-guardar fundo-40 fonte-16 opensans-sb cor-ee borda-solida borda-w05 borda-20 borda-r5">Guardar</button>
-                    <button type="reset" class="botao-anular fundo-dd fonte-16 opensans-sb cor-20 borda-solida borda-w05 borda-aa borda-r5">Anular</button>
+                    <button type="submit" class="botao-guardar fundo-40 fonte-16 opensans-sb cor-ee borda-fina borda-20 borda-r5">Guardar</button>
+                    <button type="reset" class="botao-anular fundo-dd fonte-16 opensans-sb cor-20 borda-fina borda-aa borda-r5">Anular</button>
                   </div>
                 </form>
               </div>
@@ -157,9 +157,6 @@ a.texto-desconectar{text-decoration: none; color: #ffdcdc; transition: color 0.2
 a.texto-desconectar:hover{color: #ff8a8a;}
 .botao-guardar, .botao-anular{height: 42px; padding: 0px 8px; transition: color 0.4s ease-in-out; margin: 8px 4px;}
 .botao-guardar:hover, .botao-anular:hover{color:#707070;}
-.tabela-notificacoes{width: 100%; border: 1px solid #707070; border-radius: 5px; border-collapse: collapse; overflow:hidden; color: #202020;}
-.tabela-notificacoes th{background-color: #d2d2d2; font-family: mukta-regular; font-size: 14px; border: 1px solid #707070}
-.tabela-notificacoes td{background-color: #f4f4f4; font-family: opensans-light; font-size: 12px; border: 1px solid #707070}
 </style>
 <script>
 import SideBar from "@/components/SideBar.vue";
