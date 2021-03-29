@@ -26,6 +26,8 @@
     - Áreas de conteúdo;
     - Tabelas;
     - Outros.
+
+    /!\ Tudo que tenha router-link tem de ser estilizado atravês do nome da classe + a /!\
 */
 /* Fundo das páginas */ 
   html, body, #app, .container-autenticacao-registo, .view {
