@@ -54,7 +54,7 @@
         }
         try {
           this.$store.dispatch('autenticacao', autenticacao)
-          this.$router.push({name: 'Home'});
+          this.$router.push({name: 'Propostas'});
         }
         catch(error){
           alert(error)                                     
