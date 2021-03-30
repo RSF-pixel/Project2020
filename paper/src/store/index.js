@@ -482,7 +482,7 @@ export default new Vuex.Store({
             }
             ph.push(dados);
             counter++;
-            if (counter == 5) { 
+            if (counter == 3) { 
               counter = 0; tabela.push(ph); ph = [];
             }
           }

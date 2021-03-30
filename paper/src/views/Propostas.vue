@@ -44,39 +44,45 @@
               <p>{{proposta.tipo}}</p>
               <button @click="displayProposta = proposta">Ver Proposta</button>
             </b-card>
-            <button v-for="(proposta, index) in propostas" :key="index" @click="counter = index"></button>
+            <button v-for="(proposta, index) in propostas" :key="index" @click="counter = index" style="background: red; width: 20px; height: 20px;"></button>
           </div>
           <!-- Área da proposta selecionada (lado direito) -->
           <div class="area-proposta-selecionada d-flex flex-wrap">
             <!-- Dados principais da proposta -->
-            <div class="info-proposta-principal fundo-ff borda-fina borda-aa borda-r5">
+            <div class="info-proposta-principal fundo-ff borda-fina borda-aa borda-r5 padding-all12">
               <template v-if="displayProposta != null">
-                <h5>Objetivos e descrição</h5><p>{{displayProposta.objetivos}}</p>
-                <h5>Plano provisório de trabalho</h5><p>{{displayProposta.planos}}</p>
-                <h5>Resultados esperados</h5><p>{{displayProposta.resultados}}</p>
-                <h5>Perfil do candidato desejado</h5><p>{{displayProposta.perfil}}</p>
-                <h5>Outros dados relevantes</h5><p>{{displayProposta.dados}}</p>
-                <h5>Recursos necessários</h5><p>{{displayProposta.recursos}}</p>
+                <h5 class="mukta-r fonte-20 cor-20 align-left">Objetivos e descrição</h5>
+                <p class="info-proposta-texto opensans-l fonte-16 cor-20 align-left">{{displayProposta.objetivos}}</p>
+                <h5 class="mukta-r fonte-20 cor-20 align-left">Plano provisório de trabalho</h5>
+                <p class="info-proposta-texto opensans-l fonte-16 cor-20 align-left">{{displayProposta.planos}}</p>
+                <h5 class="mukta-r fonte-20 cor-20 align-left">Resultados esperados</h5>
+                <p class="info-proposta-texto opensans-l fonte-16 cor-20 align-left">{{displayProposta.resultados}}</p>
+                <h5 class="mukta-r fonte-20 cor-20 align-left">Perfil do candidato desejado</h5>
+                <p class="info-proposta-texto opensans-l fonte-16 cor-20 align-left">{{displayProposta.perfil}}</p>
+                <h5 class="mukta-r fonte-20 cor-20 align-left">Outros dados relevantes</h5>
+                <p class="info-proposta-texto opensans-l fonte-16 cor-20 align-left">{{displayProposta.dados}}</p>
+                <h5 class="mukta-r fonte-20 cor-20 align-left">Recursos necessários</h5>
+                <p class="info-proposta-texto opensans-l fonte-16 cor-20 align-left">{{displayProposta.recursos}}</p>
               </template>
             </div>
             <!-- Dados secundários da proposta -->
-            <div class="info-proposta-secundaria d-flex flex-wrap fundo-ff borda-r5 borda-fina borda-aa">
+            <div class="info-proposta-secundaria d-flex flex-wrap fundo-ff borda-fina borda-aa borda-r5">
               <!-- Nome da empresa -->
               <div class="dados-empresa fundo-f4 borda-r5">
                 <template v-if="displayProposta != null && displayProposta.empresa != null">
-                  <p class="sem-margens fonte-14">Empresa</p><p class="sem-margens fonte-14">{{displayProposta.empresa}}</p>
+                  <p class="fonte-14 sem-margens">Empresa</p><p class="fonte-14 sem-margens">{{displayProposta.empresa}}</p>
                 </template>
               </div>
               <!-- Morada da empresa -->
               <div class="dados-empresa fundo-f4 borda-r5">
                 <template v-if="displayProposta != null && displayProposta.empresa != null">
-                  <p class="sem-margens fonte-14">Morada</p><p class="sem-margens fonte-14">{{displayProposta.morada}}</p>
+                  <p class="fonte-14 sem-margens">Morada</p><p class="fonte-14 sem-margens">{{displayProposta.morada}}</p>
                 </template>
               </div>
               <!-- Website -->
               <div class="dados-empresa fundo-f4 borda-r5">
                 <template v-if="displayProposta != null && displayProposta.empresa != null">
-                  <p class="sem-margens fonte-14">Website</p><p class="sem-margens fonte-14">{{displayProposta.website}}</p>
+                  <p class="fonte-14 sem-margens">Website</p><p class="fonte-14 sem-margens">{{displayProposta.website}}</p>
                 </template>
               </div>
             </div>
@@ -114,13 +120,14 @@
   .link-criar-proposta-btn:hover a{color: #004666 !important;}
   .link-criar-proposta-btn:hover #criar-proposta-svg{fill: #004666;}
   .area-selecao-proposta, .area-proposta-selecionada{width: 50%; margin: 8px 8px;}
-  .area-selecao-proposta{overflow: auto;}
-  .info-proposta-principal{height: 60%; width: 100%; margin-bottom: 16px; overflow: auto;}
+  .area-selecao-proposta {overflow-y: auto; overflow-x: hidden;}
+  .info-proposta-principal{height: 60%; width: 100%; margin-bottom: 16px; overflow-y: auto; overflow-x: hidden;}
   .info-proposta-secundaria{height: calc(40% - 16px); width: calc(50% - 8px); margin-right: 16px;}
   .info-proposta-terciaria{height: calc(40% - 16px); width: calc(50% - 8px);}
   .dados-empresa{height: auto; width: 100%; margin: 4px 4px;}
   .info-proposta-e-tutor{height: 72%; width: 100%; margin: 4px 4px;}
   .info-proposta-selecionada, .info-tutor-selecionada{height: 50%;}
+  .info-proposta-texto {word-break: break-word;}
 </style>
 <script>
 import SideBar from "@/components/SideBar.vue";
